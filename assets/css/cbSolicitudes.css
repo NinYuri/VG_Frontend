@@ -1,0 +1,508 @@
+:root {
+    /* ============= PRINCIPAL COLORS ============= */
+    --agave: #00758D;
+    --black: #000000;
+    --white: #FFFFFF;
+    --gray: #535353;
+    --tab-selected: #ACBCC0;
+    --tabs-gray: #A1AAAC;
+    --tabs-hover: #969c9c;
+
+    /* ============= TRANSLUCENT COLORS ============= */
+    --transparent-white: rgba(255, 255, 255, 0.5);
+    --transparent-blue: rgba(217, 217, 217, 0.5);
+    --tr-medium-blue: rgba(217, 217, 217, 0.7);
+
+    /* ============= GRADIENTS ============= */
+    --background: linear-gradient(270deg,
+        var(--agave) 25%,
+        #005B6E 48%,
+        #004553 68%,
+        #00333E 84%,
+        #002027 100%
+    );
+    --option-hover: linear-gradient(90deg,
+        #002027 0%,
+        #002A32 18%,
+        #004C5B 53%,
+        var(--agave) 100%
+    );
+    --button-hover: linear-gradient(90deg, 
+        #428188 0%,
+        #112022 100%
+    );
+    --shine-hover: linear-gradient(120deg,
+        transparent 30%,
+        rgba(217, 217, 217, 0.6),
+        transparent 70%
+    );
+}
+
+
+/* ======================= CENTURY GOTHIC FONTS ======================= */
+/* Thin */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_thinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+/* Light */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_lightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* SemiBold */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_semiboldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_boldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* ExtraBold */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_extrabold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_extraboldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+/* Black */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_blackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'CenturyGothic';
+}
+
+::before,
+::after { box-sizing: border-box; }
+
+ul { list-style: none; }
+
+button {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+input { border-width: 0em; }
+
+a {
+    display: block;
+    color: inherit;
+}
+
+
+/* ============================== REUSABLE ============================== */
+p,
+h1,
+h2,
+h3,
+h4,
+h5 { font-family: 'CenturyGothic', sans-serif; }
+
+
+/* ============================== BODY ============================== */
+body {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.background {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    background-image: var(--background);
+}
+
+
+/* ============================== OPTION BAR ============================== */
+.option-bar {
+    width: 21%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5em 0em;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.4em;
+}
+
+.logo img { width: 100%; }
+
+.logo .name {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1em;
+    color: var(--white);
+}
+
+.options,
+.logout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+    font-weight: 300;
+    font-size: 1.3em;
+    color: var(--white);
+    padding-left: 0.9em;
+}
+
+.options .option,
+.logout .option {
+    display: flex;
+    align-items: center;
+    width: 105%;
+    border-radius: 25px;
+    padding: 0.4em 0.7em;
+    gap: 0.4em;
+    cursor: pointer;
+    background-image: var(--option-hover);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 0% 100%;
+    transition: background-size 0.7s ease-out;
+}
+
+.option:hover { background-size: 100% 100%; }
+ 
+.option i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option img {
+    width: 18px;
+    object-fit: contain;
+}
+
+.option .fa-plane-departure { font-size: 0.7em; }
+
+.option .fa-clock-rotate-left,
+.option .fa-arrow-right-from-bracket { font-size: 0.85em; }
+
+
+/* ============================== CONTAINER ============================== */
+.content-container {
+    height: 100%;
+    width: 100%;
+    padding: 2.2em;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: var(--transparent-white);
+    border-radius: 40px;
+    padding: 2em 1.3em;
+    align-items: flex-start;
+    position: relative;
+    background-image: url('../images/Agave.webp');
+    background-size: 43% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.content-header {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.titles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0em 0.4em;
+}
+
+.titles .title{
+    font-weight: 500;
+    font-size: 3.4em;
+}
+
+.titles .subtitle {
+    font-weight: 400;
+    font-size: 1.35em;
+}
+
+.button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12em;
+    height: 3.5em;
+    background-image: var(--button-hover);
+    margin-top: 1em;
+    margin-right: 1em;
+    border-radius: 80px;
+    color: var(--white);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.button:hover::before { animation: shine 1.5s ease-out infinite; }
+
+.button::before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background-image: var(--shine-hover);
+    top: 0;
+    left: -100px;
+    opacity: 0.6;
+}
+
+@keyframes shine {
+    0% { left: -100px; }
+
+    60% { left: 100%; }
+
+    to { left: 100%; }
+}
+
+.button p {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.button i { margin-right: 0.3em; }
+
+.content-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.tabs { 
+    display: flex;
+    width: 100%;
+    align-items: self-end;
+    gap: 16px;
+}
+
+.tab {
+    position: relative;
+    background-color: var(--tabs-gray);
+    border-radius: 20px 0 0 0;
+    padding: 0.7em 0.3em 0.7em 1.5em;
+    filter: drop-shadow(5px -3px 5px rgba(0, 0, 0, 0.25));
+    cursor: pointer;
+}
+
+.tab:hover,
+.tab:hover::after { background-color: var(--tabs-hover); }
+
+.tab:first-child { z-index: 5; }
+.tab:nth-child(2) { z-index: 4; }
+.tab:nth-child(3) { z-index: 3; }
+.tab:nth-child(4) { z-index: 2; }
+.tab:nth-child(5) { z-index: 1; }
+
+.tab.selected { 
+    background-color: var(--tab-selected);
+    padding: 0.8em 0em 0.8em 2em;
+    cursor: default;
+    z-index: 10;
+}
+
+.tab::after {
+    content: '';
+    position: absolute;
+    background-color: var(--tabs-gray);
+    top: 0;
+    right: -20px;
+    width: 50px;
+    height: 100%;
+    transform: skewX(36deg);
+    z-index: -1;
+}
+
+.tab.selected::after { 
+    background-color: var(--tab-selected); 
+    right: -26px;
+}
+
+.tab.everything.selected,
+.tab.pending.selected,
+.tab.approved.selected,
+.tab.rejected.selected { margin-right: 9px; }
+
+.tab:hover { z-index: 9; }
+
+.tab p {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.tab.selected p {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32%;
+    height: 2.5em;
+    background-color: var(--transparent-blue);
+    border-radius: 10px;
+    padding: 0.4em 0.5em;
+    margin-bottom: 2em;
+}
+
+.search-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tr-medium-blue);
+    border-radius: 7px;
+    padding: 0em 0.6em;
+}
+
+.search-back input {
+    height: 100%;
+    width: 100%;
+    color: var(--gray);
+    font-style: normal;
+    font-size: 1.1em;
+    font-weight: 600;
+    background-color: transparent;
+    padding: 0.5em;
+}
+
+.search-back i { color: var(--gray); }
+
+.table-background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+    background-color: var(--transparent-blue);
+    border-radius: 0 20px 20px 20px;
+    padding: 1.4em 1.5em;
+}
+
+.table-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--transparent-blue);
+    border-radius: 10px;
+}
