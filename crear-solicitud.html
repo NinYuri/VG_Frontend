@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Viáticos</title>
+        <meta name="title" content="Viáticos">
+        <meta name="description" content="Gestión de solicitudes, anticipos y comprobación de gastos">
+
+        <!-- ======================= CSS ======================= -->
+        <link rel="stylesheet" href="./assets/css/crear-solicitud.css">
+
+        <!-- ======================= ICONS ======================= -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        <!-- ======================= SWEET ALERT ======================= -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+
+    <body>
+        <div class="background">
+            <!-- ======================= OPTIONS BAR ======================= -->
+            <div class="option-bar">
+                <div class="logo">
+                    <img src="./assets/images/White_logo.webp" alt="GRUPO | PSA">
+                    <div class="name">
+                        <p>Yuriana Ibarra</p>
+                    </div>
+                </div>
+
+                <div class="options">
+                    <div class="option">
+                        <img src="./assets/images/Grid.webp" alt="Grid">
+                        <p>Panel principal</p>
+                    </div>
+                    
+                    <div class="option">
+                        <i class="fa-solid fa-plane-departure"></i>
+                        <p>Solicitudes</p>
+                    </div>
+
+                    <div class="option">
+                        <img src="./assets/images/Payment.webp" alt="Payment">
+                        <p>Comprobaciones</p>
+                    </div>
+
+                    <div class="option">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <p>Historial</p>
+                    </div>
+                </div>
+
+                <div class="logout">
+                    <div class="option">
+                        <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180"></i>
+                        <p>Cerrar sesión</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= CONTENT CONTAINER ======================= -->
+            <div class="content-container">
+                <div class="container">
+                    <!-- ==================== CONTENT HEADER ==================== -->
+                    <div class="content-header">
+                        <div class="titles">
+                            <h1 class="title">NUEVA SOLICITUD</h1>
+                            <p class="subtitle">Completa la información para registrar tu solicitud</p>
+                        </div>
+
+                        <div class="action-buttons">
+                            <div class="button send">
+                                <p><i class="fa-regular fa-paper-plane"></i>Enviar</p>
+                            </div>
+
+                            <div class="button cancel">
+                                <p><i class="fa-solid fa-ban"></i>Cancelar</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ======================== FORM ======================== -->
+                    <div class="content-table">
+                        <div class="first-column">
+                            <div class="content-destination">
+                                <div class="question">
+                                    <p>¿A dónde viajas?</p>
+                                </div>
+
+                                <div class="destination">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <input type="text" placeholder="Ciudad de Destino">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="second-column">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

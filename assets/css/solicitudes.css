@@ -350,7 +350,7 @@ body {
     font-size: 1.35em;
 }
 
-.button {
+.button-create {
     position: relative;
     display: flex;
     justify-content: center;
@@ -359,17 +359,18 @@ body {
     height: 3.5em;
     background-image: var(--button-hover);
     margin-top: 1em;
-    margin-right: 1em;
+    margin-right: 2em;
     border-radius: 80px;
     color: var(--white);
+    font-size: 0.9em;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     overflow: hidden;
 }
 
-.button:hover::before { animation: shine 1.5s ease-out infinite; }
+.button-create:hover::before { animation: shine 1.5s ease-out infinite; }
 
-.button::before {
+.button-create::before {
     content: '';
     position: absolute;
     width: 100px;
@@ -388,12 +389,12 @@ body {
     to { left: 100%; }
 }
 
-.button p {
+.button-create p {
     font-size: 1.5em;
     font-weight: 500;
 }
 
-.button i { margin-right: 0.3em; }
+.button-create i { margin-right: 0.3em; }
 
 .content-table {
     display: flex;
@@ -654,6 +655,29 @@ body {
 }
 
 .back-buttons.disabled { background-color: var(--transparent-gray); }
+
+.back-buttons.disabled .prev,
+.back-buttons.disabled .next { cursor: default; }
+
+.back-buttons.disabled .prev .default-icon,
+.back-buttons.disabled .next .default-icon {
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transition: none;
+}
+
+.back-buttons.disabled .prev .hover-icon,
+.back-buttons.disabled .next .hover-icon {
+    opacity: 0;
+    stroke-dashoffset: 100;
+    transition: none;
+}
+
+.back-buttons.disabled .prev::before,
+.back-buttons.disabled .next::before {
+    opacity: 0 !important;
+    pointer-events: none;
+}
 
 .prev,
 .page,
