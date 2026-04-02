@@ -31,22 +31,22 @@
                 </div>
 
                 <div class="options">
-                    <div class="option">
+                    <div class="option dashboard">
                         <img src="./assets/images/Grid.webp" alt="Grid">
                         <p>Panel principal</p>
                     </div>
                     
-                    <div class="option">
+                    <div class="option requests">
                         <i class="fa-solid fa-plane-departure"></i>
                         <p>Solicitudes</p>
                     </div>
 
-                    <div class="option">
+                    <div class="option expenses">
                         <img src="./assets/images/Payment.webp" alt="Payment">
                         <p>Comprobaciones</p>
                     </div>
 
-                    <div class="option">
+                    <div class="option history">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         <p>Historial</p>
                     </div>
@@ -84,24 +84,113 @@
                     <!-- ======================== FORM ======================== -->
                     <div class="content-table">
                         <div class="first-column">
-                            <div class="content-destination">
+                            <div class="content">
                                 <div class="question">
                                     <p>¿A dónde viajas?</p>
                                 </div>
 
-                                <div class="destination">
+                                <div class="answer destination">
                                     <i class="fa-solid fa-location-dot"></i>
                                     <input type="text" placeholder="Ciudad de Destino">
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <div class="question">
+                                    <p>¿Cuándo viajas?</p>
+                                </div>
+
+                                <div class="datepicker">
+                                    <div class="datepicker-header">
+                                        <button class="prev-month" type="button"><i class="fa-solid fa-angle-left"></i></button>
+                                        
+                                        <div class="date-header">
+                                            <div class="month"></div>
+                                            <div class="year"></div>
+                                        </div>
+
+                                        <button class="next-month" type="button"><i class="fa-solid fa-angle-right"></i></button>
+                                    </div>
+
+                                    <div class="days-header">
+                                        <span>DOM</span>
+                                        <span>LUN</span>
+                                        <span>MAR</span>
+                                        <span>MIE</span>
+                                        <span>JUE</span>
+                                        <span>VIE</span>
+                                        <span>SAB</span>
+                                    </div>
+
+                                    <div class="dates"></div>
+
+                                    <!-- Selector de meses -->
+                                    <div class="month-selector">
+                                        <div class="month-grid"></div>
+                                    </div>
+
+                                    <!-- Selector de años -->
+                                    <div class="year-selector">
+                                        <div class="year-grid"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="second-column">
+                            <div class="content">
+                                <div class="question">
+                                    <p>¿Cuál es el motivo?</p>
+                                </div>
 
+                                <div class="answer motive">
+                                    <textarea></textarea>
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <div class="question">
+                                    <p>¿Cuánto necesitas solicitar?</p>
+                                </div>
+
+                                <div class="answer money">
+                                    <div class="currency-selector">
+                                         <div class="flags">
+                                            <img src="./assets/images/MXN.webp" alt="MXN">
+                                            <p>MXN</p>
+                                            <i class="fa-solid fa-angle-down"></i>
+                                        </div>
+
+                                        <div class="currency-dropdown"></div>
+                                    </div>
+
+                                    <p class="symbol">$</p>
+                                    <input type="text">
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <div class="question">
+                                    <p>¿Cómo deseas recibir el pago?</p>
+                                </div>
+
+                                <div class="answer payment">
+                                    <img src="./assets/images/Dollar.webp" alt="Payment">
+
+                                    <div class="payment-selector">
+                                        <p>Transferencia</p>
+                                        <i class="fa-solid fa-angle-down"></i>
+
+                                        <div class="payment-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script src="./assets/js/crear-solicitud.js"></script>
     </body>
 </html>

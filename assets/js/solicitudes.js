@@ -1,7 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
+    optionsBar();
     tabSelected();
     createTravelRequest();
 });
+
+
+/* ============================== OPTIONS BAR ============================== */
+function optionsBar() {
+    const dashboard = document.querySelector('.option.dasboard');
+    const request = document.querySelector('.option.requests');
+    const expenses = document.querySelector('.option.expenses');
+    const history = document.querySelector('.option.history');
+
+    request.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = 'solicitudes.html';
+    });
+}
 
 
 /* ================================= TABLE TABS ================================= */
