@@ -198,6 +198,8 @@ a {
     color: inherit;
 }
 
+html { scroll-behavior: smooth; }
+
 
 /* ============================== REUSABLE ============================== */
 p,
@@ -206,6 +208,12 @@ h2,
 h3,
 h4,
 h5 { font-family: 'CenturyGothic', sans-serif; }
+
+::-webkit-scrollbar { width: 5px; }
+
+::-webkit-scrollbar-track { background-color: transparent; }
+
+::-webkit-scrollbar-thumb { background-color: var(--html-back); }
 
 
 /* ============================== BODY ============================== */
