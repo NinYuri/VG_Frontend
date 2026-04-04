@@ -386,6 +386,17 @@ body {
 @media(max-width: 1024px) {
     .colored-toast span { font-size: 1.1em; }
 
+    body { 
+        height: 100dvh; 
+        overflow: hidden;
+    }
+
+    @supports not(height: 100dvh) {
+        body {
+            height: -webkit-fill-available;
+        }
+    }
+
     .background {
         grid-template-columns: 1fr;
         grid-template-rows: 3.5fr 1fr;
@@ -419,6 +430,17 @@ body {
     .colored-toast span { font-size: 0.9rem; }
 
     .agave-icon { height: 4.5em; }
+
+    body { 
+        height: 100dvh; 
+        overflow: hidden;
+    }
+
+    @supports not(height: 100dvh) {
+        body {
+            height: -webkit-fill-available;
+        }
+    }
 
     .background {
         grid-template-columns: 1fr;
