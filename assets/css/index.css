@@ -3,6 +3,7 @@
     --white: #D9D9D9;
     --black: #000000;
     --toast: #00333E;
+    --html-back: #002027;
 
     /* ============= TRANSLUCENT COLORS ============= */
     --transparent-blue: rgba(217, 217, 217, 0.5);
@@ -386,15 +387,14 @@ body {
 @media(max-width: 1024px) {
     .colored-toast span { font-size: 1.1em; }
 
-    body { 
-        height: 100dvh; 
-        overflow: hidden;
-    }
+    html { background-color: var(--html-back); }
 
-    @supports not(height: 100dvh) {
-        body {
-            height: -webkit-fill-available;
-        }
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100dvh;
+        height: -webkit-fill-available;
+        overflow: hidden;
     }
 
     .background {
@@ -431,15 +431,14 @@ body {
 
     .agave-icon { height: 4.5em; }
 
-    body { 
-        height: 100dvh; 
-        overflow: hidden;
-    }
+    html { background-color: var(--html-back); }
 
-    @supports not(height: 100dvh) {
-        body {
-            height: -webkit-fill-available;
-        }
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100dvh;
+        height: -webkit-fill-available;
+        overflow: hidden;
     }
 
     .background {
