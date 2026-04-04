@@ -213,7 +213,7 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
 
 ::-webkit-scrollbar-track { background-color: transparent; }
 
-::-webkit-scrollbar-thumb { background-color: var(--html-back); }
+/*::-webkit-scrollbar-thumb { background-color: var(); } */
 
 
 /* ============================== BODY ============================== */

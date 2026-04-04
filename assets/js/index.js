@@ -5,13 +5,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 /* ============================== LOGIN ============================== */
-function login() {
-    const button = document.querySelector('.button-login');
-
-    button.addEventListener('click', (e) => {
+async function login() {
+    document.querySelector('.button-login').addEventListener('click', async(e) => {
         e.stopPropagation();
 
-        loginValidation();
+        if(!loginValidation()) return;
+
+        const data = {
+            usuario: document.getElementById('user').value,
+            password: document.getElementById('password').value
+        };
+
+        console.log(data);
     }); 
 }
 
@@ -47,24 +52,25 @@ function loginValidation() {
 }
 
 
-function Toast(title, imageUrl = './assets/images/Icon_agave.png') {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        width: '500px',
-        customClass: {
-            popup: 'colored-toast'
-        },
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-        },
-    });
+/* =================================== TOAST =================================== */
+const ToastMixin = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: true,
+    width: '500px',
+    customClass: {
+        popup: 'colored-toast'
+    },
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+});
 
-    Toast.fire({
+function Toast(title, imageUrl = './assets/images/Icon_agave.png') {
+    ToastMixin.fire({
         icon: undefined,
         html: `
             <div style="display: flex; align-items: center; gap: 20px;">
