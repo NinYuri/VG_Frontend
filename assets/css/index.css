@@ -190,13 +190,6 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
 
 ::-webkit-scrollbar-thumb { background-color: var(--html-back); }
 
-/* Fix para bullets de contraseña en iOS Safari */
-input[type="password"] {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    -webkit-text-security: disc;
-    text-security: disc;
-}
-
 
 /* ============================== TOAST ============================== */
 .swal2-toast { 
@@ -408,6 +401,12 @@ body {
     .form .field-back input { font-size: 1.8em; }
 
     .button-login { font-size: 1.8em; }
+}
+
+@media(min-width: 1280px) and (max-width: 1366px) {
+    .form img { margin-bottom: 2em; }
+
+    .form .field { margin-top: 5em; }
 }
 
 
