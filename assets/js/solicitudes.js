@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* ============================== OPTIONS BAR ============================== */
 function optionsBar() {
-    const dashboard = document.querySelector('.option.dasboard');
+    const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.requests');
     const expenses = document.querySelector('.option.expenses');
     const history = document.querySelector('.option.history');

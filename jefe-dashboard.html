@@ -46,7 +46,7 @@
             </div>
 
             <div class="logout">
-                <div class="option">
+                <div class="option log-out">
                     <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180"></i>
                     <p>Cerrar Sesión</p>
                 </div>
@@ -95,29 +95,98 @@
                     </div>
 
                     <div class="graphs">
-                        <div class="status-back">
-                            <div class="status-wrapper">
+                        <div class="graph-back status">
+                            <div class="graph-wrapper">
                                 <p>SOLICITUDES POR ESTADO</p>
 
                                 <div class="chartst-container">
+                                    <div class="prev status-button"><i class="fa-solid fa-caret-left"></i></div>
                                     <canvas id="status-chart"></canvas>
+                                    <div class="next disabled status-button"><i class="fa-solid fa-caret-right"></i></div>
+
+                                    <div class="center-text">
+                                        <span class="year">2026</span>
+                                        <span class="month">DICIEMBRE</span>
+                                    </div>
                                 </div>
 
-                                <div class="tag-pending">
-                                    <div class="color-tag"></div>
-                                    <p>Pendientes</p>
+                                <div class="legend">
+                                    <div class="legend-item">
+                                        <span class="color-dot pending"></span>
+                                        <span class="label">Pendientes</span>
+                                        <span class="dots"></span>
+                                        <span class="percentage">39%</span>
+                                    </div>
+
+                                    <div class="legend-item">
+                                        <span class="color-dot approved"></span>
+                                        <span class="label">Aprobadas</span>
+                                        <span class="dots"></span>
+                                        <span class="percentage">20%</span>
+                                    </div>
+
+                                    <div class="legend-item">
+                                        <span class="color-dot rejected"></span>
+                                        <span class="label">Rechazadas</span>
+                                        <span class="dots"></span>
+                                        <span class="percentage">10%</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="month-requests">
+                            <div class="graph-back requests">
+                                <div class="graph-wrapper">
+                                    <div class="graph-desc">
+                                        <div class="prev request-button"><i class="fa-solid fa-caret-left"></i></div>
+                                        
+                                        <p>TENDENCIA DE SOLICITUDES MENSUAL <span class="request-year">2026</span></p>
+                                        
+                                        <div class="next disabled request-button"><i class="fa-solid fa-caret-right"></i></div>
+                                    </div>
 
+                                    <div class="chart-container">
+                                        <canvas id="trend-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="graph-back expenses">
+                                <div class="graph-wrapper">
+                                    <div class="graph-desc">
+                                        <div class="prev expense-button"><i class="fa-solid fa-caret-left"></i></div>
+
+                                        <p>GASTO MENSUAL <span class="expense-year">2026</span></p>
+
+                                        <div class="next disabled expense-button"><i class="fa-solid fa-caret-right"></i></div>
+                                    </div>
+
+                                    <div class="chart-container">
+                                        <canvas id="expense-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="expense">
-                            
+                        <div class="graph-back total">
+                            <div class="graph-wrapper">
+                                <p>GASTO TOTAL <span class="total-year">2026</span></p>
+
+                                <div class="graph-desc">
+                                    <div class="prev total-button"><i class="fa-solid fa-caret-left"></i></div>
+
+                                    <p><span class="total-month">DICIEMBRE</span></p>
+
+                                    <div class="next disabled total-button"><i class="fa-solid fa-caret-right"></i></div>
+                                </div>
+
+                                <p class="total-money">$<span class="total-amount">50,000</span></p>
+                            </div>
                         </div>
                     </div>
+
+                    <img src="./assets/images/agave.png" alt="Agave" class="agave">
                 </div>
             </div>
         </div>

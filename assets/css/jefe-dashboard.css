@@ -6,6 +6,8 @@
     --red: #D65B5B;
     --green: #97BD13;
     --yellow: #C9C867;
+    --graphs: #2A5156;
+    --gray: #919A9B;
 
     /* ============= TRANSLUCENT COLORS ============= */
     --transparent-white: rgba(255, 255, 255, 0.5);
@@ -295,8 +297,8 @@ body {
 /* ============================== CONTAINER ============================== */
 .content-container {
     height: 100%;
-    width: 100%;
-    padding: 2.2em;
+    width: 90%;
+    padding: 2.2em 1.5em 2.2em 2.2em;
 }
 
 .container {
@@ -353,13 +355,12 @@ body {
     align-items: center;
     width: 100%;
     height: 18%;
-    padding: 0 1.5em;
-    gap: 2em;
+    gap: 2.2em;
 }
 
 .card-wrapper {
     position: relative;
-    width: 25%;
+    width: 24%;
     height: 100%;
     padding: 0.5em;
     border-radius: 15px;
@@ -435,22 +436,18 @@ body {
     display: flex;
     width: 100%;
     height: 100%;
-    padding: 0 1.5em 1em 1.5em;
+    padding-bottom: 1em;
 }
 
-.status-back {
+.graph-back {
     position: relative;
-    width: 48%;
-    height: 100%;
     background-color: var(--transparent-blue);
     border-radius: 15px;
-    padding: 0.7em;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-    overflow: visible !important;
-    z-index: 10;
+    padding: 0.7em;
 }
 
-.status-wrapper { 
+.graph-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -460,59 +457,216 @@ body {
     height: 100%;
     background-color: var(--transparent-blue);
     border-radius: 10px;
-    overflow: visible !important;
 }
 
-.status-wrapper p { 
-    font-size: 1.1em;
-    font-weight: 600; 
-    margin-bottom: 2em;
+.graph-back.status {
+    width: 27%;
+    height: 100%;
+    overflow: visible !important;
+    z-index: 10;
 }
+
+.graph-back.status .graph-wrapper { 
+    justify-content: space-between;
+    padding: 1em 0;
+    overflow: visible !important; 
+}
+
+.graph-back.status .graph-wrapper p { font-size: 1.1em; }
+
+.graph-wrapper p { font-weight: 600; }
 
 .chartst-container {
-    position: relative; 
-    width: 70%; 
-    overflow: visible !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 100%;
+    gap: 0.6em; 
 }
 
 .chartst-container canvas { 
-    width: 100% !important;
+    flex: 1;
+    max-width: 70% !important;
     height: auto !important;
 }
 
-.tag-pending {
+.prev,
+.next {
     display: flex;
     align-items: center;
-    width: 100%;
-    gap: 0.5em;
-    padding: 0 1em;
-}
-
-.color-tag {
-    position: relative;
-    width: 9%;
-    height: 75%;
-    background-color: var(--yellow);
+    justify-content: center;
+    width: 1.2em;
+    height: 80%;
     border-radius: 999px;
+    background-color: var(--graphs);
+    color: var(--white);
+    cursor: pointer;
+    z-index: 5;
 }
 
-.color-tag::after {
+.prev.status-button,
+.next.status-button {
+    height: 1.3em;
+    width: 1.3em;
+}
+
+.prev.disabled,
+.next.disabled { 
+    background-color: var(--gray);
+    cursor: default;
+    pointer-events: none;
+}
+
+.prev i,
+.next i { font-size: 0.7em; }
+
+.prev.status-button i,
+.next.status-button i { font-size: 0.8em; }
+
+.center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.center-text .year {
+    display: block;
+    font-size: 1.5em;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.center-text .month {
+    display: block;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 0.5em;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-size: 1em;
+}
+
+.color-dot {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin-right: 0.5em;
+}
+
+.color-dot.pending { background-color: var(--yellow); }
+
+.color-dot.approved { background-color: var(--green); }
+
+.color-dot.rejected { background-color: var(--red); }
+
+.color-dot::after {
     content: '';
     position: absolute;
-    bottom: 0.1em;
-    right: 0.2em;
-    width: 100%;
-    height: 100%;
-    border-radius: 999px;
+    border-radius: 50%;
     border: 1.5px solid var(--black);
+    width: 90%;
+    height: 90%;
+    bottom: 2px;
+    right: 5px;
+}
+
+.dots {
+    flex: 1;
+    border-bottom: 1.5px dotted var(--black);
+    align-self: flex-end;
+    margin: 0 4px 5px 4px;
 }
 
 .month-requests {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 47%;
+    gap: 1em;
+    padding: 0 1.2em;
 }
 
-.expense { 
-    width: 40%; 
-    height: 100%;
+.graph-back.requests,
+.graph-back.expenses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+}
+
+.graph-back.requests,
+.graph-back.expenses { font-size: 0.9em; }
+
+.graph-back.requests .graph-wrapper,
+.graph-back.expenses .graph-wrapper { padding: 0em 0.5em; }
+
+.graph-desc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 1em;
+}
+
+.chart-container {
+    width: 100%;
+    height: 80%;
+}
+
+.graph-back.total {
+    width: 26%;
+    height: 40%;
+    z-index: 2;
+}
+
+.graph-back.total .graph-wrapper p { font-size: 1.1em; }
+
+.graph-back.total .graph-wrapper .graph-desc .total-month { font-size: 0.8em; }
+
+.prev.total-button,
+.next.total-button { 
+    width: 1.1em; 
+    height: 1.1em; 
+}
+
+.prev.total-button i,
+.next.total-button i { font-size: 0.6em; }
+
+.graph-back.total .graph-wrapper .total-money {
+    font-size: 3em;
+    font-weight: 400;
+    margin-top: 0.1em;
+}
+
+.agave {
+    position: absolute;
+    bottom: 0;
+    right: -0.1em;
+    height: 91.6%;
+    z-index: 1;
+}
+
+
+/* ======================== RESPONSIVE DESKTOP FIRST ======================== */
+/* Escritorio */
+@media(min-width: 1920px) {
+    
 }

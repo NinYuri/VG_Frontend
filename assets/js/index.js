@@ -19,7 +19,7 @@ async function login() {
         console.log(data);
         
         if(data.usuario === "Yuriana" && data.password === "123456")
-            window.location.href = 'solicitudes.html';
+            window.location.href = 'jefe-dashboard.html';
     }); 
 }
 
