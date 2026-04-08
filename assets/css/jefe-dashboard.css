@@ -670,24 +670,17 @@ body {
 /* ======================== RESPONSIVE DESKTOP FIRST ======================== */
 /* Escritorio */
 @media(min-width: 1920px) {
-    body, 
-    .background, 
-    .container { overflow-x: hidden; }
-
     .logo .name { font-size: 1.5em; }
 
     .options,
     .logout {
-        font-size: 1.8em;
+        font-size: 1em;
         gap: 1em;
         padding-left: 0.8em;
     }
 
     .options .option,
-    .logout .option {
-        width: 100%; 
-        gap: 0.5em; 
-    }
+    .logout .option { gap: 0.5em; }
 
     .option img { width: 27px; }
 
@@ -695,10 +688,7 @@ body {
 
     .option .fa-arrow-right-from-bracket { font-size: 1em; }
 
-    .content-container {
-        width: 100%;
-        padding: 2.5em 2.5em 2.5em 3em; 
-    }
+    .content-container { padding: 2.5em 2.5em 2.5em 3em; }
 
     .container { padding: 2em 2.5em; }
 
@@ -709,8 +699,6 @@ body {
     .titles .subtitle { font-size: 1.8em; }
 
     .cards { gap: 2.5em; }
-
-    .card-wrapper { width: 25%; }
     
     .card-text p { font-size: 1.3em; }
 
@@ -789,10 +777,7 @@ body {
 
     .graph-back.total .graph-wrapper .graph-desc { margin-bottom: 0; }
 
-    .agave { 
-        right: 0;
-        height: 98%;
-    }
+    .agave { height: 99%; }
 }
 
 /* Ordenadores */
