@@ -298,19 +298,20 @@ body {
 .content-container {
     height: 100%;
     width: 90%;
-    padding: 2.2em 1.5em 2.2em 2.2em;
+    padding: 1.7em 1.5em 1.7em 2.2em;
 }
 
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
     background-color: var(--transparent-white);
     border-radius: 40px;
-    padding: 2em 1.3em 0.5em 1.3em;
+    padding: 1em 1.3em;
     align-items: flex-start;
-    position: relative;
+    justify-content: center;
     background-image: url('../images/Agave.webp');
     background-size: 43% auto;
     background-repeat: no-repeat;
@@ -346,7 +347,7 @@ body {
     flex-direction: column;
     width: 100%;
     height: 100%;
-    margin-top: 1.5em;
+    margin-top: 1.7em;
     gap: 1.7em;
 }
 
@@ -371,8 +372,8 @@ body {
     position: absolute;
     background-color: var(--transparent-blue);
     width: 93%;
-    height: 87%;
-    top: 5%;
+    height: 85%;
+    top: 7%;
     left: 3.5%;
     border-radius: 10px;
     z-index: 1;
@@ -496,8 +497,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1.2em;
-    height: 80%;
+    width: 1.1em;
+    height: 1.1em;
     border-radius: 999px;
     background-color: var(--graphs);
     color: var(--white);
@@ -668,7 +669,107 @@ body {
 /* ======================== RESPONSIVE DESKTOP FIRST ======================== */
 /* Escritorio */
 @media(min-width: 1920px) {
+    .logo .name { font-size: 1.5em; }
+
+    .options,
+    .logout {
+        font-size: 1.8em;
+        gap: 1em;
+        padding-left: 0.8em;
+    }
+
+    .options .option,
+    .logout .option { gap: 0.5em; }
+
+    .option img { width: 27px; }
+
+    .option .fa-plane-departure { font-size: 0.9em; }
+
+    .option .fa-arrow-right-from-bracket { font-size: 1em; }
+
+    .content-container { padding: 2.5em 1.5em 2.5em 3em; }
+
+    .container { padding: 2em 2.5em; }
+
+    .content { margin-top: 3em; }
+
+    .titles .title { font-size: 4em; }
+
+    .titles .subtitle { font-size: 1.8em; }
     
+    .card-text p { font-size: 1.3em; }
+
+    .card-text .rejected-number,
+    .card-text .approved-number,
+    .card-text .pending-number { font-size: 3.7em; }
+
+    .graph-back.status .graph-wrapper { padding: 1.5em 0; }
+
+    .graph-back.status .graph-wrapper p,
+    .graph-back.total .graph-wrapper p { font-size: 1.5em; }
+
+    .chartst-container { gap: 0.7em; }
+
+    .prev.status-button,
+    .next.status-button {
+        width: 2em;
+        height: 2em;
+    }
+
+    .prev.status-button i,
+    .next.status-button i { font-size: 1.1em; }
+
+    .center-text .year { font-size: 2.2em; }
+
+    .center-text .month { font-size: 1.2em; }
+
+    .legend-item { font-size: 1.5em; }
+
+    .color-dot { 
+        width: 23px;
+        height: 23px; 
+    }
+
+    .graph-back.requests .graph-wrapper,
+    .graph-back.expenses .graph-wrapper { padding: 0.7em; }
+
+    .graph-back.requests,
+    .graph-back.expenses { font-size: 1.3em; }
+
+    .graph-desc { margin-bottom: 1em; }
+
+    .prev.request-button,
+    .next.request-button,
+    .prev.expense-button,
+    .next.expense-button { 
+        width: 1.3em;
+        height: 1.3em; 
+    }
+
+    .graph-back.total .graph-wrapper p { line-height: 1.5em; }
+
+    .prev.request-button i,
+    .next.request-button i,
+    .prev.expense-button i,
+    .next-expense-button i { transform: translateY(5%); }
+
+    .prev.total-button,
+    .next.total-button {
+        width: 1.7em;
+        height: 1.7em;
+    }
+
+    .prev.total-button i,
+    .next.total-button i { font-size: 0.9em; }
+
+    .graph-back.total .graph-wrapper .total-money { 
+        font-size: 4.5em; 
+        margin-top: 0;
+    }
+
+    .graph-back.total .graph-wrapper .graph-desc { margin-bottom: 0; }
+
+    .agave { height: 99%; }
 }
 
 /* Ordenadores */
@@ -688,11 +789,6 @@ body {
 
     .content-container { padding: 1em 1.5em 1em 2.2em; }
 
-    .container { 
-        padding: 1em 1.5em 0.5em 1.5em; 
-        background-size: auto 60%;
-    }
-
     .content { gap: 1em; }
 
     .titles .title{ font-size: 3em; }
@@ -709,7 +805,9 @@ body {
     .card-text .approved-number,
     .card-text .pending-number { font-size: 2.3em; }
 
-    .graph-back.status .graph-wrapper { padding: 0.5em 0; }
+    .graph-back.status .graph-wrapper { padding: 1em 0; }
+
+    .chartst-container { gap: 0.7em }
 
     .chartst-container canvas { max-width: 60% !important; }
 
@@ -753,7 +851,7 @@ body {
     .graph-back.expenses { font-size: 0.8em; }
 
     .graph-back.total .graph-wrapper .total-money {
-        font-size: 2em;
+        font-size: 2.3em;
         margin-top: 0.1em;
     }
 
@@ -764,7 +862,9 @@ body {
     }
 
     .prev.total-button i,
-    .next.total-button i { transform: translateY(-4%); }
+    .next.total-button i { 
+        font-size: 0.5em;
+        transform: translateY(-5%); }
 
     .agave { height: 93%; }
 }

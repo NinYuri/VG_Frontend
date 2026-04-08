@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* ================================ VARIABLES ================================ */
 let trendChart = null;
+let expensesChart = null;
 
 
 /* ============================== OPTIONS BAR ============================== */
@@ -87,6 +88,7 @@ function requestChart() {
         trendChart.destroy();
 
     const isMobile = window.innerWidth <= 768;
+    const isDesktop = window.innerWidth >= 1920;
 
     trendChart = new Chart(ctx, {
         type: 'line',
@@ -96,12 +98,12 @@ function requestChart() {
                 label: 'Solicitudes',
                 data: [42, 58, 34, 38, 122, 12, 90, 120, 156, 65, 34, 78],
                 borderColor: '#2A5156',
-                borderWidth: 1.5,
+                borderWidth: isDesktop ? 2 : 1.5,
                 tension: 0,
                 pointBackgroundColor: '#2A5156',
-                pointBorderWidth: 1,
-                pointRadius: 3,
-                pointHoverRadius: 5,
+                pointBorderWidth: isDesktop ? 2 : 1,
+                pointRadius: isDesktop ? 4 : 3,
+                pointHoverRadius: isDesktop ? 7 :5,
                 fill: false
             }]
         },
@@ -114,10 +116,10 @@ function requestChart() {
                     backgroundColor: 'rgb(217, 217, 217, 0.8)',
                     titleColor: '#505455',
                     bodyColor: '#000000',
-                    titleFont: { size: 10 },
-                    bodyFont: { size: 15, weight: 'normal', color: '#000000' },
+                    titleFont: { size: isDesktop ? 15 : 10 },
+                    bodyFont: { size: isDesktop ? 21 : 15, weight: 'normal', color: '#000000' },
                     displayColors: false,
-                    padding: 6,
+                    padding: isDesktop ? 7 : 6,
                     callbacks: {
                         label: (context) => context.raw + ' solicitudes'
                     }
@@ -135,7 +137,7 @@ function requestChart() {
                     },
                     ticks: {
                         stepSize: 50,
-                        font: { size: isMobile ? 10 : 11 },
+                        font: { size: isDesktop ? 18 : 11 },
                         color: '#000000'
                     }
                 },
@@ -145,7 +147,7 @@ function requestChart() {
                         drawBorder: false
                     },
                     ticks: {
-                        font: { size: isMobile ? 9 : 10, weight: 400 },
+                        font: { size: isDesktop ? 15 : 10, weight: 400 },
                         color: '#000000'
                     }
                 }
@@ -161,7 +163,12 @@ function requestChart() {
 function expenseChart() {
     const ctx = document.getElementById('expense-chart').getContext('2d');
 
-    new Chart(ctx, {
+    if(expensesChart) 
+        expensesChart.destroy();
+
+    const isDesktop = window.innerWidth >= 1920;
+
+    expensesChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'],
@@ -169,12 +176,12 @@ function expenseChart() {
                 label: 'Gasto',
                 data: [15000, 11000, 10000, 20000, 25000, 41000, 32000, 48000, 30000, 27000, 25000, 50000],
                 borderColor: '#2A5156',
-                borderWidth: 1.5,
+                borderWidth: isDesktop ? 2 : 1.5,
                 tension: 0,
                 pointBackgroundColor: '#2A5156',
-                pointBorderWidth: 1,
-                pointRadius: 3,
-                pointHoverRadius: 5,
+                pointBorderWidth: isDesktop ? 2 : 1,
+                pointRadius: isDesktop ? 4 : 3,
+                pointHoverRadius: isDesktop ? 7 :5,
                 fill: false
             }]
         },
@@ -187,10 +194,10 @@ function expenseChart() {
                     backgroundColor: 'rgb(217, 217, 217, 0.8)',
                     titleColor: '#505455',
                     bodyColor: '#000000',
-                    titleFont: { size: 10 },
-                    bodyFont: { size: 15, weight: 'normal', color: '#000000' },
+                    titleFont: { size: isDesktop ? 15 : 10 },
+                    bodyFont: { size: isDesktop ? 21 : 15, weight: 'normal', color: '#000000' },
                     displayColors: false,
-                    padding: 7,
+                    padding: isDesktop ? 7 : 6,
                     callbacks: {
                         title: (context) => "GASTO",
                         label: (context) => "$" + context.raw.toLocaleString('es-MX')
@@ -209,7 +216,7 @@ function expenseChart() {
                     },
                     ticks: {
                         stepSize: 10000,
-                        font: { size: 11 },
+                        font: { size: isDesktop ? 18 : 11 },
                         color: '#000000',
                         callback: function(value) {
                             return '$' + value.toLocaleString('es-MX');
@@ -222,7 +229,7 @@ function expenseChart() {
                         drawBorder: false
                     },
                     ticks: {
-                        font: { size: 10, weight: 400 },
+                        font: { size: isDesktop ? 15 : 10, weight: 400 },
                         color: '#000000'
                     }
                 }
