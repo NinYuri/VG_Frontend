@@ -746,12 +746,12 @@ body {
         height: 1.3em; 
     }
 
-    .graph-back.total .graph-wrapper p { line-height: 1.5em; }
-
     .prev.request-button i,
     .next.request-button i,
     .prev.expense-button i,
-    .next-expense-button i { transform: translateY(5%); }
+    .next.expense-button i { font-size: 0.7em; }
+
+    .graph-back.total .graph-wrapper p { line-height: 1.5em; }
 
     .prev.total-button,
     .next.total-button {
