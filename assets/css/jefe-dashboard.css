@@ -670,11 +670,11 @@ body {
 /* ======================== RESPONSIVE DESKTOP FIRST ======================== */
 /* Escritorio */
 @media(min-width: 1920px) {
-    .logo .name { font-size: 1.5em; }
+    .logo .name { font-size: 1.3em; }
 
     .options,
     .logout {
-        font-size: 1em;
+        font-size: 1.5em;
         gap: 1em;
         padding-left: 0.8em;
     }
@@ -682,34 +682,34 @@ body {
     .options .option,
     .logout .option { gap: 0.5em; }
 
-    .option img { width: 27px; }
+    .option img { width: 20px; }
 
-    .option .fa-plane-departure { font-size: 0.9em; }
+    .option .fa-plane-departure { font-size: 0.8em; }
 
-    .option .fa-arrow-right-from-bracket { font-size: 1em; }
+    .option .fa-arrow-right-from-bracket { font-size: 0.9em; }
 
-    .content-container { padding: 2.5em 2.5em 2.5em 3em; }
+    .content-container { padding: 2em 2.5em 2em 3em; }
 
     .container { padding: 2em 2.5em; }
 
     .content { margin-top: 3em; }
 
-    .titles .title { font-size: 4em; }
+    .titles .title { font-size: 3.6em; }
 
-    .titles .subtitle { font-size: 1.8em; }
+    .titles .subtitle { font-size: 1.5em; }
 
     .cards { gap: 2.5em; }
     
-    .card-text p { font-size: 1.3em; }
+    .card-text p { font-size: 1em; }
 
     .card-text .rejected-number,
     .card-text .approved-number,
-    .card-text .pending-number { font-size: 3.7em; }
+    .card-text .pending-number { font-size: 2.5em; }
 
     .graph-back.status .graph-wrapper { padding: 1.5em 0; }
 
     .graph-back.status .graph-wrapper p,
-    .graph-back.total .graph-wrapper p { font-size: 1.5em; }
+    .graph-back.total .graph-wrapper p { font-size: 1.3em; }
 
     .chartst-container { gap: 0.7em; }
 
@@ -717,45 +717,45 @@ body {
 
     .prev.status-button,
     .next.status-button {
-        width: 2em;
-        height: 2em;
+        width: 1.5em;
+        height: 1.5em;
     }
 
     .prev.status-button i,
-    .next.status-button i { font-size: 1.1em; }
+    .next.status-button i { font-size: 1em; }
 
-    .center-text .year { font-size: 2.2em; }
+    .center-text .year { font-size: 1.8em; }
 
-    .center-text .month { font-size: 1.2em; }
+    .center-text .month { font-size: 1em; }
 
-    .legend-item { font-size: 1.5em; }
+    .legend-item { font-size: 1.2em; }
 
     .color-dot { 
-        width: 23px;
-        height: 23px; 
+        width: 21px;
+        height: 21px; 
     }
 
     .graph-back.requests .graph-wrapper,
     .graph-back.expenses .graph-wrapper { padding: 0.7em; }
 
     .graph-back.requests,
-    .graph-back.expenses { font-size: 1.3em; }
+    .graph-back.expenses { font-size: 1.2em; }
 
-    .graph-desc { margin-bottom: 1em; }
+    .graph-desc { margin-bottom: 0.6em; }
 
     .prev.request-button,
     .next.request-button,
     .prev.expense-button,
     .next.expense-button { 
-        width: 1.3em;
-        height: 1.3em; 
+        width: 1em;
+        height: 1em; 
     }
 
     .prev.request-button i,
     .next.request-button i,
     .prev.expense-button i,
     .next.expense-button i { 
-        font-size: 0.7em; 
+        font-size: 0.5em; 
         transform: translateY(5%);
     }
 
@@ -763,15 +763,15 @@ body {
 
     .prev.total-button,
     .next.total-button {
-        width: 1.7em;
-        height: 1.7em;
+        width: 1.3em;
+        height: 1.3em;
     }
 
     .prev.total-button i,
-    .next.total-button i { font-size: 0.9em; }
+    .next.total-button i { font-size: 0.8em; }
 
     .graph-back.total .graph-wrapper .total-money { 
-        font-size: 4.5em; 
+        font-size: 3.3em; 
         margin-top: 0;
     }
 
