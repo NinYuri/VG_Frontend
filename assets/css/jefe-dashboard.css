@@ -761,7 +761,7 @@ body {
     .prev.expense-button i,
     .next.expense-button i { 
         font-size: 0.5em; 
-        transform: translateY(5%);
+        transform: translateY(10%);
     }
 
     .graph-back.total .graph-wrapper p { line-height: 1.5em; }
@@ -802,7 +802,10 @@ body {
 
     .content-container { padding: 1em 1.5em 1em 2.2em; }
 
-    .content { gap: 1em; }
+    .content {
+        height: 95%; 
+        gap: 1em; 
+    }
 
     .titles .title{ font-size: 3em; }
 
@@ -834,10 +837,7 @@ body {
     }
 
     .prev i,
-    .next i { 
-        font-size: 0.65em;
-        transform: translate(-7%, 7%); 
-    }
+    .next i { font-size: 0.65em; }
 
     .prev.status-button,
     .next.status-button {
@@ -852,7 +852,7 @@ body {
     }
 
     .prev.request-button i,
-    .next.request-button i { transform: translateY(5%); }
+    .next.request-button i { transform: translateY(10%); }
 
     .center-text .year { font-size: 1.4em; }
 
