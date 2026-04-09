@@ -747,7 +747,7 @@ body {
     position: absolute;
     bottom: 0;
     right: -0.1em;
-    height: 91.6%;
+    height: 98%;
     z-index: 1;
     pointer-events: none;
 }
@@ -973,7 +973,10 @@ body {
         font-size: 0.5em;
         transform: translateY(-5%); }
 
-    .agave { height: 97.5%; }
+    .agave { 
+        height: 90%;
+        right: 0.1em; 
+    }
 }
 
 @media (min-width: 1280px) and (max-width: 1439px) {
@@ -1276,9 +1279,10 @@ body {
     .chartst-container {
         width: 100%;
         height: 100%;
+        gap: 0.6em;
     }
 
-    .chartst-container canvas { width: 70% !important; }
+    .chartst-container canvas { max-width: 70% !important; }
 
     .prev.status-button,
     .next.status-button {
