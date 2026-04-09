@@ -329,6 +329,18 @@ body {
     color: var(--black); 
 }
 
+.form .field-back input[type="password"] {
+    color: var(--black) !important;
+    -webkit-text-security: disc !important;
+    text-security: disc !important;
+    opacity: 1;
+}
+
+.form .field-back input [type="password"]::placeholder {
+    color: var(--black);
+    opacity: 1;
+}
+
 .form .field-back i { font-size: 1.1em; }
 
 .form .field-back .fa-eye,
