@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    phoneMenu();
     optionsBar();
     statusChart();
     requestChart();
@@ -9,6 +10,42 @@ document.addEventListener('DOMContentLoaded', function() {
 /* ================================ VARIABLES ================================ */
 let trendChart = null;
 let expensesChart = null;
+
+
+/* ================================= PHONE MENU ================================= */
+function phoneMenu() {
+    const hamburger = document.getElementById('hamburger');
+    const optionBar = document.getElementById('optionBar');
+    const checkBox = hamburger.querySelector('input');
+
+    if(!hamburger || !optionBar || !checkBox) return;
+
+    checkBox.addEventListener('change', function(e) {
+        e.stopPropagation();
+
+        hamburger.classList.toggle('active', checkBox.checked);
+        optionBar.classList.toggle('active', checkBox.checked);
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if(!hamburger.contains(e.target) && !optionBar.contains(e.target)) {
+            checkBox.checked = false;
+            hamburger.classList.remove('active');
+            optionBar.classList.remove('active');
+        }
+    });
+
+    // Cerrar al hacer click en un enlace del menú
+    const menuLinks = optionBar.querySelectorAll('.option');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            checkBox.checked = false;
+            hamburger.classList.remove('active');
+            optionBar.classList.remove('active');
+        });
+    });
+}
 
 
 /* ============================== OPTIONS BAR ============================== */
