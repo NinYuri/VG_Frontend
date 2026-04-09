@@ -1019,7 +1019,7 @@ body {
 }
 
 /* Tabletas pequeñas / móviles grandes */
-@media(max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) {
     html { background-color: var(--html-back); }
 
     body { height: -webkit-fill-available; }
