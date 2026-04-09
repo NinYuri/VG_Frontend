@@ -1026,7 +1026,7 @@ body {
 
     .content-container {
         width: 100%;
-        padding: 70px 15px 20px;
+        padding: 70px 20px 80px;
         height: 100vh;
         margin-top: 1em;
         overflow-y: auto;
@@ -1081,7 +1081,13 @@ body {
 
     .graph-back.status {
         width: 100%;
-        height: 420px;
+        height: auto;
+        min-height: 420px;
+    }
+
+    .graph-back.status .graph-wrapper {
+        height: auto;
+        min-height: 400px;
     }
 
     .chartst-container {
