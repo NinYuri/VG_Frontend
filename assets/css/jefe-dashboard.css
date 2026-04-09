@@ -43,6 +43,10 @@
         rgb(232, 120, 120, 0.5) 42%,
         rgb(185, 16, 16, 0.5) 100%
     );
+    --option-bar: linear-gradient(180deg,
+        var(--html-back), 
+        #005B6E
+    );
 }
 
 /* ======================= CENTURY GOTHIC FONTS ======================= */
@@ -217,12 +221,54 @@ body {
 
 
 /* ============================== PHONE MENU ============================== */
+.mobile-nav {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 10px 20px;
+    background: transparent;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.mobile-nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--background);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.mobile-nav.bar,
+.mobile-nav.bar.scrolled { 
+    background-image: none;
+    box-shadow: none; 
+}
+
+.mobile-nav.scrolled {
+    background-image: var(--background);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav.scrolled::before { opacity: 1; }
+
+.mobile-nav.bar.scrolled::before { opacity: 0; }
+
 .hamburger {
     display: none;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
+    position: static;
+    top: auto;
+    left: auto;
     cursor: pointer;
 }
 
@@ -235,7 +281,7 @@ body {
 
 .line {
     fill: none;
-    stroke: white;
+    stroke: var(--white);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 3;
@@ -695,6 +741,8 @@ body {
     margin-top: 0.1em;
 }
 
+.agave-mobile { display: none; }
+
 .agave {
     position: absolute;
     bottom: 0;
@@ -941,7 +989,7 @@ body {
         left: 0;
         width: 70%;
         height: 100vh;
-        background: linear-gradient(180deg, #002027, #005B6E);
+        background: var(--option-bar);
         z-index: 999;
         padding: 150px 30px;
         transform: translateX(-100%);
@@ -955,6 +1003,8 @@ body {
     .option-bar.active { transform: translateX(0); }
 
     .hamburger { display: block; }
+
+    .hamburger.active { background-image: none; }
 
     .logo { padding-left: 0; }
 
@@ -984,42 +1034,110 @@ body {
 
     .container {
         border-radius: 20px;
-        padding: 1.2em 1em;
+        padding: 1.2em 1em 0 1em;
         height: auto;
         min-height: calc(100vh - 90px);
     }
 
-    /* Ajustes de tarjetas y gráficos en móvil */
+    .titles {
+        align-items: center; 
+        text-align: center;
+        padding: 0em; 
+    }
+
+    .titles .title { 
+        font-size: 2em; 
+        margin-bottom: 0.3em; 
+    }
+
+    .titles .subtitle { 
+        font-size: 1em;
+        line-height: 1.5em; 
+    }
+
     .cards {
         flex-direction: column;
         height: auto;
-        gap: 1.2em;
+        gap: 1.5em;
     }
 
     .card-wrapper {
         width: 100%;
-        height: 110px;
+        height: 100px;
     }
+
+    .card-text { gap: 0.2em; }
 
     .graphs {
         flex-direction: column;
-        gap: 1.2em;
+        gap: 1.5em;
         height: auto;
     }
 
-    .graph-back.status,
-    .graph-back.total,
-    .graph-back.requests,
-    .graph-back.expenses {
+    .graph-back.status {
         width: 100%;
-        height: 280px;
+        height: 420px;
     }
 
-    .titles .title {
-        font-size: 2.2em;
+    .chartst-container {
+        width: 100%;
+        height: 100%;
     }
 
-    .titles .subtitle {
-        font-size: 1.1em;
+    .chartst-container canvas { width: 70% !important; }
+
+    .prev.status-button,
+    .next.status-button {
+        width: 1.7em;
+        height: 1.7em;
     }
+
+    .prev.status-button i,
+    .next.status-button i { font-size: 1em; }
+
+    .center-text .year { font-size: 1.6em; }
+
+    .center-text .month { font-size: 0.9em; }
+
+    .month-requests { 
+        width: 100%;
+        height: 420px;
+        padding: 0; 
+        gap: 1.5em;
+    }
+
+    .graph-desc { gap: 0.7em; }
+
+    .graph-back.requests, 
+    .graph-back.expenses { font-size: 0.8em; }
+
+    .graph-back.requests .graph-wrapper, 
+    .graph-back.expenses .graph-wrapper { gap: 0.5em; }
+
+    .graph-back.total { width: 100%; }
+
+    .graph-back.total .graph-wrapper { padding: 0.6em 0; }
+
+    .graph-back.total .graph-wrapper p:first-child { margin-bottom: 0.3em; }
+
+    .prev.total-button,
+    .next.total-button {
+        width: 1.3em;
+        height: 1.3em;
+    }
+
+    .prev.total-button i,
+    .next.total-button i { font-size: 0.7em; }
+
+    .agave-mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 2em;
+    }
+
+    .agave-mobile img { width: 70px; }
+
+    .agave { display: none; }
 }

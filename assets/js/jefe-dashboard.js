@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     statusChart();
     requestChart();
     expenseChart();
+    initMobileScroll();
 });
 
 
@@ -14,15 +15,17 @@ let expensesChart = null;
 
 /* ================================= PHONE MENU ================================= */
 function phoneMenu() {
+    const container = document.querySelector('.mobile-nav');
     const hamburger = document.getElementById('hamburger');
     const optionBar = document.getElementById('optionBar');
     const checkBox = hamburger.querySelector('input');
 
-    if(!hamburger || !optionBar || !checkBox) return;
+    if(!container || !hamburger || !optionBar || !checkBox) return;
 
     checkBox.addEventListener('change', function(e) {
         e.stopPropagation();
 
+        container.classList.toggle('bar', checkBox.checked);
         hamburger.classList.toggle('active', checkBox.checked);
         optionBar.classList.toggle('active', checkBox.checked);
     });
@@ -31,6 +34,7 @@ function phoneMenu() {
     document.addEventListener('click', function(e) {
         if(!hamburger.contains(e.target) && !optionBar.contains(e.target)) {
             checkBox.checked = false;
+            container.classList.remove('bar');
             hamburger.classList.remove('active');
             optionBar.classList.remove('active');
         }
@@ -41,10 +45,30 @@ function phoneMenu() {
     menuLinks.forEach(link => {
         link.addEventListener('click', () => {
             checkBox.checked = false;
+            container.classList.remove('bar');
             hamburger.classList.remove('active');
             optionBar.classList.remove('active');
         });
     });
+}
+
+
+function initMobileScroll() {
+    const nav = document.querySelector('.mobile-nav');
+    const scrollContainer = document.querySelector('.content-container');
+
+    if(!nav || !scrollContainer) return;
+
+    function handleMobileScroll() {
+        const scrollTop = scrollContainer.scrollTop;
+        if(scrollTop > 30)
+            nav.classList.add('scrolled');
+        else
+            nav.classList.remove('scrolled');
+    }
+
+    scrollContainer.addEventListener('scroll', handleMobileScroll, { passive: true });
+    handleMobileScroll();
 }
 
 
@@ -124,7 +148,6 @@ function requestChart() {
     if(trendChart)
         trendChart.destroy();
 
-    const isMobile = window.innerWidth <= 768;
     const isDesktop = window.innerWidth >= 1920;
 
     trendChart = new Chart(ctx, {
