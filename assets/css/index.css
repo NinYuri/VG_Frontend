@@ -275,7 +275,7 @@ body {
 
 .form img { 
     width: 35%;
-    margin-bottom: 3em; 
+    margin-bottom: 1em; 
 }
 
 .form h1 {
@@ -298,7 +298,7 @@ body {
     background-color: var(--transparent-blue);
     border-radius: 10px;
     padding: 0.5em;
-    margin-top: 7em;
+    margin-top: 6em;
 }
 
 .form .field.second { margin-top: 2em; }
