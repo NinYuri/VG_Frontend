@@ -8,6 +8,7 @@
     --yellow: #C9C867;
     --graphs: #2A5156;
     --gray: #919A9B;
+    --html-back: #002027;
 
     /* ============= TRANSLUCENT COLORS ============= */
     --transparent-white: rgba(255, 255, 255, 0.5);
@@ -212,6 +213,43 @@ body {
     align-items: center;
     width: 100vw;
     background-image: var(--background);
+}
+
+
+/* ============================== PHONE MENU ============================== */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.hamburger input { display: none; }
+
+.hamburger svg {
+    height: 3em;
+    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line {
+    fill: none;
+    stroke: white;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+                stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-top-bottom { stroke-dasharray: 12 63; }
+
+.hamburger.active input:checked + svg { transform: rotate(-45deg); }
+
+.hamburger.active input:checked + svg .line-top-bottom {
+    stroke-dasharray: 20 300;
+    stroke-dashoffset: -32.42;
 }
 
 
@@ -890,5 +928,98 @@ body {
 
 /* Móviles */
 @media(max-width: 480px) {
+    html { background-color: var(--html-back); }
 
+    body { height: -webkit-fill-available; }
+
+    ::-webkit-scrollbar-thumb { background-color: transparent; }
+
+    .option-bar {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 100vh;
+        background: linear-gradient(180deg, #002027, #005B6E);
+        z-index: 999;
+        padding: 150px 30px;
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+        overflow-y: auto;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+        visibility: visible;
+        pointer-events: none;
+    }
+
+    .option-bar.active { transform: translateX(0); }
+
+    .hamburger { display: block; }
+
+    .logo { padding-left: 0; }
+
+    .logo .name { font-size: 1em; }
+
+    .options,
+    .logout { 
+        padding-left: 0;
+        font-size: 1.1em;
+        gap: 1.5em; 
+    }
+
+    .options .option,
+    .logout .option { gap: 0.5em; }
+
+    .option img { width: 12px; }
+
+    .background { flex-direction: column; }
+
+    .content-container {
+        width: 100%;
+        padding: 70px 15px 20px;
+        height: 100vh;
+        margin-top: 1em;
+        overflow-y: auto;
+    }
+
+    .container {
+        border-radius: 20px;
+        padding: 1.2em 1em;
+        height: auto;
+        min-height: calc(100vh - 90px);
+    }
+
+    /* Ajustes de tarjetas y gráficos en móvil */
+    .cards {
+        flex-direction: column;
+        height: auto;
+        gap: 1.2em;
+    }
+
+    .card-wrapper {
+        width: 100%;
+        height: 110px;
+    }
+
+    .graphs {
+        flex-direction: column;
+        gap: 1.2em;
+        height: auto;
+    }
+
+    .graph-back.status,
+    .graph-back.total,
+    .graph-back.requests,
+    .graph-back.expenses {
+        width: 100%;
+        height: 280px;
+    }
+
+    .titles .title {
+        font-size: 2.2em;
+    }
+
+    .titles .subtitle {
+        font-size: 1.1em;
+    }
 }
