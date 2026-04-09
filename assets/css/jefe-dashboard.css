@@ -873,44 +873,49 @@ body {
 
 /* Ordenadores */
 @media(min-width: 1025px) and (max-width: 1366px) and (max-resolution: 1.5dppx) {
+    .logo .name { font-size: 1em; }
+    
     .options,
     .logout { 
-        font-size: 1.2em; 
+        font-size: 1.1em; 
         gap: 0.6em;
     }
 
     .options .option,
-    .logout .option { gap: 0.6em; }
+    .logout .option { gap: 0.5em; }
 
-    .option img { width: 17px; }
+    .option img { width: 15px; }
 
-    .option .fa-plane-departure { font-size: 0.8em; }
+    .option .fa-plane-departure { font-size: 0.75em; }
 
     .content-container { padding: 1em 1.5em 1em 2.2em; }
 
-    .container { padding: 2em 1.3em; }
+    .container { background-size: 33% auto; }
+
+    .content-header { padding-top: 2.5em; }
 
     .content {
-        height: 85%; 
         gap: 1em; 
         margin-top: 1.4em;
     }
 
-    .titles .title{ font-size: 3em; }
+    .titles .title{ font-size: 2.7em; }
 
     .titles .subtitle { font-size: 1.1em; }
 
     .cards { gap: 1.8em; }
 
-    .card-wrapper { width: 23%; }
+    .card-wrapper { width: 21%; }
 
     .card-text p { font-size: 0.9em; }
 
     .card-text .rejected-number,
     .card-text .approved-number,
-    .card-text .pending-number { font-size: 2.3em; }
+    .card-text .pending-number { font-size: 2.2em; }
 
-    .graph-back.status .graph-wrapper { padding: 1em 0; }
+    .graphs { padding-bottom: 3em; }
+
+    .graph-back.status .graph-wrapper { padding: 0.5em 0; }
 
     .chartst-container { gap: 0.7em }
 
@@ -941,7 +946,7 @@ body {
     }
 
     .prev.request-button i,
-    .next.request-button i { transform: translateY(10%); }
+    .next.request-button i { transform: translateY(5%); }
 
     .center-text .year { font-size: 1.4em; }
 
@@ -968,7 +973,7 @@ body {
         font-size: 0.5em;
         transform: translateY(-5%); }
 
-    .agave { height: 93%; }
+    .agave { height: 97.5%; }
 }
 
 /* Tabletas pequeñas / móviles grandes */
