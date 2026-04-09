@@ -1013,14 +1013,14 @@ body {
     .options,
     .logout { 
         padding-left: 0;
-        font-size: 1.1em;
+        font-size: 1.3em;
         gap: 1.5em; 
     }
 
     .options .option,
     .logout .option { gap: 0.5em; }
 
-    .option img { width: 12px; }
+    .option img { width: 15px; }
 
     .background { flex-direction: column; }
 
@@ -1046,7 +1046,8 @@ body {
     }
 
     .titles .title { 
-        font-size: 2em; 
+        font-size: 2.7em; 
+        font-weight: 600;
         margin-bottom: 0.3em; 
     }
 
@@ -1067,6 +1068,10 @@ body {
     }
 
     .card-text { gap: 0.2em; }
+
+    .card-text .rejected-number,
+    .card-text .approved-number,
+    .card-text .pending-number { font-size: 2.5em; }
 
     .graphs {
         flex-direction: column;
@@ -1101,7 +1106,7 @@ body {
 
     .month-requests { 
         width: 100%;
-        height: 420px;
+        height: 450px;
         padding: 0; 
         gap: 1.5em;
     }
@@ -1109,10 +1114,20 @@ body {
     .graph-desc { gap: 0.7em; }
 
     .graph-back.requests, 
-    .graph-back.expenses { font-size: 0.8em; }
+    .graph-back.expenses { font-size: 0.9em; }
 
     .graph-back.requests .graph-wrapper, 
-    .graph-back.expenses .graph-wrapper { gap: 0.5em; }
+    .graph-back.expenses .graph-wrapper { 
+        gap: 0.5em; 
+        text-align: center;
+        padding: 0.6em 0.5em;
+    }
+
+    .prev.request-button,
+    .next.request-button {
+        width: 1.3em;
+        height: 1.2em;
+    }
 
     .graph-back.total { width: 100%; }
 
@@ -1127,7 +1142,9 @@ body {
     }
 
     .prev.total-button i,
-    .next.total-button i { font-size: 0.7em; }
+    .next.total-button i { font-size: 0.75em; }
+
+    .graph-back.total .graph-wrapper .total-money { margin-top: 0.5em; }
 
     .agave-mobile {
         display: flex;
