@@ -888,6 +888,8 @@ body {
 
     .content-container { padding: 1em 1.5em 1em 2.2em; }
 
+    .container { padding: 2em 1.3em; }
+
     .content {
         height: 85%; 
         gap: 1em; 
