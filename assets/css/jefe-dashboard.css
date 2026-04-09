@@ -1197,3 +1197,231 @@ body {
 
     .agave { display: none; }
 }
+
+
+
+
+
+
+/* ======================== RESPONSIVE - DESKTOP FIRST ======================== */
+
+/* 1. Escritorios Muy Grandes */
+@media (min-width: 1920px) {
+    .logo .name { font-size: 1.35em; }
+    .options, .logout { font-size: 1.55em; gap: 1em; }
+    .titles .title { font-size: 4em; }
+    .titles .subtitle { font-size: 1.7em; }
+    .card-wrapper { width: 17.5%; }
+    .cards { height: 26%; gap: 2.2em; }
+    .graph-back.status .graph-wrapper { padding: 1.6em 0; }
+    .center-text .year { font-size: 2em; }
+}
+
+/* 2. Laptops Medianas / Monitores 1440p - 1919px */
+@media (min-width: 1440px) and (max-width: 1919px) {
+    .titles .title { font-size: 3.5em; }
+    .titles .subtitle { font-size: 1.4em; }
+    .cards { gap: 2em; }
+    .card-wrapper { width: 23%; }
+    .graph-back.status .graph-wrapper p { font-size: 1.25em; }
+}
+
+/* 3. Rango más común: 1280px - 1439px (incluye 1280x720, 1280x768, 1366x768) */
+@media (min-width: 1280px) and (max-width: 1439px) {
+    .content-container { 
+        padding: 1.6em 1.4em 1.6em 2.2em; 
+    }
+    
+    .container { 
+        padding: 1.5em 1.4em; 
+        border-radius: 32px;
+    }
+
+    .titles .title { font-size: 3.1em; }
+    .titles .subtitle { font-size: 1.2em; }
+
+    .cards { 
+        gap: 1.8em; 
+        height: 19%; 
+    }
+    
+    .card-wrapper { width: 23.5%; }
+    .card-text .rejected-number,
+    .card-text .approved-number,
+    .card-text .pending-number { 
+        font-size: 2.45em; 
+    }
+
+    .graph-back.status .graph-wrapper { 
+        padding: 1em 0; 
+    }
+    
+    .chartst-container canvas { 
+        max-width: 63% !important; 
+    }
+
+    .center-text .year { font-size: 1.5em; }
+    .center-text .month { font-size: 0.8em; }
+
+    .legend-item { font-size: 0.97em; }
+}
+
+/* 4. Laptops pequeñas y tablets grandes (1025px - 1279px) */
+@media (min-width: 1025px) and (max-width: 1279px) {
+    .content-container { 
+        padding: 1.4em 1.3em 1.4em 2em; 
+    }
+    
+    .titles .title { font-size: 2.85em; }
+    .titles .subtitle { font-size: 1.1em; }
+
+    .cards { gap: 1.6em; }
+    .card-wrapper { width: 23%; }
+
+    .card-text .rejected-number,
+    .card-text .approved-number,
+    .card-text .pending-number { 
+        font-size: 2.25em; 
+    }
+
+    .graph-back.status { width: 29%; }
+    .chartst-container canvas { max-width: 58% !important; }
+}
+
+/* 5. Tabletas (768px - 1024px) - NUEVO Y IMPORTANTE */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .background { flex-direction: row; }
+
+    .option-bar {
+        width: 26%;
+        padding: 4em 0;
+    }
+
+    .content-container {
+        width: 74%;
+        padding: 1.4em 1.2em 1.4em 1.8em;
+    }
+
+    .container {
+        padding: 1.4em 1.2em;
+        border-radius: 28px;
+    }
+
+    .titles .title { font-size: 2.6em; }
+    .titles .subtitle { font-size: 1.05em; }
+
+    .cards {
+        flex-wrap: wrap;
+        height: auto;
+        gap: 1.4em;
+    }
+
+    .card-wrapper {
+        width: 48%;
+        height: 100px;
+    }
+
+    .graphs {
+        flex-direction: column;
+        gap: 1.4em;
+        height: auto;
+    }
+
+    .graph-back.status,
+    .graph-back.total {
+        width: 100%;
+        height: 380px;
+    }
+
+    .month-requests {
+        width: 100%;
+        gap: 1.4em;
+    }
+
+    .graph-back.requests,
+    .graph-back.expenses {
+        height: 320px;
+    }
+}
+
+/* 6. Móviles */
+@media (max-width: 768px) {
+    .background { flex-direction: column; }
+
+    .option-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 78%;
+        height: 100vh;
+        background: var(--option-bar);
+        z-index: 999;
+        padding: 90px 25px 30px;
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+        overflow-y: auto;
+    }
+
+    .option-bar.active { transform: translateX(0); }
+
+    .hamburger { display: block; }
+
+    .content-container {
+        width: 100%;
+        padding: 75px 18px 30px;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .container {
+        border-radius: 22px;
+        padding: 1.3em 1.1em;
+        min-height: calc(100vh - 95px);
+    }
+
+    .titles {
+        text-align: center;
+        align-items: center;
+    }
+
+    .titles .title { 
+        font-size: 2.4em; 
+        margin-bottom: 0.4em;
+    }
+
+    .cards {
+        flex-direction: column;
+        height: auto;
+        gap: 1.4em;
+    }
+
+    .card-wrapper {
+        width: 100%;
+        height: 98px;
+    }
+
+    .graphs {
+        flex-direction: column;
+        gap: 1.5em;
+        height: auto;
+    }
+
+    .graph-back.status,
+    .graph-back.total {
+        width: 100%;
+        height: auto;
+        min-height: 390px;
+    }
+
+    .graph-back.requests,
+    .graph-back.expenses {
+        height: 310px;
+    }
+
+    .chartst-container canvas { 
+        max-width: 75% !important; 
+    }
+
+    .center-text .year { font-size: 1.55em; }
+    .center-text .month { font-size: 0.85em; }
+}
