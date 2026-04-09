@@ -404,9 +404,9 @@ body {
 }
 
 @media (min-width: 1440px) and (max-width: 1919px) {
-    .form img { margin-bottom: 2em; }
+    .form img { margin-bottom: 1em; }
 
-    .form .field { margin-top: 5em; }
+    .form .field { margin-top: 1em; }
 }
 
 /* Ordenadores */
