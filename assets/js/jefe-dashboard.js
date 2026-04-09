@@ -50,6 +50,11 @@ function phoneMenu() {
             optionBar.classList.remove('active');
         });
     });
+
+    // Touch events
+    hamburger.addEventListener('touchstart', function(e) {
+        e.stopImmediatePropagation();
+    }, { passive: true });
 }
 
 
