@@ -403,17 +403,11 @@ body {
     .button-login { font-size: 1.8em; }
 }
 
-@media (min-width: 1440px) and (max-width: 1919px) {
-    .form img { margin-bottom: 1em; }
-
-    .form .field { margin-top: 1em; }
-}
-
 /* Ordenadores */
-@media(min-width: 1000px) and (max-width: 1300px) and (max-resolution: 1.5dppx) {
+@media(min-width: 1025px) and (max-width: 1336px) and (max-resolution: 1.5dppx) {
     .form img { margin-bottom: 1em; }
 
-    .form .field { margin-top: 1em; }
+    .form .field { margin-top: 5em; }
 }
 
 
