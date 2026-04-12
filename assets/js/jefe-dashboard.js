@@ -88,6 +88,11 @@ function optionsBar() {
         window.location.href = 'jefe-dashboard.html';
     });
 
+    request.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = 'jefe-solicitudes.html'
+    });
+
     logout.addEventListener('click', (e) => {
         e.stopPropagation();
         window.location.href = 'index.html';
