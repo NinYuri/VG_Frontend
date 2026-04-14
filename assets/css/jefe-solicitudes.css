@@ -1390,9 +1390,9 @@ body {
 /* Escritorios grandes (1920px) */
 @media(min-width: 1920px) {
     /* TOAST */
-    .swal2-container.swal2-top-end.swal2-backdrop-show { width: 670px !important; }
+    body.swal2-toast-shown .swal2-container { width: 680px !important; }
 
-    .swal2-popup.swal2-modal.custom-reject-modal.swal2-show { width: 610px !important; }
+    .swal2-popup.custom-reject-modal { width: 670px !important; }
 
     .colored-toast p,
     .reject-title { font-size: 1.5em; }
@@ -1608,24 +1608,275 @@ body {
     .info-currency p { font-size: 1em; }
 }
 
-
-
 /* Escritorios medianos (1440px + 1919px) */
 @media(min-width: 1440px) and (max-width: 1919px) {
+    /* TOAST */
+    body.swal2-toast-shown .swal2-container { width: 560px !important; }
 
+    .swal2-popup.custom-reject-modal { width: 540px !important; }
+
+    .colored-toast p,
+    .reject-title { font-size: 1.2em; }
+
+    .colored-toast span { font-size: 1em; }
+
+    .agave-icon { height: 7em; }
+
+    .swal2-textarea {
+        width: 75% !important;
+        height: 6.5em !important;
+        font-size: 0.9em;
+    }
+
+    .reject-question { font-size: 1em; }
+
+    .swal-confirm-btn, 
+    .swal-cancel-btn { font-size: 1em; }
+
+    .swal2-validation-message { font-size: 1em; }
+
+    .agave-half { height: 14.4em; }
+
+    /* OPTION BAR */
+    .logo .name { font-size: 1.1em; }
+
+    .options,
+    .logout {
+        font-size: 1.2em;
+        gap: 0.6em;
+    }
+
+    .option img { width: 15px; }
+
+    .option.fa-plane-departure,
+    .option.fa-arrow-right-from-bracket { font-size: 0.9em; }
+
+    /* CONTAINER */
+    .container { background-size: 33% auto; }
+
+    .titles .title { font-size: 2.9em; }
+
+    .titles .subtitle { font-size: 1.2em; }
+
+    .tab p { font-size: 1em; }
+
+    .tab.selected p { font-size: 1.1em; }
+
+    .amount { 
+        width: 25px;
+        height: 25px;
+        font-size: 0.9em; 
+    }
+
+    .amount.selected {
+        width: 33px;
+        height: 33px; 
+        font-size: 1.1em; 
+    }
+
+    .search { height: 2.5em; }
+
+    .search-back input { font-size: 1em; }
+
+    .search-back i { font-size: 0.9em; }
+
+    .datepicker-header { font-size: 1em; }
+
+    .datepicker-header button { font-size: 0.8em; }
+
+    .days-header span,
+    .dates { font-size: 0.8em; }
+
+    /* TABLE */
+    .table-head { font-size: 0.9em; }
+
+    .table-body td { font-size: 1em; }
+
+    .table-body .folio { font-size: 1.1em; }
+
+    .back-buttons {
+        width: 2em;
+        height: 2em;
+    }
+
+    .page { font-size: 1em; }
+
+    /* INFORMATION */
+    .info-wrapper { 
+        width: 30em;
+        height: 93%; 
+    }
+
+    .info-back::before,
+    .info-back::after {
+        width: 50px;
+        height: 50px;
+    }
+
+    .request-generals { padding: 0.7em 0.9em 0 0.7em; }
+
+    .arrow-back {
+        width: 2.7em;
+        height: 2.7em;
+        border: 6px solid var(--toast);
+    }
+
+    .arrow-back i { font-size: 1em; }
+
+    .info-folio,
+    .info-date,
+    .info-update { font-size: 0.75em; }
+
+    .request-destination .info-subtitle,
+    .departure-date .info-subtitle,
+    .return-date .info-subtitle,
+    .info-bottom .info-subtitle { font-size: 0.8em; }
+
+    .request-dates-wrapper { 
+        height: 100%; 
+        padding: 0 1.8em;
+    }
+
+    .request-destination p { font-size: 2.5em; }
+
+    .departure-date p,
+    .return-date p { font-size: 0.9em; }
+
+    .travel-days img:first-child { 
+        width: 20%; 
+        transform: translateY(5%);
+    }
+
+    .total-days { font-size: 0.6em; }
+
+    .passport-line { border-bottom: 2px dashed var(--line-gray); } 
+
+    .info-motive p,
+    .info-payment { font-size: 1em; }
+
+    .info-amount { font-size: 1.7em; }
+
+    .info-currency { gap: 0.3em; }
+
+    .currency-flag {
+        width: 15px;
+        height: 15px;
+    }
+
+    .info-currency p { font-size: 0.8em; }
 }
 
-@media(min-width:1300px) and (max-width: 1439px) {
+/* Laptops pequeñas (1024px - 1299px) */
+@media(min-width: 1024px) and (max-width: 1250px) {
+    /* TOAST */
+    body.swal2-toast-shown .swal2-container { width: 500px !important; }
 
-}
+    .swal2-popup.custom-reject-modal { width: 450px !important; }
 
-/* Laptops pequeñas (1025px - 1299px) */
-@media(min-width: 1025px) and (max-width: 1299px) {
+    .colored-toast p,
+    .reject-title { font-size: 1em; }
 
+    .colored-toast span { font-size: 0.9em; }
+
+    .agave-icon { height: 6em; }
+
+    .swal2-textarea {
+        width: 80% !important;
+        font-size: 0.85em;
+    }
+
+    .reject-question { font-size: 0.8em; }
+
+    .swal-confirm-btn, 
+    .swal-cancel-btn { font-size: 0.85em; }
+
+    .swal2-validation-message { font-size: 0.9em; }
+
+    .agave-half { height: 12.6em; }
+
+    /* OPTION BAR */
+    .option-bar { width: 23%; }
+
+    .logo { width: 97%; }
+
+    .logo .name { font-size: 0.9em; }
+
+    .options,
+    .logout { 
+        font-size: 1em;
+        gap: 0.8em; 
+    }
+
+    .options .option,
+    .options .logout { gap: 0.5em; }
+
+    .option img { width: 14px; }
+
+    /* CONTAINER */
+    .content-container { padding: 1.5em 1em 1.5em 1.3em; }
+
+    .container { background-size: 56% auto; }
+
+    .titles .title { font-size: 2.3em; }
+
+    .titles .subtitle { font-size: 1.1em; }
+
+    .tab { padding: 0.6em 0.3em 0.6em 1.5em; }
+
+    .tab.selected { padding: 0.8em 0 0.8em 1.5em; }
+
+    .tab p { font-size: 0.9em; }
+
+    .tab.selected p { font-size: 1em; }
+
+    .amount {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7em;
+    }
+
+    .amount.selected { 
+        width: 30px;
+        height: 30px;
+        font-size: 1em; 
+    }
+
+    .search-back i { font-size: 0.85em; }
+
+    .search-back input { font-size: 0.9em; }
+
+    /* CALENDAR */
+    .datepicker-wrapper { width: 35%; }
+
+    .datepicker-header { font-size: 0.9em; }
+
+    .datepicker-header button { 
+        font-size: 0.8em; 
+        transform: translateY(-1%);
+    }
+
+    .days-header span,
+    .dates { font-size: 0.8em; }
+
+    /* TABLE */
+    .table-head th { font-size: 1em; }
+
+    .table-body td { font-size: 0.8em; }
+
+    .table-body .folio { font-size: 0.9em; }
+
+    .status { padding: 0.4em 0.7em; }
+
+    .back-buttons {
+        width: 2em;
+        height: 2em;
+    }
+
+    .page { font-size: 0.9em; }
 }
 
 /* Tabletas */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1023px) {
 
 }
 

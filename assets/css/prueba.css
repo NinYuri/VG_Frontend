@@ -1,3 +1,522 @@
+:root {
+    /* ============= PRINCIPAL COLORS ============= */
+    --agave: #00758D;
+    --toast: #00333E;
+    --black: #000000;
+    --blue-white: #D9D9D9;
+    --white: #FFFFFF;
+    --gray: #535353;
+    --icons: #2A5156;
+    --line-gray: #919A9B;
+    --tab-selected: #ACBCC0;
+    --tabs-gray: #A1AAAC;
+    --tabs-hover: #969C9C;
+    --date: #B0BDC1;
+    --selected: #428188;
+    --red: #992F2C;
+    --passport-gray: #5E6364;
+
+    /* ============= TRANSLUCENT COLORS ============= */
+    --transparent-white: rgba(255, 255, 255, 0.5);
+    --transparent-blue: rgba(217, 217, 217, 0.5);
+    --transparent-gray: rgba(140, 146, 146, 0.5);
+    --tr-medium-blue: rgba(217, 217, 217, 0.7);
+    --tr-dark-blue: rgba(217, 217, 217, 0.8);
+    --tr-status-pending: rgba(208, 175, 6, 0.25);
+    --tr-status-approved: rgba(113, 153, 144, 0.25);
+    --tr-status-rejected: rgba(169, 56, 53, 0.25);
+    --tr-amount-pending: rgba(153, 47,44, 0.85);
+    --tr-date-range: rgba(66, 129, 136, 0.2);
+    --tr-passport: rgba(217, 217, 217, 0.95);
+
+    /* ============= GRADIENTS ============= */
+    --background: linear-gradient(270deg,
+        var(--agave) 25%,
+        #005B6E 48%,
+        #004553 68%,
+        #00333E 84%,
+        #002027 100%
+    );
+    --option-hover: linear-gradient(90deg,
+        #002027 0%,
+        #002A32 18%,
+        #004C5B 53%,
+        var(--agave) 100%
+    );
+    --status-pending: linear-gradient(90deg,
+        #D0AF06 0%,
+        #66570C 100%
+    );
+    --status-approved: linear-gradient(90deg,
+        #719990 0%,
+        #243934 100%
+    );
+    --status-rejected: linear-gradient(90deg,
+        #A93835 0%,
+        #3E1413 100%
+    );
+    --toast-buttons: linear-gradient(90deg,
+        var(--agave) 0%,
+        #004C5B 50%,
+        #00758D 94%
+    );
+}
+
+/* ======================= CENTURY GOTHIC FONTS ======================= */
+/* Thin */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_thinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+/* Light */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_lightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* SemiBold */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_semiboldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_boldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* ExtraBold */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_extrabold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_extraboldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+/* Black */
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('../fonts/cg_blackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+
+/* ============================== BASE ============================== */
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'CenturyGothic';
+}
+
+::before,
+::after { box-sizing: border-box; }
+
+ul { list-style: none; }
+
+button {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+input { border-width: 0em; }
+
+a {
+    display: block;
+    color: inherit;
+}
+
+html { scroll-behavior: smooth; }
+
+
+/* ============================== REUSABLE ============================== */
+p,
+h1,
+h2,
+h3,
+h4,
+h5 { font-family: 'CenturyGothic', sans-serif; }
+
+::-webkit-scrollbar { width: 5px; }
+
+::-webkit-scrollbar-track { background-color: transparent; }
+
+/*::-webkit-scrollbar-thumb { background-color: var(); } */
+
+
+/* ============================== TOAST ============================== */
+.swal2-toast { 
+    margin: 0.5em 0.5em 0 0 !important;
+    padding: 0; 
+    transition: all 0.3s ease-out !important;
+}
+
+.swal2-toast.swal2-hide {
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
+}
+
+.swal2-toast div:where(.swal2-html-container) { margin: 0 !important; }
+
+.swal2-popup.swal2-toast.colored-toast.swal2-show { padding: 0; }
+
+.colored-toast,
+.custom-reject-modal { 
+    background-color: var(--toast) !important;
+    font-family: 'CenturyGothic', sans-serif;
+    border-radius: 30px !important;
+}
+
+.colored-toast .text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--white);
+    padding: 12px 30px 15px 0 !important;
+    text-align: center;
+}
+
+.colored-toast p,
+.reject-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+.colored-toast span { font-size: 1rem; }
+
+.agave-icon {
+    height: 6.5em; 
+    object-fit: contain; 
+    transform: translateY(10px);
+}
+
+.swal2-popup.swal2-modal.custom-reject-modal.swal2-show { 
+    position: relative;
+    margin: 0.5em 0.5em 0 0; 
+    padding-bottom: 0.5em !important;
+}
+
+.swal2-html-container { padding: 0em !important; }
+
+.swal2-textarea {
+    width: 75% !important;
+    height: 6em !important;
+    margin: 0em !important;
+    border-radius: 12px !important;
+    border: none !important;
+    resize: none !important;
+    font-family: 'CenturyGothic', sans-serif;
+    font-size: 0.9em;
+    background: var(--tr-dark-blue) !important;
+    color: var(--black) !important;
+    margin-bottom: 1em !important;
+}
+
+.swal2-textarea::placeholder { color: var(--black) !important; }
+
+.reject-question { 
+    font-size: 0.9em; 
+    font-weight: 600;
+}
+
+.swal2-actions { 
+    margin-top: 0.5em !important; 
+    gap: 0.5em;
+}
+
+.swal-confirm-btn, .swal-cancel-btn {
+    border-radius: 25px !important;
+    padding: 0.2em 1.3em !important;
+    filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.25)) !important;
+    font-weight: 600;
+    font-size: 1em;
+    background-image: var(--toast-buttons) !important;
+    border: none !important;
+    box-shadow: 0 0 0 3px rgba(0, 117, 141, 0.5) !important;
+    border-radius: 50px !important;
+}
+
+.swal2-validation-message {
+    width: 75%;
+    background-color: var(--tr-dark-blue);
+    border-radius: 12px;
+    color: var(--black);
+    font-family: 'CenturyGothic', sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    margin: 16px auto 8px;
+}
+
+div:where(.swal2-container) div:where(.swal2-validation-message)::before { background-color: var(--red) !important; }
+
+.agave-half {
+    position: absolute;
+    top: 0;
+    height: 13.9em;
+    object-fit: contain;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.agave-half.left { 
+    left: 0;
+    border-radius: 0 0 0 30px;
+}
+
+.agave-half.right { 
+    right: 0;
+    border-radius: 0 0 30px 0; 
+}
+
+
+/* ============================== BODY ============================== */
+body {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.background {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    background-image: var(--background);
+}
+
+
+/* ============================== PHONE MENU ============================== */
+.mobile-nav {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 10px 20px;
+    background: transparent;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.mobile-nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--background);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.mobile-nav.bar,
+.mobile-nav.bar.scrolled { 
+    background-image: none;
+    box-shadow: none; 
+}
+
+.mobile-nav.scrolled {
+    background-image: var(--background);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-nav.scrolled::before { opacity: 1; }
+
+.mobile-nav.bar.scrolled::before { opacity: 0; }
+
+.hamburger {
+    display: none;
+    position: static;
+    top: auto;
+    left: auto;
+    cursor: pointer;
+}
+
+.hamburger input { display: none; }
+
+.hamburger svg {
+    height: 3em;
+    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line {
+    fill: none;
+    stroke: var(--white);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+                stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-top-bottom { stroke-dasharray: 12 63; }
+
+.hamburger.active input:checked + svg { transform: rotate(-45deg); }
+
+.hamburger.active input:checked + svg .line-top-bottom {
+    stroke-dasharray: 20 300;
+    stroke-dashoffset: -32.42;
+}
+
+
+/* ============================== OPTION BAR ============================== */
+.option-bar {
+    width: 21%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5em 0em;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.4em;
+}
+
+.logo img { width: 100%; }
+
+.logo .name {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1em;
+    color: var(--white);
+}
+
+.options,
+.logout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+    font-weight: 300;
+    font-size: 1.3em;
+    color: var(--white);
+    padding-left: 0.9em;
+}
+
+.options .option,
+.logout .option {
+    display: flex;
+    align-items: center;
+    width: 105%;
+    border-radius: 25px;
+    padding: 0.4em 0.7em;
+    gap: 0.4em;
+    cursor: pointer;
+    background-image: var(--option-hover);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 0% 100%;
+    transition: background-size 0.7s ease-out;
+}
+
+.option:hover { background-size: 100% 100%; }
+
+.option i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option img {
+    width: 18px;
+    object-fit: contain;
+}
+
+.option .fa-plane-departure { font-size: 0.7em; }
+
+.option .fa-clock-rotate-left,
+.option .fa-arrow-right-from-bracket { font-size: 0.85em; }
+
+
 /* ============================== CONTAINER ============================== */
 .content-container {
     height: 100%;
@@ -382,6 +901,7 @@
     align-items: center;
     justify-content: center;
     transform: translateY(2px);
+    cursor: pointer;
 }
 
 .table-container .order i {
@@ -555,134 +1075,6 @@
     opacity: 1;
     stroke-dashoffset: 0;
 }
-
-
-/* ============================== TOAST ============================== */
-.swal2-toast { 
-    margin: 0.5em 0.5em 0 0 !important;
-    padding: 0; 
-    transition: all 0.3s ease-out !important;
-}
-
-.swal2-toast.swal2-hide {
-    opacity: 0 !important;
-    transform: translateY(-20px) !important;
-}
-
-.swal2-toast div:where(.swal2-html-container) { margin: 0 !important; }
-
-.swal2-popup.swal2-toast.colored-toast.swal2-show { padding: 0; }
-
-.colored-toast,
-.custom-reject-modal { 
-    background-color: var(--toast) !important;
-    font-family: 'CenturyGothic', sans-serif;
-    border-radius: 30px !important;
-}
-
-.colored-toast .text {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    color: var(--white);
-    padding: 12px 30px 15px 0 !important;
-    text-align: center;
-}
-
-.colored-toast p,
-.reject-title {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin-bottom: 0.5em;
-}
-
-.colored-toast span { font-size: 1rem; }
-
-.agave-icon {
-    height: 6.5em; 
-    object-fit: contain; 
-    transform: translateY(10px);
-}
-
-.swal2-popup.swal2-modal.custom-reject-modal.swal2-show { 
-    position: relative;
-    margin: 0.5em 0.5em 0 0; 
-    padding-bottom: 0.5em !important;
-}
-
-.swal2-html-container { padding: 0em !important; }
-
-.swal2-textarea {
-    width: 75% !important;
-    height: 6em !important;
-    margin: 0em !important;
-    border-radius: 12px !important;
-    border: none !important;
-    resize: none !important;
-    font-family: 'CenturyGothic', sans-serif;
-    font-size: 0.9em;
-    background: var(--tr-dark-blue) !important;
-    color: var(--black) !important;
-    margin-bottom: 1em !important;
-}
-
-.swal2-textarea::placeholder { color: var(--black) !important; }
-
-.reject-question { 
-    font-size: 0.9em; 
-    font-weight: 600;
-}
-
-.swal2-actions { 
-    margin-top: 0.5em !important; 
-    gap: 0.5em;
-}
-
-.swal-confirm-btn, .swal-cancel-btn {
-    border-radius: 25px !important;
-    padding: 0.2em 1.3em !important;
-    filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.25)) !important;
-    font-weight: 600;
-    font-size: 1em;
-    background-image: var(--toast-buttons) !important;
-    border: none !important;
-    box-shadow: 0 0 0 3px rgba(0, 117, 141, 0.5) !important;
-    border-radius: 50px !important;
-}
-
-.swal2-validation-message {
-    width: 75%;
-    background-color: var(--tr-dark-blue);
-    border-radius: 12px;
-    color: var(--black);
-    font-family: 'CenturyGothic', sans-serif;
-    font-size: 1em;
-    font-weight: 600;
-    margin: 16px auto 8px;
-}
-
-div:where(.swal2-container) div:where(.swal2-validation-message)::before { background-color: var(--red) !important; }
-
-.agave-half {
-    position: absolute;
-    top: 0;
-    height: 13.9em;
-    object-fit: contain;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.agave-half.left { 
-    left: 0;
-    border-radius: 0 0 0 30px;
-}
-
-.agave-half.right { 
-    right: 0;
-    border-radius: 0 0 30px 0; 
-}
-
-
 
 
 /* ============================== INFORMATION ============================== */
@@ -992,3 +1384,267 @@ div:where(.swal2-container) div:where(.swal2-validation-message)::before { backg
 .info-currency p { font-size: 0.8em; }
 
 .info-update { margin-left: 0.7em; }
+
+
+/* ============================== RESPONSIVIDAD ============================== */
+/* Escritorios grandes (1920px) */
+@media(min-width: 1920px) {
+    /* TOAST */
+    .swal2-container.swal2-top-end.swal2-backdrop-show { width: 670px !important; }
+
+    .swal2-popup.swal2-modal.custom-reject-modal.swal2-show { width: 610px !important; }
+
+    .colored-toast p,
+    .reject-title { font-size: 1.5em; }
+
+    .colored-toast span { font-size: 1.3em; }
+
+    .agave-icon { height: 7em; }
+
+    .swal2-textarea {
+        width: 80% !important;
+        height: 7em !important;
+        font-size: 1.1em;
+    }
+
+    .reject-question { font-size: 1.1em; }
+
+    .swal-confirm-btn, 
+    .swal-cancel-btn { font-size: 1.2em; }
+
+    .swal2-validation-message { font-size: 1.2em; }
+
+    .agave-half { height: 17.9em; }
+
+    /* OPTION BAR */
+    .option-bar { padding: 7em 0; }
+
+    .logo .name { font-size: 1.5em; }
+
+    .options,
+    .logout { 
+        font-size: 1.6em; 
+        gap: 0.7em;
+    }
+
+    .options .option,
+    .logout .option {
+        width: 100%;
+        gap: 0.5em;
+    }
+
+    .option img { width: 25px; }
+
+    .option .fa-plane-departure { font-size: 0.8em; }
+
+    .option .fa-arrow-right-from-bracket { font-size: 0.9em; }
+
+    /* CONTAINER */
+    .content-container { padding: 2.5em 2em 2.5em 2.5em; }
+
+    .container { border-radius: 60px; }
+
+    .titles .title { font-size: 4em; }
+
+    .titles .subtitle { font-size: 1.6em; }
+
+    .tabs { gap: 20px; }
+
+    .tab {
+        border-radius: 25px 0 0 0;
+        padding: 0.9em 0.6em 0.9em 2em;
+    }
+
+    .tab::after { right: -23px; }
+
+    .tab.selected { padding: 1.1em 0.5em 1.1em 2.2em; }
+
+    .tab p { font-size: 1.3em; }
+
+    .tab.selected p { font-size: 1.6em; }
+
+    .amount { 
+        width: 30px;
+        height: 30px;
+        font-size: 1em;
+    }
+
+    .amount.selected { 
+        font-size: 1.5em; 
+        width: 42px;
+        height: 42px;
+        right: -1em;
+    }
+
+    .search {
+        height: 3em;
+        border-radius: 13px;
+        padding: 0.5em 0.6em;
+        margin-bottom: 0;
+    }
+
+    .search-back { border-radius: 10px; }
+
+    .search-back input { font-size: 1.4em; }
+
+    .search-back i { font-size: 1.2em; }
+
+    /* CALENDAR */
+    .datepicker-wrapper {
+        top: 75%;
+        border-radius: 13px;
+        padding: 0.5em 0.6em;
+    }
+    
+    .datepicker { border-radius: 10px; }
+
+    .datepicker-header { font-size: 1.3em; }
+
+    .datepicker-header button { font-size: 0.8em; }
+
+    .days-header span { font-size: 1em; }
+
+    .dates { font-size: 1em; }
+
+    /* TABLE */
+    .table-background { 
+        border-radius: 0 25px 25px 25px;
+        padding: 1.7em;
+    }
+
+    .table-container { border-radius: 15px; }
+
+    .table-head th { font-size: 1.6em; }
+
+    .table-container .order i { font-size: 0.6em; }
+
+    .table-body td { font-size: 1.3em; }
+
+    .table-body .folio { font-size: 1.4em; }
+
+    .status { padding: 0.3em 0.6em; }
+
+    .tab-buttons { margin-top: 1.5em; }
+
+    .back-buttons {
+        width: 3em;
+        height: 3em;
+    }
+
+    .page { font-size: 1.5em; }
+
+    /* INFORMATION */
+    .info-wrapper {
+        width: 35em;
+        border-radius: 25px;
+        padding: 1em;
+    }
+
+    .info-back { border-radius: 15px; }
+
+    .info-back::before,
+    .info-back::after {
+        width: 60px;
+        height: 60px;
+    }
+
+    .arrow-back {
+        width: 3.5em;
+        height: 3.5em;
+        border: 8px solid var(--toast);
+    }
+
+    .arrow-back i { 
+        font-size: 1.3em; 
+        transform: translateY(5%);
+    }
+
+    .request-generals { padding: 0.7em 0.9em 0 0.7em; }
+
+    .info-folio,
+    .info-date,
+    .info-update { font-size: 0.9em; }
+
+    .request-generals .status { font-size: 0.9em; }
+
+    .request-destination .info-subtitle,
+    .departure-date .info-subtitle,
+    .return-date .info-subtitle,
+    .info-bottom .info-subtitle { font-size: 1em; }
+
+    .request-destination { margin-top: 3.5em; }
+
+    .request-destination p { font-size: 3em; }
+
+    .request-dates-wrapper { 
+        height: 100%; 
+        padding: 0 2.1em;
+    }
+
+    .departure-date p,
+    .return-date p { font-size: 1.1em; }
+
+    .travel-days img:first-child { 
+        width: 25%; 
+        transform: translateY(5%);
+    }
+
+    .total-days { font-size: 0.8em; }
+
+    .passport-line { border-bottom: 2.5px dashed var(--line-gray); } 
+
+    .info-motive p,
+    .info-payment { font-size: 1.2em; }
+
+    .info-amount { font-size: 2.2em; }
+
+    .info-currency { gap: 0.5em; }
+
+    .currency-flag {
+        width: 19px;
+        height: 19px;
+    }
+
+    .info-currency p { font-size: 1em; }
+}
+
+/* Escritorios medianos (1440px + 1919px) */
+@media(min-width: 1440px) and (max-width: 1919px) {
+    /* OPTION BAR */
+    .logo .name { font-size: 1.3em; }
+
+    .options,
+    .logout {
+        font-size: 1.5em;
+        gap: 0.6em;
+    }
+
+    .option img { width: 20px; }
+
+    .option.fa-plane-departure,
+    .option.fa-arrow-right-from-bracket { font-size: 0.9em; }
+
+    /* TABLE */
+    .table-body td { font-size: 1.2em; }
+
+    .table-body .folio { font-size: 1.3em; }
+}
+
+@media(min-width:1300px) and (max-width: 1439px) {
+
+}
+
+/* Laptops pequeñas (1025px - 1299px) */
+@media(min-width: 1025px) and (max-width: 1299px) {
+
+}
+
+/* Tabletas */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+}
+
+/* Móviles */
+@media(max-width: 768px) {
+
+}

@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
+    initCalendar();
+    setupCalendar();
     optionsBar();
     tabSelected();
     searchColab();
-    initCalendar();
-    setupCalendar();
     buttonRejected();
     buttonApproved();
     buttonInfo();
@@ -370,6 +370,8 @@ function initCalendar() {
         endDate = null;
         renderCalendar();
     });
+
+    window.calendarRender = renderCalendar;
 }
 
 function setupCalendar() {
@@ -402,8 +404,13 @@ function setupCalendar() {
         if(isVisible) {
             clearRangeSelect();
             datepicker.style.display = 'none';
-        } else
+        } else {
             datepicker.style.display = 'block';
+
+            const datesContainer = document.querySelector('.dates');
+            if(datesContainer && datesContainer.children.length === 0 && window.calendarRender)
+                window.calendarRender();
+        }
     });
 
     document.addEventListener('click', (e) => {
