@@ -1974,6 +1974,8 @@ body {
 
     .tab { padding: 0.6em 0.3em 0.6em 1.5em; }
 
+    .table-background { background-color: pink; }
+
     .tab.selected { padding: 0.8em 0 0.8em 1.5em; }
 
     .tab p { font-size: 0.9em; }
