@@ -1059,7 +1059,10 @@ body {
     }
 
     .options .option,
-    .logout .option { gap: 0.6em; }
+    .logout .option { 
+        width: 90%;
+        gap: 0.6em; 
+    }
 
     .background { flex-direction: column; }
 

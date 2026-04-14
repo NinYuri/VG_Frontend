@@ -15,6 +15,7 @@
     --selected: #428188;
     --red: #992F2C;
     --passport-gray: #5E6364;
+    --html-back: #002027;
 
     /* ============= TRANSLUCENT COLORS ============= */
     --transparent-white: rgba(255, 255, 255, 0.5);
@@ -59,6 +60,10 @@
         var(--agave) 0%,
         #004C5B 50%,
         #00758D 94%
+    );
+    --option-bar: linear-gradient(180deg,
+        var(--html-back),
+        #005B6E
     );
 }
 
@@ -498,6 +503,7 @@ body {
     transition: background-size 0.7s ease-out;
 }
 
+.option.active,
 .option:hover { background-size: 100% 100%; }
 
 .option i {
@@ -1385,6 +1391,8 @@ body {
 
 .info-update { margin-left: 0.7em; }
 
+.cards-mobile { display: none; }
+
 
 /* ============================== RESPONSIVIDAD ============================== */
 /* Escritorios grandes (1920px) */
@@ -1766,8 +1774,151 @@ body {
     .info-currency p { font-size: 0.8em; }
 }
 
+@media(min-width: 1251px) and (max-width: 1322px) {
+    /* TOAST */
+    body.swal2-toast-shown .swal2-container { width: 520px !important; }
+
+    .swal2-popup.custom-reject-modal { width: 500px !important; }
+
+    .colored-toast span { font-size: 0.95em; }
+
+    .colored-toast p,
+    .reject-title { font-size: 1em; }
+
+    .swal2-textarea { font-size: 0.85em; }
+
+    .reject-question { font-size: 0.85em; }
+
+    .swal-confirm-btn, 
+    .swal-cancel-btn { font-size: 0.9em; }
+
+    .swal2-validation-message { font-size: 0.9em; }
+
+    .agave-half { height: 12.8em; }
+
+    /* OPTION BAR */
+    .logo .name { font-size: 1em; }
+
+    .options,
+    .logout { font-size: 1.1em; }
+
+    .options img { 
+        width: 15px;
+        transform: translateY(5%); 
+    }
+
+    /* CONTAINER */
+    .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
+
+    .container { 
+        background-size: 30% auto; 
+        padding: 1em 1.3em 0 1.3em;
+    }
+
+    .content { margin-top: 0.7em; }
+
+    .titles .title { font-size: 2.8em; }
+
+    .titles .subtitle { font-size: 1.1em; }
+
+    .tab { padding: 0.55em 0.3em 0.55em 1.5em; }
+
+    .tab.selected { padding: 0.7em 0em 0.7em 1.5em; }
+
+    .tab p { font-size: 0.95em; }
+
+    .tab.selected p { font-size: 1.1em; }
+
+    .amount {
+        width: 22px;
+        height: 22px;
+        font-size: 0.8em;
+    }
+
+    .amount.selected {
+        width: 28px;
+        height: 28px;
+        font-size: 1em;
+    }
+
+    .search { height: 2.2em; }
+
+    .search input { font-size: 1em; }
+
+    .search i { font-size: 0.9em; }
+
+    /* CALENDAR */
+    .datepicker-wrapper { width: 29%; }
+
+    .date-header { font-size: 0.9em; }
+
+    .datepicker-header button { font-size: 0.7em; }
+
+    .days-header span { font-size: 0.7em; }
+
+    .dates { font-size: 0.7em; }
+
+    /* TABLE */
+    .table-head th { font-size: 1.1em; }
+
+    .table-body .folio { font-size: 1em; }
+
+    .table-body td { font-size: 0.9em; }
+
+    .tab-buttons { margin-top: 0.8em; }
+
+    .back-buttons {
+        width: 2em;
+        height: 2em;
+    }
+
+    .page { font-size: 0.9em; }
+
+    /* INFORMATION */
+    .info-wrapper {
+        width: 27em; 
+        height: 95%; 
+    }
+
+    .info-back::after,
+    .info-back::before { 
+        width: 48px; 
+        height: 47px;
+    }
+
+    .arrow-back {
+        width: 37px;
+        height: 37px;
+        border: 5px solid var(--toast);
+    }
+
+    .arrow-back i { font-size: 0.9em; }
+
+    .info-folio,
+    .info-date,
+    .info-update { font-size: 0.7em; }
+
+    .request-generals .status { 
+        font-size: 0.7em; 
+        padding: 0em 0.8em;
+    }
+
+    .request-destination { margin-top: 1.5em; }
+
+    .request-destination p { font-size: 2.3em; }
+
+    .request-dates { margin-top: 0.3em; }
+
+    .departure-date p { font-size: 0.8em; }
+
+    .info-motive p,
+    .info-payment { font-size: 0.95em; }
+
+    .info-currency p { font-size: 0.75em; }
+}
+
 /* Laptops pequeñas (1024px - 1299px) */
-@media(min-width: 1024px) and (max-width: 1250px) {
+@media(min-width: 1025px) and (max-width: 1250px) {
     /* TOAST */
     body.swal2-toast-shown .swal2-container { width: 500px !important; }
 
@@ -1873,14 +2024,174 @@ body {
     }
 
     .page { font-size: 0.9em; }
+
+    /* INFORMATION */
+    .info-wrapper { width: 28em; }
+
+    .request-destination p { font-size: 2.4em; }
+
+    .departure-date p,
+    .return-date p { font-size: 0.85em; }
+
+    .info-motive p,
+    .info-payment { font-size: 0.95em; }
 }
 
 /* Tabletas */
-@media (min-width: 769px) and (max-width: 1023px) {
+@media (min-width: 766px) and (max-width: 1024px) {
+    html { background-color: var(--html-back); }
 
+    body { height: -webkit-fill-available; }
+
+    ::-webkit-scrollbar-thumb { background-color: transparent; }
+
+    .option-bar {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100vh;
+        background: var(--option-bar);
+        z-index: 999;
+        padding: 110px 30px;
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+        overflow-y: auto;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+        visibility: visible;
+    }
+
+    .option-bar.active { transform: translateX(0); }
+
+    .hamburger { display: block; }
+
+    .hamburger.active { background-image: none; }
+
+    .logo { 
+        padding: 0; 
+        width: 70%;
+    }
+
+    .logo .name { font-size: 1.1em; }
+
+    .options,
+    .logout { 
+        font-size: 1.5em;
+        gap: 1em; 
+    }
+
+    .options .option,
+    .logout .option { 
+        width: 90%;
+        gap: 0.6em; 
+    }
+
+    .background { flex-direction: column; }
+
+    .content-container {
+        padding: 70px 5px 60px;
+        height: 100vh; 
+        margin-top: 1em;
+        overflow-y: auto;
+    }
+
+    .container {
+        border-radius: 22px;
+        padding: 1.3em 1.1em 0em 1.1em;
+        height: auto;;
+    }
+
+    .titles {
+        width: 100%;
+        text-align: center;
+    }
+
+    .content { margin-top: 3em; }
+
+    .tab-header { 
+        flex-direction: column-reverse; 
+        gap: 1em;
+    }
+
+    .search { margin-left: auto; }
+
+    .datepicker-wrapper { 
+        top: 35%;
+        width: 40%;
+    }
+
+    .dates { font-size: 0.9em; }
+    
+    .table-background { display: none; }
+
+    .cards-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--transparent-blue);
+        border-radius: 0 20px 20px 20px;
+        padding: 1.3em;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        background-color: var(--transparent-blue);
+        border-radius: 10px;
+        padding: 1em 2em;
+        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+    }
+
+    .card.active { cursor: default; }
+
+    .first-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card.active .first-info { 
+        padding-bottom: 0.6em;
+        border-bottom: 1px solid var(--tabs-hover); 
+        box-shadow: 0 3px 10px -9px rgba(0, 0, 0, 0.7);
+    }
+
+    .complete-info {
+        padding-top: 0.6em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    .info-mobile.second { 
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .subt-mobile {
+        font-size: 0.8em;
+        font-weight: 700;
+        color: var(--passport-gray);
+    }
+
+    .st-mobile { 
+        font-size: 0.85em;
+        padding: 0.5em 1.3em; 
+    }
+    
+    .destiny { font-size: 1.3em; }
 }
 
 /* Móviles */
-@media(max-width: 768px) {
+@media(max-width: 765px) {
 
 }

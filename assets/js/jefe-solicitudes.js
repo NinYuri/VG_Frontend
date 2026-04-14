@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
-    initCalendar();
-    setupCalendar();
+    phoneMenu();
+    initMobileScroll();
     optionsBar();
     tabSelected();
     searchColab();
+    initCalendar();
+    setupCalendar();
     buttonRejected();
     buttonApproved();
     buttonInfo();
@@ -14,11 +16,90 @@ document.addEventListener("DOMContentLoaded", function() {
 let motivoRechazo = null;
 
 
+/* ============================== PHONE MENU ============================== */
+function phoneMenu() {
+    const container = document.querySelector('.mobile-nav');
+    const hamburger = document.getElementById('hamburger');
+    const optionBar = document.getElementById('optionBar');
+    const checkBox = hamburger.querySelector('input');
+
+    if(!container || !hamburger || !optionBar || !checkBox) return;
+
+    checkBox.addEventListener('change', function(e) {
+        e.stopPropagation();
+
+        container.classList.toggle('bar', checkBox.checked);
+        hamburger.classList.toggle('active', checkBox.checked);
+        optionBar.classList.toggle('active', checkBox.checked);
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if(!hamburger.contains(e.target) && !optionBar.contains(e.target)) {
+            checkBox.checked = false;
+            container.classList.remove('bar');
+            hamburger.classList.remove('active');
+            optionBar.classList.remove('active');
+        }
+    });
+
+    // Cerrar al hacer click en un enlace del menú
+    const menuLinks = optionBar.querySelectorAll('.option');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            checkBox.checked = false;
+            container.classList.remove('bar');
+            hamburger.classList.remove('active');
+            optionBar.classList.remove('active');
+        });
+    });
+
+    // Touch events
+    hamburger.addEventListener('touchstart', function(e) {
+        e.stopImmediatePropagation();
+    }, { passive: true });
+}
+
+function initMobileScroll() {
+    const nav = document.querySelector('.mobile-nav');
+    const scrollContainer = document.querySelector('.content-container');
+
+    if(!nav || !scrollContainer) return;
+
+    function handleMobileScroll() {
+        const scrollTop = scrollContainer.scrollTop;
+        if(scrollTop > 30)
+            nav.classList.add('scrolled');
+        else
+            nav.classList.remove('scrolled');
+    }
+
+    scrollContainer.addEventListener('scroll', handleMobileScroll, { passive: true });
+    handleMobileScroll();
+}
+
+
 /* ============================== OPTIONS BAR ============================== */
 function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.request');
     const logout = document.querySelector('.option.log-out');
+
+    function setActiveOption() {
+        const allOptions = document.querySelectorAll('.option:not(.log-out)');
+        const currentPath = window.location.pathname;
+        
+        allOptions.forEach(option => {
+            option.classList.remove('active');
+        });
+
+        if(currentPath.includes('jefe-dashboard.html'))
+            dashboard.classList.add('active');
+        else if(currentPath.includes('jefe-solicitudes.html'))
+            request.classList.add('active');
+    }
+
+    setActiveOption();
 
     dashboard.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -87,25 +168,31 @@ function searchColab() {
         swapped = !swapped;
     }
 
-    function fadeAndSwap() {
-        glass.classList.add('fade-out');
-        user.classList.add('fade-out');
-        
+    function fadeAndSwap(shouldSwap) {
+        if(shouldSwap) {
+            glass.classList.add('fade-out');
+            user.classList.add('fade-out');
+        }
+
         setTimeout(() => {
-            swapIcons();
-            glass.classList.remove('fade-out');
-            user.classList.remove('fade-out');
+            if(shouldSwap) {
+                swapIcons();
+                glass.classList.remove('fade-out');
+                user.classList.remove('fade-out');
+            }
         }, 200);
     }
 
     glass.addEventListener('click', (e) => {
         e.stopPropagation();
-        fadeAndSwap()
+        const shouldSwap = swapped;
+        fadeAndSwap(shouldSwap);
     });
 
     user.addEventListener('click', (e) => {
         e.stopPropagation();
-        fadeAndSwap()
+        const shouldSwap = !swapped;
+        fadeAndSwap(shouldSwap);
     });
 }
 
