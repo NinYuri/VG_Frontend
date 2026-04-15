@@ -2299,6 +2299,8 @@ body {
     /* TOAST */
     .swal2-toast { margin: 0 !important; }
 
+    .swal2-popup.swal2-modal.custom-reject-modal.swal2-show { margin: 0 !important; }
+
     /* BODY */
     html { background-color: var(--html-back); }
 
