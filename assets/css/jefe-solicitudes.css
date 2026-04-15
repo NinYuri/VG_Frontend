@@ -2297,9 +2297,9 @@ body {
 /* Móviles */
 @media(max-width: 765px) {
     /* TOAST */
-    .colored-toast span { font-size: 0.9em; } 
+    .swal2-toast { margin: 0 !important; }
 
-    .agave-icon { height: 4.5em; }
+    .swal2-popup.swal2-modal.custom-reject-modal.swal2-show { margin: 0 !important; }
 
     /* BODY */
     html { background-color: var(--html-back); }
