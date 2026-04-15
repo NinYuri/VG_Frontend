@@ -2301,6 +2301,8 @@ body {
 
     .swal2-popup.swal2-modal.custom-reject-modal.swal2-show { margin: 0 !important; }
 
+    .agave-icon { width: 5em; }
+
     /* BODY */
     html { background-color: var(--html-back); }
 
