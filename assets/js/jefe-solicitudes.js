@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     searchColab();
     initCalendar();
     setupCalendar();
+    activeCards();
     buttonRejected();
     buttonApproved();
     buttonInfo();
@@ -490,8 +491,10 @@ function setupCalendar() {
         const isVisible = datepicker.style.display === 'block';
         if(isVisible) {
             clearRangeSelect();
+            calendarIcon.classList.remove('icon-active');
             datepicker.style.display = 'none';
         } else {
+            calendarIcon.classList.add('icon-active');
             datepicker.style.display = 'block';
 
             const datesContainer = document.querySelector('.dates');
@@ -503,33 +506,31 @@ function setupCalendar() {
     document.addEventListener('click', (e) => {
         if(!datepicker.contains(e.target) && e.target !== calendarIcon) {
             clearRangeSelect();
+            calendarIcon.classList.remove('icon-active');
             datepicker.style.display = 'none';
         }
     });
 }
 
 
-/* ============================== ACTION BUTTONS ============================== */
-// Change status
-function changeStatus(row, action) {
-    // se reemplaza con la actualización de la tabla
-    const statusDiv = row.querySelector('.status');
-        if(statusDiv) {
-            statusDiv.textContent = action === 'approve' ? 'Aprobada': 'Rechazada';
-            statusDiv.classList.remove('st-pending');
-            statusDiv.classList.add(action === 'approve' ? 'st-approved' : 'st-rejected');
-        }
+/* ============================== ACTIVE CARD ============================== */
+function activeCards() {
+    const cards = document.querySelectorAll('.cards-mobile .card');
+    if(!cards.length) return;
 
-        const actionsDiv = row.querySelector('.actions');
-        if(actionsDiv) {
-            const checkIcon = actionsDiv.querySelector('.fa-circle-check');
-            const xmarkIcon = actionsDiv.querySelector('.fa-circle-xmark');
-                
-            if(checkIcon) checkIcon.style.display = 'none';
-            if(xmarkIcon) xmarkIcon.style.display = 'none';
-        }
+    cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            if(e.target.closest('.fa-circle-check, .fa-circle-xmark, .buttons-mobile')) return;
+            cards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active')
+        });
+    });
 }
 
+
+/* ============================== ACTION BUTTONS ============================== */
 // Calculate travel days
 function calculateDays() {
     const infoWrapper = document.querySelector('.info-wrapper');
@@ -581,12 +582,23 @@ function buttonRejected() {
         button.addEventListener('click', (e) => {
             e.stopPropagation(); 
 
+            // Determinar si está en tabla o tarjeta
             const row = button.closest('tr');
-            if(!row) return;
-            const folioCell = row.querySelector('.folio');
-            const folio = folioCell ? folioCell.textContent.trim() : 'desconocido';
+            const card = button.closest('.card');
+            let folio = 'desconocido';
+            let elemento = null;
+
+            if(row) {
+                const folioCell = row.querySelector('.folio');
+                if(folioCell) folio = folioCell.textContent.trim();
+                elemento = row;
+            } else if(card) {
+                const folioElem = card.querySelector('.folio-mobile');
+                if(folioElem) folio = folioElem.textContent.trim();
+                elemento = card;
+            } else return;
             
-            ToastRejected(folio, row);
+            ToastRejected(folio);
         });
     });
 }
@@ -600,16 +612,23 @@ function buttonApproved() {
         button.addEventListener('click', (e) => {
             e.stopPropagation(e);
 
-            // Obtener fila más cercana
+            // Determinar si está en tabla o tarjeta
             const row = button.closest('tr');
-            if(!row) return;
+            const card = button.closest('.card');
+            let folio = 'desconocido';
+            let elemento = null;
 
-            // Obtener el folio
-            const folioCell = row.querySelector('.folio');
-            const folio = folioCell ? folioCell.textContent.trim() : 'desconocido';
+            if(row) {
+                const folioCell = row.querySelector('.folio');
+                if(folioCell) folio = folioCell.textContent.trim();
+                elemento = row
+            } else if(card) {
+                const folioElem = card.querySelector('.folio-mobile');
+                if(folioElem) folio = folioElem.textContent.trim();
+                elemento = card;
+            } else return;
 
             Toast('SOLICITUD APROBADA', `La solicitud con folio ${folio} fue aprobada y notificada al colaborador correctamente`);
-            changeStatus(row, 'approve');
         });
     });
 }
@@ -617,6 +636,7 @@ function buttonApproved() {
 // Information
 function buttonInfo() {
     const buttons = document.querySelectorAll('.fa-circle-info');
+    const container = document.querySelector('.container');
     if(!buttons) return;
 
     buttons.forEach(button => {
@@ -631,11 +651,13 @@ function buttonInfo() {
             if(!infoCard || !buttonClose) return;
 
             infoCard.style.display = 'flex';
+            container.classList.add('modal-open');
             calculateDays();
 
             buttonClose.addEventListener('click', (e) => {
                 e.stopPropagation();
                 infoCard.style.display = 'none';
+                container.classList.remove('modal-open');
             });
         });
     });
@@ -676,7 +698,7 @@ function Toast(title, content, imageUrl = './assets/images/Icon_agave.webp') {
 }
 
 // Rejected
-function ToastRejected(folio, row, imageLeft = './assets/images/Icon_agave1.webp', imageRight = './assets/images/Icon_agave2.webp') {
+function ToastRejected(folio, imageLeft = './assets/images/Icon_agave1.webp', imageRight = './assets/images/Icon_agave2.webp') {
     Swal.fire({
         title: 'SOLICITUD RECHAZADA',
         html: `
@@ -716,7 +738,6 @@ function ToastRejected(folio, row, imageLeft = './assets/images/Icon_agave1.webp
         if(result.isConfirmed) {
             motivoRechazo = result.value;
             Toast('SOLICITUD RECHAZADA', `La solicitud con folio ${folio} fue rechazada y notificada al colaborador correctamente`);
-            changeStatus(row, 'reject');
         }
     });
 }
