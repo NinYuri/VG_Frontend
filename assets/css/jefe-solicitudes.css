@@ -2403,11 +2403,28 @@ body {
         padding: 0.5em 0.1em 0.5em 1.5em; 
         white-space: nowrap;
         flex-shrink: 0;
+        transition: all 0.3s ease;
+        z-index: 1;
+    }
+
+    .tab::after {
+        content: '';
+        position: absolute;
+        background-color: var(--tabs-gray);
+        top: 0;
+        right: -20px;
+        width: 50px;
+        height: 100%;
+        transform: skewX(36deg);
+        z-index: -1;
+        transition: background-color 0.3s ease;
     }
 
     .tab p { font-size: 0.9em; }
 
-    .tab.selected p { font-size: 1.1em; }
+    .tab.selected { z-index: 10; }
+
+    .tab.selected p { font-size: 1.2em; }
 
     .amount.selected { 
         width: 30px;
@@ -2417,7 +2434,7 @@ body {
 
     .search { width: 100%; }
 
-    .search-back i { font-size: 1em; }
+    .search-back i { font-size: 1.1em; }
     
     .datepicker-wrapper { 
         width: 100%; 
@@ -2435,7 +2452,7 @@ body {
         height: 100%;
         background-color: var(--transparent-blue);
         border-radius: 0 0 20px 20px;
-        padding: 1.3em 1em;
+        padding: 1.3em 0.7em;
         gap: 1.5em;
     }
 
@@ -2452,16 +2469,24 @@ body {
 
     .first-info {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        text-align: center;
         width: 100%;
         height: 100%;
+        gap: 1em;
     }
 
     .card.active .first-info { 
         padding-bottom: 0.6em;
         border-bottom: 1px solid var(--tabs-hover); 
         box-shadow: 0 3px 10px -9px rgba(0, 0, 0, 0.7);
+    }
+
+    .folio-mobile { 
+        font-size: 1.2em; 
+        font-weight: 600;
     }
 
     .complete-info {
@@ -2472,30 +2497,64 @@ body {
 
     .card.active .complete-info { display: flex; }
 
-    .first-column { 
+    .first-column,
+    .second-column,
+    .third-column { 
         display: flex;
         flex-direction: column;
         text-align: center; 
         gap: 1em;
     }
 
-    .info-mobile .destiny { 
+    .first-column,
+    .second-column { margin-bottom: 1em; }
+
+    .info-mobile .destiny,
+    .info-mobile .amount-mobile { 
         font-size: 1.2em; 
         font-weight: 600;
     }
 
     .info-mobile.second { 
         display: flex; 
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+        gap: 1em;
         width: 100%;
     }
 
-    .info-mobile p { font-size: 1em; }
+    .info-mobile p { font-size: 1.1em; }
 
     .info-mobile .subt-mobile {
         font-size: 0.8em;
         font-weight: 700;
         color: var(--passport-gray);
+    }
+
+    .map-img { 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 3em;
+        overflow: hidden;
+        margin-bottom: 0.8em;
+    }
+
+    .map-img img { 
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .buttons-mobile {
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        height: 100%;
+        width: 100%;
+        gap: 1.5em;
+        color: var(--icons);
+        font-size: 1.3em;
+        margin-top: 1em;
     }
 }
