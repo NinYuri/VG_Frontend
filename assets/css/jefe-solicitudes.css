@@ -2337,10 +2337,14 @@ body {
     }
 
     .options .option,
-    .logout .option { gap: 0.5em; }
+    .logout .option { 
+        width: 100%;
+        gap: 0.5em; 
+        padding: 0.6em 0.7em;
+    }
 
     .option img { 
-        transform: translateY(-5%);
+        transform: translateY(-15%);
         width: 15px; 
     }
 
@@ -2368,7 +2372,7 @@ body {
     }
 
     .titles .title {
-        font-size: 2.7em;
+        font-size: 2.5em;
         font-weight: 600;
         margin-bottom: 0.3em;
     }
@@ -2376,7 +2380,7 @@ body {
     .titles .subtitle {
         font-size: 1.1em;
         line-height: 1.5em;
-        margin-bottom: 0.5em;
+        margin-bottom: 1.7em;
     }
 
     .tab-header {
@@ -2384,5 +2388,117 @@ body {
         gap: 1em;
     }
 
+    .tabs {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-top: 25px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar { display: none }
+
+    .tab { 
+        padding: 0.5em 0.1em 0.5em 1.5em; 
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .tab p { font-size: 0.9em; }
+
+    .tab.selected { padding: 0.6em 0em 0.6em 1.3em; }
+
+    .tab.selected p { font-size: 1em; }
+
+    .amount.selected { 
+        width: 27px;
+        height: 27px;
+        right: -1.5em;
+        font-size: 1em; 
+    }
+
     .search { width: 100%; }
+
+    .search-back i { font-size: 1em; }
+    
+    .datepicker-wrapper { 
+        width: 100%; 
+        top: 35%;
+    }
+
+    .table-background { display: none; }
+
+    .cards-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--transparent-blue);
+        border-radius: 0 0 20px 20px;
+        padding: 1.3em;
+        gap: 1.5em;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        background-color: var(--transparent-blue);
+        border-radius: 10px;
+        padding: 1em;
+        box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .first-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card.active .first-info { 
+        padding-bottom: 0.6em;
+        border-bottom: 1px solid var(--tabs-hover); 
+        box-shadow: 0 3px 10px -9px rgba(0, 0, 0, 0.7);
+    }
+
+    .complete-info {
+        display: none;
+        flex-direction: column;
+        padding-top: 1em;
+    }
+
+    .card.active .complete-info { display: flex; }
+
+    .first-column { 
+        display: flex;
+        flex-direction: column;
+        text-align: center; 
+        gap: 1em;
+    }
+
+    .info-mobile .destiny { 
+        font-size: 1.1em; 
+        font-weight: 600;
+    }
+
+    .info-mobile.second { 
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .info-mobile p { font-size: 0.9em; }
+
+    .info-mobile .subt-mobile {
+        font-size: 0.8em;
+        font-weight: 700;
+        color: var(--passport-gray);
+    }
 }
