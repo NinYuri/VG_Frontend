@@ -2580,5 +2580,15 @@ body {
     }
 
     /* PAGE */
+    .tab-buttons { margin-top: 2.5em; }
 
+    .agave-mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 2em 0 0.6em;
+    }
+
+    .agave-mobile img { width: 50px; }
 }
