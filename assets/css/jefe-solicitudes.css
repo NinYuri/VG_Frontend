@@ -2360,7 +2360,7 @@ body {
 
     .container {
         border-radius: 20px;
-        padding: 1.2em 1em 0 1em;
+        padding: 2em 1em 0 1em;
         height: auto;
         min-height: calc(100vh - 90px);
     }
@@ -2407,14 +2407,11 @@ body {
 
     .tab p { font-size: 0.9em; }
 
-    .tab.selected { padding: 0.6em 0em 0.6em 1.3em; }
-
-    .tab.selected p { font-size: 1em; }
+    .tab.selected p { font-size: 1.1em; }
 
     .amount.selected { 
-        width: 27px;
-        height: 27px;
-        right: -1.5em;
+        width: 30px;
+        height: 30px;
         font-size: 1em; 
     }
 
@@ -2438,7 +2435,7 @@ body {
         height: 100%;
         background-color: var(--transparent-blue);
         border-radius: 0 0 20px 20px;
-        padding: 1.3em;
+        padding: 1.3em 1em;
         gap: 1.5em;
     }
 
@@ -2483,7 +2480,7 @@ body {
     }
 
     .info-mobile .destiny { 
-        font-size: 1.1em; 
+        font-size: 1.2em; 
         font-weight: 600;
     }
 
@@ -2494,7 +2491,7 @@ body {
         width: 100%;
     }
 
-    .info-mobile p { font-size: 0.9em; }
+    .info-mobile p { font-size: 1em; }
 
     .info-mobile .subt-mobile {
         font-size: 0.8em;
