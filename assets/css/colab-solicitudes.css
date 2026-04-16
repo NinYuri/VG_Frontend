@@ -2601,18 +2601,7 @@ body {
     .tab:nth-child(4) { z-index: 2; }
     .tab:nth-child(5) { z-index: 1; }
 
-    .tab::after {
-        content: '';
-        position: absolute;
-        background-color: var(--tabs-gray);
-        top: 0;
-        right: -20px;
-        width: 50px;
-        height: 100%;
-        transform: skewX(36deg);
-        z-index: -1;
-        transition: background-color 0.3s ease;
-    }
+    
 
     .tab p { font-size: 0.9em; }
 
