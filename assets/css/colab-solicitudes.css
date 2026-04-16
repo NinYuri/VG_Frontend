@@ -1247,7 +1247,7 @@ body {
 
 .request-generals .both-status .status:only-child { margin-bottom: 4em; }
 
-.request-generals .both-status .status.second { margin-bottom: 1.3em; }
+.request-generals .both-status .status.second { margin-bottom: 1.5em; }
 
 .request-generals .status { padding: 0.5em 1em; }
 
@@ -2038,9 +2038,9 @@ body {
         padding: 0.4em 0.9em;
     }
 
-    .request-generals .both-status .status:only-child { margin-bottom: 5.5em; }
-
-    .request-generals .both-status .status.second { margin-bottom: 3.5em; }
+    .request-generals .both-status .status:only-child { margin-bottom: 3.5em; }
+    
+    .request-generals .both-status .status.second { margin-bottom: 1em; }
 
     .request-destination p { font-size: 2.3em; }
 
@@ -2444,31 +2444,30 @@ body {
 
     .swal2-popup.swal2-modal.custom-reject-modal.swal2-show { margin: 0 !important; }
 
-    .colored-toast .text { padding: 12px 10px 15px 0 !important; }
+    .colored-toast .text { padding: 12px 15px 15px 0 !important; }
 
-    .agave-icon { width: 6em; }
+    .agave-icon { width: 5em; }
 
     .colored-toast p,
     .reject-title { font-size: 1em; }
 
     .colored-toast span { font-size: 0.9em; }
 
-    .swal2-textarea {
-        width: 80% !important;
-        font-size: 0.9em;
+    .canceled-text { 
+        padding: 0 2em;
+        font-size: 0.9em; 
     }
 
     .reject-question { font-size: 0.9em; }
 
     .swal-confirm-btn, 
-    .swal-cancel-btn { font-size: 0.9em; }
-
-    .swal2-validation-message { 
-        width: 80%;
-        font-size: 0.8em; 
-    }
+    .swal-cancel-btn { font-size: 0.95em; }
 
     .agave-half { height: 12em; }
+
+    .agave-half.left { left: -9%; }
+
+    .agave-half.right { right: -9%; }
     
     /* BODY */
     html { background-color: var(--html-back); }
@@ -2486,7 +2485,7 @@ body {
         width: 70%;
         height: 100vh;
         background: var(--option-bar);
-        padding: 150px 30px;
+        padding: 110px 30px;
         transform: translateX(-100%);
         transition: transform 0.4s ease;
         overflow-y: auto;
@@ -2509,7 +2508,7 @@ body {
     .logout {
         padding-left: 0;
         font-size: 1.2em;
-        gap: 1.5em;
+        gap: 0.7em;
     }
 
     .options .option,
