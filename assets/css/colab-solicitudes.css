@@ -1596,6 +1596,7 @@ body {
 
     .info-folio,
     .info-date,
+    .payment-date,
     .info-update { font-size: 0.9em; }
 
     .request-generals .status { font-size: 0.9em; }
@@ -1740,6 +1741,7 @@ body {
 
     .info-folio,
     .info-date,
+    .payment-date,
     .info-update { font-size: 0.75em; }
 
     .request-destination .info-subtitle,
@@ -1893,6 +1895,7 @@ body {
 
     .info-folio,
     .info-date,
+    .payment-date,
     .info-update { font-size: 0.75em; }
 
     .request-generals .status { 
@@ -2008,7 +2011,7 @@ body {
     /* INFORMATION */
     .info-wrapper {
         width: 27em; 
-        height: 95%; 
+        height: 98%; 
     }
 
     .info-back::after,
@@ -2027,6 +2030,7 @@ body {
 
     .info-folio,
     .info-date,
+    .payment-date,
     .info-update { font-size: 0.7em; }
 
     .request-generals .status { 
