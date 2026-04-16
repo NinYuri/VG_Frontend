@@ -83,6 +83,22 @@ function optionsBar() {
     const request = document.querySelector('.option.request');
     const logout = document.querySelector('.option.log-out');
 
+    function setActiveOption() {
+        const allOptions = document.querySelectorAll('.option:not(.log-out)');
+        const currentPath = window.location.pathname;
+        
+        allOptions.forEach(option => {
+            option.classList.remove('active');
+        });
+
+        if(currentPath.includes('jefe-dashboard.html'))
+            dashboard.classList.add('active');
+        else if(currentPath.includes('jefe-solicitudes.html'))
+            request.classList.add('active');
+    }
+    
+    setActiveOption();
+
     dashboard.addEventListener('click', (e) => {
         e.stopPropagation();
         window.location.href = 'jefe-dashboard.html';
