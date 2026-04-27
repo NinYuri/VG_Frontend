@@ -459,7 +459,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.5em;
+    gap: 0.7em;
     font-weight: 300;
     font-size: 1.3em;
     color: var(--white);
@@ -927,6 +927,23 @@ body {
 .table-body .folio {
     font-size: 1.1em;
     font-weight: 600;
+}
+
+.monto-cell { vertical-align: middle; }
+
+.monto-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.monto-content img {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
 .status {
@@ -1485,7 +1502,7 @@ body {
 
     .titles .subtitle { font-size: 1.6em; }
 
-    .button-create { font-size: 1.1em; }
+    .button-create { font-size: 1.15em; }
 
     .button-create i { margin-right: 0.5em; }
 
@@ -1549,6 +1566,11 @@ body {
     .table-body td { font-size: 1.3em; }
 
     .table-body .folio { font-size: 1.4em; }
+
+    .monto-content img {
+        width: 22px;
+        height: 22px;
+    }
 
     .status { padding: 0.3em 0.6em; }
 
@@ -1641,7 +1663,7 @@ body {
 }
 
 /* Escritorios medianos (1440px + 1800px) */
-@media(min-width: 1440px) and (max-width: 1800px) and (max-resolution: 1.5dppx){
+@media(min-width: 1440px) and (max-width: 1800px) and (max-resolution: 1.5dppx) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 530px !important; }
 
@@ -1709,6 +1731,11 @@ body {
     .table-body td { font-size: 1em; }
 
     .table-body .folio { font-size: 1.1em; }
+
+    .monto-content img {
+        width: 20px;
+        height: 20px;
+    }
 
     .back-buttons {
         width: 2em;
@@ -1783,7 +1810,7 @@ body {
     .info-currency p { font-size: 0.8em; }
 }
 
-@media(min-width: 1367px) and (max-width:1439px) {
+@media(min-width: 1366px) and (max-width:1439px) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
@@ -1920,7 +1947,7 @@ body {
 }
 
 /* Laptops tipo del trabajo */
-@media(min-width: 1251px) and (max-width: 1366px) and (max-resolution: 1.5dppx) {
+@media(min-width: 1251px) and (max-width: 1365px) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
@@ -1996,6 +2023,13 @@ body {
     .table-head th { font-size: 1.1em; }
 
     .table-body .folio { font-size: 1em; }
+
+    .monto-content { gap: 8px; }
+
+    .monto-content img {
+        width: 16px;
+        height: 16px;
+    }
 
     .table-body td { font-size: 0.9em; }
 
@@ -2084,6 +2118,8 @@ body {
 
     .logo .name { font-size: 0.9em; }
 
+    .options .option { width: 100%; }
+
     .options,
     .logout { 
         font-size: 1em;
@@ -2148,6 +2184,13 @@ body {
     .table-body td { font-size: 0.8em; }
 
     .table-body .folio { font-size: 0.9em; }
+
+    .monto-content { gap: 7px; }
+
+    .monto-content img {
+        width: 15px;
+        height: 15px;
+    }
 
     .status { padding: 0.4em 0.7em; }
 
@@ -2242,7 +2285,7 @@ body {
     .container {
         border-radius: 22px;
         padding: 1.3em 1.1em 0.5em 1.1em;
-        height: auto;;
+        height: auto;
     }
 
     .content-header {
@@ -2500,7 +2543,7 @@ body {
 
     .hamburger.active { background-image: none; }
 
-    .logo { padding-left: 10px; }
+    .logo { padding-left: 0; }
 
     .logo .name { font-size: 1em; }
 
@@ -2513,6 +2556,7 @@ body {
 
     .options .option,
     .logout .option { 
+        width: 100%;
         gap: 0.5em; 
         padding: 0.6em 0.7em;
     }
@@ -2748,6 +2792,17 @@ body {
     .map-img img { 
         height: 100%;
         object-fit: cover;
+    }
+
+    .info-mobile .amount-mobile-currency { font-size: 0.75em; }
+
+    .info-mobile .amount-mobile-currency img {
+        width: 16px; 
+        height: 16px;
+        border-radius: 50%;
+        object-fit: cover;
+        transform: translateY(15%);
+        margin-right: 0.3em;
     }
 
     .buttons-mobile {

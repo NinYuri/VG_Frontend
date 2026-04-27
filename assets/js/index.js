@@ -44,11 +44,12 @@ function loginValidation() {
     const password = document.getElementById('password').value;
 
     if(user === "" || user.trim() === "") {
-        Toast('Credenciales incorrectas. Por favor, verifica tu correo y contraseña.');
+        Toast('Por favor, ingresa tu correo y contraseña');
         return false;
     }
     if(password === "" || password.trim() === "") {
-        Toast('Credenciales incorrectas. Por favor, verifica tu correo y contraseña.');
+        //Toast('Credenciales incorrectas. Por favor, verifica tu correo y contraseña');
+        Toast('Por favor, ingresa tu correo y contraseña');
         return false;
     }
     return true;

@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
     initCalendar();
     setupCalendar();
     activeCards();
+    updateCurrency();
+    buttonRequest();
     buttonCanceled();
     buttonInfo();
 });
@@ -79,7 +81,6 @@ function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.request');
     const expenses = document.querySelector('.option.expenses');
-    const history = document.querySelector('.option.history');
     const logout = document.querySelector('.option.log-out');
 
     function setActiveOption() {
@@ -94,10 +95,8 @@ function optionsBar() {
             dashboard.classList.add('active');
         else if(currentPath.includes('colab-solicitudes.html'))
             request.classList.add('active');
-        else if(currentPath.includes('colab-comprobacion.html'))
+        else if(currentPath.includes('colab-comprobaciones.html'))
             expenses.classList.add('active');
-        else if(currentPath.includes('colab-historial.html'))
-            history.classList.add('active');
     }
 
     setActiveOption();
@@ -114,12 +113,7 @@ function optionsBar() {
 
     expenses.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = 'colab-comprobacion.html';
-    });
-
-    history.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.location.href = 'colab-historial.html';
+        window.location.href = 'colab-comprobaciones.html';
     });
 
     logout.addEventListener('click', (e) => {
@@ -477,6 +471,64 @@ function activeCards() {
 }
 
 
+/* ============================= FLAG CURRENCY ============================= */
+function updateCurrency() {
+    const currencies = [
+        { code: 'MXN', flag: './assets/images/MXN.webp', symbol: '$' },
+        { code: 'USD', flag: './assets/images/USD.webp', symbol: '$' },
+        { code: 'EUR', flag: './assets/images/EUR.webp', symbol: '€' },
+        { code: 'JPY', flag: './assets/images/JPY.webp',  symbol: '¥' }
+    ];
+
+    // TABLE
+    const tableRows = document.querySelectorAll('.table-body tr');
+    tableRows.forEach(row => {
+        const montoCell = row.querySelector('.monto-cell');
+        const img = montoCell.querySelector('img');
+        const symbolSpan = montoCell.querySelector('.symbol-money');
+
+        if(!montoCell || !img || !symbolSpan) return;
+        
+        let currencyCode = img.getAttribute('alt')?.toUpperCase();
+        const currency = currencies.find(c => c.code === currencyCode);
+        if(!currency) return;
+
+        symbolSpan.textContent = currency.symbol;
+    });
+
+    // CARDS
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        const amountMobile = card.querySelector('.amount-mobile');
+        const img = card.querySelector('img');
+        const symbolSpan = amountMobile.querySelector('.symbol-money');
+
+        if(!amountMobile || !img || !symbolSpan) return;
+
+        let currencyCode = img.getAttribute('alt')?.toUpperCase();
+        const currency = currencies.find(c => c.code === currencyCode);
+        if(!currency) return;
+
+        symbolSpan.textContent = currency.symbol;
+    }); 
+
+    // INFORMATION
+    const info = document.querySelector('.info-wrapper');
+    if(!info) return;
+
+    const img = info.querySelector('.currency-flag');
+    const symbolSpan = info.querySelector('.symbol-money');
+
+    if(!img || !symbolSpan) return;
+
+    let currencyCode = img.getAttribute('alt')?.toUpperCase();
+    const currency = currencies.find(c => c.code === currencyCode);
+    if(!currency) return;
+
+    symbolSpan.textContent = currency.symbol;
+}
+
+
 /* ============================== ACTION BUTTONS ============================== */
 // Calculate travel days
 function calculateDays() {
@@ -518,6 +570,18 @@ function calculateDays() {
         days.textContent = diffDays.toString().padStart(2, '0');
     } else
         days.textContent = '00';
+}
+
+// Request
+function buttonRequest() {
+    const button = document.querySelector('.button-create');
+    if(!button) return;
+
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        window.location.href = 'crear-solicitud.html';
+    });
 }
 
 // Cancel

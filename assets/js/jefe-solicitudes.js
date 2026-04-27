@@ -1,19 +1,21 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
     phoneMenu();
     initMobileScroll();
     optionsBar();
     tabSelected();
+    cardLinks();
     searchColab();
     initCalendar();
     setupCalendar();
     activeCards();
+    updateCurrency();
     buttonRejected();
     buttonApproved();
     buttonInfo();
 });
 
 
-/* ============================== VARIABLE ============================== */
+/* ============================== VARIABLES ============================== */
 let motivoRechazo = null;
 
 
@@ -120,6 +122,7 @@ function optionsBar() {
 
 
 /* ============================== TABLE TABS ============================== */
+// Selección manual
 function tabSelected() {
     const tabs = document.querySelectorAll('.tab');
 
@@ -134,6 +137,29 @@ function tabSelected() {
             this.querySelector('.amount')?.classList.add('selected');
         });
     });
+}
+
+// Links de las cards
+function cardLinks() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    
+    if(tabParam) {
+        // Remover selected
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('selected');
+            const amount = tab.querySelector('.amount');
+            if(amount) amount.classList.remove('selected');
+        });
+
+        // Activar opción correspondiente
+        const activeTab = document.querySelector(`.tab.${tabParam}`);
+        if(activeTab) {
+            activeTab.classList.add('selected');
+            const amount = activeTab.querySelector('.amount');
+            if(amount) amount.classList.add('selected');
+        }
+    }
 }
 
 
@@ -527,6 +553,66 @@ function activeCards() {
             card.classList.add('active')
         });
     });
+}
+
+
+/* ============================== FLAG CURRENCY ============================== */
+function updateCurrency() {
+    const currencies = [
+        { code: 'MXN', flag: './assets/images/MXN.webp', symbol: '$' },
+        { code: 'USD', flag: './assets/images/USD.webp', symbol: '$' },
+        { code: 'EUR', flag: './assets/images/EUR.webp', symbol: '€' },
+        { code: 'JPY', flag: './assets/images/JPY.webp',  symbol: '¥' }
+    ];
+
+    // TABLE
+    const tableRows = document.querySelectorAll('.table-body tr');
+    tableRows.forEach(row => {
+        const montoCell = row.querySelector('.monto-cell');
+        const img = montoCell.querySelector('img');
+        const symbolSpan = montoCell.querySelector('.symbol-money');
+
+        if(!montoCell || !img || !symbolSpan) return;
+        
+        let currencyCode = img.getAttribute('alt')?.toUpperCase();
+        const currency = currencies.find(c => c.code === currencyCode);
+        if(!currency) return;
+
+        symbolSpan.textContent = currency.symbol;
+    });
+
+
+    // CARDS
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        const amountMobile = card.querySelector('.amount-mobile');
+        const img = card.querySelector('img');
+        const symbolSpan = amountMobile.querySelector('.symbol-money');
+
+        if(!amountMobile || !img || !symbolSpan) return;
+
+        let currencyCode = img.getAttribute('alt')?.toUpperCase();
+        const currency = currencies.find(c => c.code === currencyCode);
+        if(!currency) return;
+
+        symbolSpan.textContent = currency.symbol;
+    }); 
+
+
+    // INFORMATION
+    const info = document.querySelector('.info-wrapper');
+    if(!info) return;
+
+    const img = info.querySelector('.currency-flag');
+    const symbolSpan = info.querySelector('.symbol-money');
+
+    if(!img || !symbolSpan) return;
+
+    let currencyCode = img.getAttribute('alt')?.toUpperCase();
+    const currency = currencies.find(c => c.code === currencyCode);
+    if(!currency) return;
+
+    symbolSpan.textContent = currency.symbol;
 }
 
 

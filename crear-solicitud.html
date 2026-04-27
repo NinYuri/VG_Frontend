@@ -21,8 +21,19 @@
 
     <body>
         <div class="background">
+            <!-- ======================= PHONE MENU ======================= -->
+            <div class="mobile-nav">
+                <label class="hamburger" id="hamburger">
+                    <input type="checkbox">
+                    <svg viewBox="0 0 32 32">
+                        <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                        <path class="line" d="M7 16 27 16"></path>
+                    </svg>
+                </label>
+            </div>
+
             <!-- ======================= OPTIONS BAR ======================= -->
-            <div class="option-bar">
+            <div class="option-bar" id="optionBar">
                 <div class="logo">
                     <img src="./assets/images/White_logo.webp" alt="GRUPO | PSA">
                     <div class="name">
@@ -33,7 +44,7 @@
                 <div class="options">
                     <div class="option dashboard">
                         <img src="./assets/images/Grid.webp" alt="Grid">
-                        <p>Panel principal</p>
+                        <p>Panel Principal</p>
                     </div>
                     
                     <div class="option requests">
@@ -45,15 +56,10 @@
                         <img src="./assets/images/Payment.webp" alt="Payment">
                         <p>Comprobaciones</p>
                     </div>
-
-                    <div class="option history">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <p>Historial</p>
-                    </div>
                 </div>
 
                 <div class="logout">
-                    <div class="option">
+                    <div class="option log-out">
                         <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180"></i>
                         <p>Cerrar sesión</p>
                     </div>
@@ -82,100 +88,106 @@
                     </div>
 
                     <!-- ======================== FORM ======================== -->
-                    <div class="content-table">
-                        <div class="first-column">
-                            <div class="content">
-                                <div class="question">
-                                    <p>¿A dónde viajas?</p>
+                    <div class="content-back">
+                        <div class="content-form">
+                            <div class="first-column">
+                                <div class="content">
+                                    <div class="question">
+                                        <p>¿A dónde viajas?</p>
+                                    </div>
+
+                                    <div class="answer destination">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <input type="text" id="ans-destination" placeholder="Ciudad de Destino">
+                                    </div>
                                 </div>
 
-                                <div class="answer destination">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    <input type="text" id="ans-destination" placeholder="Ciudad de Destino">
-                                </div>
-                            </div>
+                                <div class="content">
+                                    <div class="question">
+                                        <p>¿Cuándo viajas?</p>
+                                    </div>
 
-                            <div class="content">
-                                <div class="question">
-                                    <p>¿Cuándo viajas?</p>
-                                </div>
+                                    <div class="datepicker">
+                                        <div class="datepicker-header">
+                                            <button class="prev-month" type="button"><i class="fa-solid fa-angle-left"></i></button>
+                                            
+                                            <div class="date-header">
+                                                <div class="month"></div>
+                                                <div class="year"></div>
+                                            </div>
 
-                                <div class="datepicker">
-                                    <div class="datepicker-header">
-                                        <button class="prev-month" type="button"><i class="fa-solid fa-angle-left"></i></button>
-                                        
-                                        <div class="date-header">
-                                            <div class="month"></div>
-                                            <div class="year"></div>
+                                            <button class="next-month" type="button"><i class="fa-solid fa-angle-right"></i></button>
                                         </div>
 
-                                        <button class="next-month" type="button"><i class="fa-solid fa-angle-right"></i></button>
+                                        <div class="days-header">
+                                            <span>DOM</span>
+                                            <span>LUN</span>
+                                            <span>MAR</span>
+                                            <span>MIE</span>
+                                            <span>JUE</span>
+                                            <span>VIE</span>
+                                            <span>SAB</span>
+                                        </div>
+
+                                        <div class="dates"></div>
                                     </div>
-
-                                    <div class="days-header">
-                                        <span>DOM</span>
-                                        <span>LUN</span>
-                                        <span>MAR</span>
-                                        <span>MIE</span>
-                                        <span>JUE</span>
-                                        <span>VIE</span>
-                                        <span>SAB</span>
-                                    </div>
-
-                                    <div class="dates"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="second-column">
-                            <div class="content">
-                                <div class="question">
-                                    <p>¿Cuál es el motivo?</p>
-                                </div>
-
-                                <div class="answer motive">
-                                    <textarea></textarea>
                                 </div>
                             </div>
 
-                            <div class="content">
-                                <div class="question">
-                                    <p>¿Cuánto necesitas solicitar?</p>
+                            <div class="second-column">
+                                <div class="content">
+                                    <div class="question">
+                                        <p>¿Cuál es el motivo?</p>
+                                    </div>
+
+                                    <div class="answer motive">
+                                        <textarea></textarea>
+                                    </div>
                                 </div>
 
-                                <div class="answer money">
-                                    <div class="currency-selector">
-                                         <div class="flags">
-                                            <img src="./assets/images/MXN.webp" alt="MXN">
-                                            <p>MXN</p>
+                                <div class="content">
+                                    <div class="question">
+                                        <p>¿Cuánto necesitas solicitar?</p>
+                                    </div>
+
+                                    <div class="answer money">
+                                        <div class="currency-selector">
+                                            <div class="flags">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p>MXN</p>
+                                                <i class="fa-solid fa-angle-down"></i>
+                                            </div>
+
+                                            <div class="currency-dropdown"></div>
+                                        </div>
+
+                                        <p class="symbol">$</p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+
+                                <div class="content">
+                                    <div class="question">
+                                        <p>¿Cómo deseas recibir el pago?</p>
+                                    </div>
+
+                                    <div class="answer payment">
+                                        <img src="./assets/images/Dollar.webp" alt="Payment">
+
+                                        <div class="payment-selector">
+                                            <p>Transferencia</p>
                                             <i class="fa-solid fa-angle-down"></i>
+
+                                            <div class="payment-dropdown"></div>
                                         </div>
-
-                                        <div class="currency-dropdown"></div>
-                                    </div>
-
-                                    <p class="symbol">$</p>
-                                    <input type="text">
-                                </div>
-                            </div>
-
-                            <div class="content">
-                                <div class="question">
-                                    <p>¿Cómo deseas recibir el pago?</p>
-                                </div>
-
-                                <div class="answer payment">
-                                    <img src="./assets/images/Dollar.webp" alt="Payment">
-
-                                    <div class="payment-selector">
-                                        <p>Transferencia</p>
-                                        <i class="fa-solid fa-angle-down"></i>
-
-                                        <div class="payment-dropdown"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="agave-mobile">
+                        <img src="./assets/images/Agave.webp" alt="Agave">
                     </div>
                 </div>
             </div>

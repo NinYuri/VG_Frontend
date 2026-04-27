@@ -10,7 +10,7 @@
     <meta name="description" content="Gestión de solicitudes, anticipos y comprobación de gastos">
 
     <!-- ======================= CSS ======================= -->
-    <link rel="stylesheet" href="./assets/css/colab-solicitudes.css">
+    <link rel="stylesheet" href="./assets/css/colab-comprobaciones.css">
 
     <!-- ======================= ICONS ======================= -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -72,12 +72,12 @@
                 <!-- ==================== CONTENT HEADER ==================== -->
                 <div class="content-header">
                     <div class="titles">
-                        <h1 class="title">SOLICITUDES DE VIÁTICOS</h1>
-                        <p class="subtitle">Gestiona tus solicitudes y da seguimiento a su estado</p>
+                        <h1 class="title">COMPROBACIÓN DE GASTOS</h1>
+                        <p class="subtitle">Registra tus comprobantes y valida los gastos de tus viáticos</p>
                     </div>
 
                     <div class="button-create">
-                        <p><i class="fa-solid fa-plus"></i>Solicitar</p>
+                        <p><i class="fa-solid fa-plus"></i>Comprobar</p>
                     </div>
                 </div>
 
@@ -88,7 +88,6 @@
                             <div class="tab pending"><p>Pendientes</p></div>
                             <div class="tab approved"><p>Aprobadas</p></div>
                             <div class="tab rejected"><p>Rechazadas</p></div>
-                            <div class="tab canceled"><p>Canceladas</p></div>
                         </div>
 
                         <div class="search">
@@ -163,12 +162,7 @@
                                         <td class="folio"><p>SOL-26-001</p></td>
                                         <td><p>16 / ABR / 2026</p></td>
                                         <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/EUR.webp" alt="EUR">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
+                                        <td><p>$10,000.00</p></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
@@ -186,12 +180,7 @@
                                         <td class="folio"><p>SOL-26-002</p></td>
                                         <td><p>16 / ABR / 2026</p></td>
                                         <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
+                                        <td><p>$10,000.00</p></td>
                                         <td><div class="status st-approved">
                                             Aprobada
                                         </div></td>
@@ -210,12 +199,7 @@
                                         <td class="folio"><p>SOL-26-005</p></td>
                                         <td><p>16 / ABR / 2026</p></td>
                                         <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
+                                        <td><p>$10,000.00</p></td>
                                         <td><div class="status st-rejected">
                                             Rechazada
                                         </div></td>
@@ -231,12 +215,7 @@
                                         <td class="folio"><p>SOL-26-007</p></td>
                                         <td><p>16 / ABR / 2026</p></td>
                                         <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
+                                        <td><p>$10,000.00</p></td>
                                         <td><div class="status st-approved">
                                             Aprobada
                                         </div></td>
@@ -255,12 +234,7 @@
                                         <td class="folio"><p>SOL-26-008</p></td>
                                         <td><p>16 / ABR / 2026</p></td>
                                         <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
+                                        <td><p>$10,000.00</p></td>
                                         <td><div class="status st-canceled">
                                             Cancelada
                                         </div></td>
@@ -276,12 +250,7 @@
                                         <td class="folio"><p>SOL-26-010</p></td>
                                         <td><p>16 / ABR / 2026</p></td>
                                         <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
+                                        <td><p>$10,000.00</p></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
@@ -299,12 +268,7 @@
                                         <td class="folio"><p>SOL-26-015</p></td>
                                         <td><p>16 / ABR / 2026</p></td>
                                         <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
+                                        <td><p>$10,000.00</p></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
@@ -371,8 +335,8 @@
                                 <div class="second-column">
                                     <div class="info-mobile">
                                         <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/JPY.webp" alt="JPY">JPY</p>
+                                        <p class="amount-mobile">$10,000.00</p>
+                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
                                     </div>
 
                                     <div class="info-mobile">
@@ -462,8 +426,8 @@
                                 <div class="second-column">
                                     <div class="info-mobile">
                                         <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/EUR.webp" alt="EUR">EUR</p>
+                                        <p class="amount-mobile">$10,000.00</p>
+                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
                                     </div>
 
                                     <div class="info-mobile">
@@ -547,7 +511,7 @@
                                 <div class="second-column">
                                     <div class="info-mobile">
                                         <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="amount-mobile">$10,000.00</p>
                                         <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
                                     </div>
 
@@ -636,7 +600,7 @@
                                 <div class="second-column">
                                     <div class="info-mobile">
                                         <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="amount-mobile">$10,000.00</p>
                                         <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
                                     </div>
 
@@ -721,7 +685,7 @@
                                 <div class="second-column">
                                     <div class="info-mobile">
                                         <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="amount-mobile">$10,000.00</p>
                                         <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
                                     </div>
 
@@ -805,7 +769,7 @@
                                 <div class="second-column">
                                     <div class="info-mobile">
                                         <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="amount-mobile">$10,000.00</p>
                                         <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
                                     </div>
 
@@ -891,7 +855,7 @@
                                 <div class="second-column">
                                     <div class="info-mobile">
                                         <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="amount-mobile">$10,000.00</p>
                                         <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
                                     </div>
 
@@ -1021,7 +985,7 @@
 
                                     <div class="info-money">
                                         <p class="info-subtitle">MONTO</p>
-                                        <p class="info-amount"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="info-amount"><span>$</span>10,000.00</p>
                                         
                                         <div class="info-currency">
                                             <img class="currency-flag" src="./assets/images/MXN.webp" alt="MXN">
@@ -1053,6 +1017,6 @@
         </div>
     </div>
 
-    <script src="./assets/js/colab-solicitudes.js"></script>
+    <script src="./assets/js/colab-comprobaciones.js"></script>
 </body>
 </html>

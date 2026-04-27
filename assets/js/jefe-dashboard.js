@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     phoneMenu();
     optionsBar();
+    cardLinks();
     statusChart();
     requestChart();
     expenseChart();
@@ -115,6 +116,18 @@ function optionsBar() {
     });
 }
 
+
+/* ============================== CARD LINKS ============================== */
+function cardLinks() {
+    const cards = document.querySelectorAll('.card-wrapper');
+    
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            const tabToActivate = this.getAttribute('data-tab');
+            window.location.href = `jefe-solicitudes.html?tab=${tabToActivate}`;
+        });
+    });
+}
 
 /* ============================== GRAPHS ============================== */
 const shadowPlugin = {
