@@ -1069,7 +1069,11 @@ body {
         padding: 1.5em 1.3em 0 1.3em;
     }
 
-    .content-form { padding: 1em 0; }
+    .content-form { padding: 0.7em 0 1em; }
+    
+    .content { margin-bottom: 1.3em; }
+
+    .content:last-child { margin-bottom: 0; }
 
     .titles .title { font-size: 3em; }
 
@@ -1079,28 +1083,31 @@ body {
 
     .second-column .content { margin-bottom: 1.5em; }
 
-    .question { font-size: 0.9em; }
+    .question { font-size: 0.85em; }
 
     .answer input,
     .answer.money .symbol,
     .datepicker-header,
     .answer.motive textarea,
-    .payment-selector { font-size: 0.8em; }
+    .payment-selector { font-size: 0.75em; }
 
-    .answer.destination i { font-size: 0.9em; }
+    .answer.destination i { font-size: 0.85em; }
 
-    .datepicker-header { font-size: 0.8em; }
+    .datepicker-header { font-size: 0.75em; }
 
     .days-header span { font-size: 0.65em; }
 
-    .dates { font-size: 0.7em; }
+    .dates { 
+        font-size: 0.65em; 
+        gap: 0.2em;
+    }
 
-    .answer.motive { height: 7em; }
+    .answer.motive { height: 5.3em; }
 
     .payment-dropdown,
-    .currency-dropdown { top: calc(100% + 0.52em); }
+    .currency-dropdown { top: calc(100% + 0.64em); }
 
-    .payment-dropdown { left: -1em; }
+    .payment-dropdown { left: -1.1em; }
 
     .flags img,
     .currency-option img,
@@ -1110,7 +1117,7 @@ body {
     }
 
     .currency-option span,
-    .flags p { font-size: 0.8em; }
+    .flags p { font-size: 0.65em; }
 }
 
 /* Laptops */
@@ -1551,7 +1558,8 @@ body {
         height: 1em;
     }
 
-    .flags p { font-size: 0.75em; }
+    .currency-option p,
+    .flags p { font-size: 0.8em; }
 
     .flags i { transform: translateY(-5%); }
 
