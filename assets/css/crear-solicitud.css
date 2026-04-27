@@ -472,7 +472,7 @@ body {
     padding: 0em 0.4em;
 }
 
-.titles .title{
+.titles .title {
     font-weight: 500;
     font-size: 3.3em;
 }
@@ -982,11 +982,383 @@ body {
 }
 
 /* Escritorios medianos (1440px + 1800px) */
-@media(min-width: 1440px) and (max-width: 1800px) and (max-resolution: 1.5dppx) {
+@media(min-width: 1470px) and (max-width: 1800px) and (max-resolution: 1.5dppx) {
+    /* TOAST */ 
+    body.swal2-toast-shown .swal2-container { width: 530px !important; }
 
+    .colored-toast p { font-size: 1.2em; }
+
+    .colored-toast span { font-size: 1em; }
+
+    .agave-icon { height: 7em; }
+
+    /* OPTION BAR */
+    .logo .name { font-size: 1.1em; }
+
+    .options,
+    .logout {
+        font-size: 1.2em;
+        gap: 0.6em;
+    }
+
+    .option img { width: 15px; }
+
+    .option.fa-plane-departure,
+    .option.fa-arrow-right-from-bracket { font-size: 0.9em; }
+
+    /* CONTAINER */
+    .titles .title { font-size: 2.9em; }
+
+    .titles .subtitle { font-size: 1.2em; }
+
+    .action-buttons { gap: 1.2em; }
+
+    .button { font-size: 0.9em; }
+
+    .question { font-size: 1em; }
+
+    .answer input,
+    .answer.money .symbol,
+    .datepicker-header,
+    .answer.motive textarea,
+    .payment-selector { font-size: 0.85em; }
+
+    .answer.destination i { font-size: 0.95em; }
+
+    .answer.motive { height: 7em; }
+
+    .payment-dropdown,
+    .currency-dropdown { top: calc(100% + 0.54em); }
+
+    .payment-dropdown { left: -1em; }
+
+    .flags img,
+    .currency-option img,
+    .answer.payment img {
+        width: 1em;
+        height: 1em;
+    }
+
+    .flags p { font-size: 0.8em; }
+}
+
+@media(min-width: 1366px) and (max-width:1469px) {
+    /* TOAST */
+    body.swal2-toast-shown .swal2-container { width: 470px !important; }
+
+    .colored-toast span { font-size: 0.95em; }
+
+    .colored-toast p { font-size: 1em; }
+
+    /* OPTION BAR */
+    .logo .name { font-size: 1.1em; }
+
+    .options,
+    .logout { font-size: 1.2em; }
+
+    .options img { 
+        width: 17px;
+        transform: translateY(5%); 
+    }
+
+    /* CONTAINER */
+    .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
+
+    .container { 
+        background-size: 70% auto; 
+        padding: 1.5em 1.3em 0 1.3em;
+    }
+
+    .content-form { padding: 1em 0; }
+
+    .titles .title { font-size: 3em; }
+
+    .titles .subtitle { font-size: 1.2em; }
+
+    .button { font-size: 0.85em; }
+
+    .second-column .content { margin-bottom: 1.5em; }
+
+    .question { font-size: 0.9em; }
+
+    .answer input,
+    .answer.money .symbol,
+    .datepicker-header,
+    .answer.motive textarea,
+    .payment-selector { font-size: 0.8em; }
+
+    .answer.destination i { font-size: 0.9em; }
+
+    .datepicker-header { font-size: 0.8em; }
+
+    .days-header span { font-size: 0.65em; }
+
+    .dates { font-size: 0.7em; }
+
+    .answer.motive { height: 7em; }
+
+    .payment-dropdown,
+    .currency-dropdown { top: calc(100% + 0.52em); }
+
+    .payment-dropdown { left: -1em; }
+
+    .flags img,
+    .currency-option img,
+    .answer.payment img {
+        width: 0.9em;
+        height: 0.9em;
+    }
+
+    .currency-option span,
+    .flags p { font-size: 0.8em; }
+}
+
+/* Laptops */
+@media(min-width: 1251px) and (max-width: 1365px) {
+    /* TOAST */ 
+    body.swal2-toast-shown .swal2-container { width: 470px !important; }
+
+    .colored-toast p { font-size: 1em; }
+
+    .colored-toast span { font-size: 0.95em; }
+
+    /* OPTION BAR */
+    .logo .name { font-size: 1em; }
+
+    .options,
+    .logout { font-size: 1.1em; }
+
+    .options img { 
+        width: 15px;
+        transform: translateY(5%); 
+    }
+
+    /* CONTAINER */
+    .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
+
+    .container { padding: 1em 1.3em 0 1.3em; }
+
+    .titles .title { font-size: 2.8em; }
+
+    .titles .subtitle { font-size: 1.1em; }
+
+    .action-buttons { gap: 1.3em; }
+
+    .button { font-size: 0.8em; }
+
+    .button.send i { margin-right: 0.6em; }
+
+    .question { font-size: 1em; }
+
+    .answer input,
+    .answer.money .symbol,
+    .datepicker-header,
+    .answer.motive textarea,
+    .payment-selector { font-size: 0.9em; }
+
+    .flags img,
+    .currency-option img,
+    .answer.payment img {
+        width: 1em;
+        height: 1em;
+    }
+
+    .currency-option span,
+    .flags p { font-size: 0.8em; }
+}
+
+/* Laptops pequeñas (1024px - 1250px) */
+@media(min-width: 1025px) and (max-width: 1250px) {
+    /* TOAST */ 
+    body.swal2-toast-shown .swal2-container { width: 390px !important; }
+
+    .colored-toast p { font-size: 0.9em; }
+
+    .colored-toast span { font-size: 0.9em; }
+
+    .agave-icon { height: 6em; }
+
+    /* OPTION BAR */
+    .option-bar { width: 23%; }
+
+    .logo { width: 97%; }
+
+    .logo .name { font-size: 0.9em; }
+
+    .options .option { width: 100%; }
+
+    .options,
+    .logout { 
+        font-size: 1em;
+        gap: 0.8em; 
+    }
+
+    .options .option,
+    .options .logout { gap: 0.5em; }
+
+    .option img { width: 14px; }
+
+    /* CONTAINER */
+    .content-container { padding: 1.5em 1em 1.5em 1.3em; }
+
+    .container { 
+        padding: 1em 1.3em 0 1.3em;
+        background-size: 90% auto; 
+    }
+
+    .titles .title { font-size: 2.3em; }
+
+    .titles .subtitle { font-size: 1.1em; }
+
+    .button { font-size: 0.76em; }
+
+    .question { font-size: 0.95em; }
+
+    .answer input,
+    .answer.money .symbol,
+    .datepicker-header,
+    .answer.motive textarea,
+    .payment-selector { font-size: 0.8em; }
+
+    .answer.destination i { font-size: 0.9em; }
+
+    .flags img,
+    .currency-option img,
+    .answer.payment img {
+        width: 0.9em;
+        height: 0.9em;
+    }
+
+    .currency-option span,
+    .flags p { font-size: 0.75em; }
 }
 
 /* Tabletas */
+@media (min-width: 766px) and (max-width: 1024px) {
+    /* BODY */
+    html { background-color: var(--html-back); }
+
+    body { height: -webkit-fill-available; }
+
+    ::-webkit-scrollbar-thumb { background-color: transparent; }
+
+    /* OPTION BAR */
+    .option-bar {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100vh;
+        background: var(--option-bar);
+        z-index: 999;
+        padding: 110px 30px;
+        transform: translateX(-100%);
+        transition: transform 0.4s ease;
+        overflow-y: auto;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+        visibility: visible;
+    }
+
+    .option-bar.active { transform: translateX(0); }
+
+    .hamburger { display: block; }
+
+    .hamburger.active { background-image: none; }
+
+    .logo { 
+        padding: 0; 
+        width: 70%;
+    }
+
+    .logo .name { font-size: 1.1em; }
+
+    .options,
+    .logout { 
+        font-size: 1.5em;
+        gap: 0.5em; 
+    }
+
+    .options .option,
+    .logout .option { 
+        width: 90%;
+        gap: 0.6em; 
+    }
+
+    /* CONTENT */
+    .background { flex-direction: column; }
+
+    .content-container {
+        padding: 70px 5px 100px;
+        height: 100vh; 
+        margin-top: 1em;
+        overflow-y: auto;
+    }
+
+    .container {
+        border-radius: 22px;
+        padding: 1.3em 1.1em 0.5em 1.1em;
+        height: auto;
+    }
+
+    .content-header {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2em;
+    }
+
+    .titles {
+        width: 100%;
+        text-align: center;
+    }
+
+    .button,
+    .button:last-child { margin: 0 0 3em 0; }
+
+    .button.send i,
+    .button.cancel i { 
+        font-size: 0.85em;
+        transform: translateY(-5%);
+    }
+
+    .button-create:hover::before { animation: shine 2.5s ease-out infinite; }
+
+    /* CONTENT */
+    .content-form { flex-direction: column; }
+
+    .content,
+    .content:last-child { margin-bottom: 2.3em; }
+
+    .first-column,
+    .second-column { width: 100%; }
+
+    .question { 
+        width: 90%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .answer,
+    .datepicker { width: 90%; }
+
+    .answer.motive { height: 9em; }
+    
+    .payment-dropdown { 
+        width: 103%; 
+        left: -7px;
+    }
+
+    .agave-mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 3em;
+    }
+
+    .agave-mobile img { width: 70px; }
+}
 
 /* Móviles */
 @media(max-width: 765px) {
@@ -1120,21 +1492,21 @@ body {
         width: 90%;
         justify-content: center;
         text-align: center;
-        font-size: 0.9em; 
+        font-size: 1em; 
     }
 
     .answer { 
         width: 90%;
-        font-size: 0.85em; 
+        font-size: 0.95em; 
     }
 
     .answer.destination i { font-size: 1em; }
 
     .datepicker { width: 90%; }
 
-    .datepicker-header { font-size: 0.8em; }
+    .datepicker-header { font-size: 0.9em; }
 
-    .days-header span { font-size: 0.55em; }
+    .days-header span { font-size: 0.6em; }
 
     .flags img,
     .currency-option img,

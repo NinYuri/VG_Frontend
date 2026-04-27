@@ -1661,7 +1661,7 @@ body {
 }
 
 /* Escritorios medianos (1440px + 1800px) */
-@media(min-width: 1440px) and (max-width: 1800px) and (max-resolution: 1.5dppx){
+@media(min-width: 1470px) and (max-width: 1800px) and (max-resolution: 1.5dppx){
     /* TOAST */
     body.swal2-toast-shown .swal2-container { width: 560px !important; }
 
@@ -1823,7 +1823,7 @@ body {
     .info-currency p { font-size: 0.8em; }
 }
 
-@media(min-width: 1366px) and (max-width:1439px) {
+@media(min-width: 1366px) and (max-width: 1469px) {
     /* TOAST */
     body.swal2-toast-shown .swal2-container { width: 520px !important; }
 
