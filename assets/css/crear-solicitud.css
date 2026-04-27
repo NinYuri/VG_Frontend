@@ -1120,7 +1120,7 @@ body {
     .flags p { font-size: 0.65em; }
 }
 
-/* Laptops */
+/* Laptops de trabajo */
 @media(min-width: 1251px) and (max-width: 1365px) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 470px !important; }
@@ -1223,7 +1223,7 @@ body {
 
     .container { 
         padding: 1em 1.3em 0 1.3em;
-        background-size: 90% auto; 
+        background-size: 75% auto; 
     }
 
     .content-form { padding: 0.7em 0 1em; }
@@ -1252,9 +1252,12 @@ body {
 
     .answer.destination i { font-size: 0.75em; }
 
-    .days-header span { font-size: 0.6em; }
+    .days-header span { font-size: 0.5em; }
 
-    .dates { font-size: 0.6em; }
+    .dates { 
+        font-size: 0.55em; 
+        gap: 0.2em;
+    }
 
     .answer.motive { height: 4.5em; }
 
