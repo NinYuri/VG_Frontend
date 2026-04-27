@@ -1159,11 +1159,11 @@ body {
     .answer.motive textarea,
     .payment-selector { font-size: 0.75em; }
 
-    .datepicker-header { font-size: 0.85em; }
+    .datepicker-header { font-size: 0.8em; }
 
     .days-header span { font-size: 0.6em; }
 
-    .dates { font-size: 0.7em; }
+    .dates { font-size: 0.65em; }
 
     .flags img,
     .currency-option img,
@@ -1215,31 +1215,48 @@ body {
         background-size: 90% auto; 
     }
 
+    .content-form { padding: 0.7em 0 1em; }
+
+    .content,
+    .content:last-child { margin-bottom: 1em; }
+
     .titles .title { font-size: 2.3em; }
 
     .titles .subtitle { font-size: 1.1em; }
 
-    .button { font-size: 0.76em; }
+    .action-buttons { gap: 0.5em; }
 
-    .question { font-size: 0.95em; }
+    .button { font-size: 0.7em; }
+
+    .button:last-child { margin-right: 0; }
+
+    .question { font-size: 0.8em; }
 
     .answer input,
     .answer.money .symbol,
     .datepicker-header,
     .answer.motive textarea,
-    .payment-selector { font-size: 0.8em; }
+    .payment-selector { font-size: 0.7em; }
 
-    .answer.destination i { font-size: 0.9em; }
+    .answer.destination i { font-size: 0.8em; }
+
+    .days-header span { font-size: 0.6em; }
+
+    .dates { font-size: 0.6em; }
+
+    .answer.motive { height: 5em; }
 
     .flags img,
     .currency-option img,
     .answer.payment img {
-        width: 0.9em;
-        height: 0.9em;
+        width: 0.8em;
+        height: 0.8em;
     }
 
     .currency-option span,
-    .flags p { font-size: 0.75em; }
+    .flags p { font-size: 0.65em; }
+
+    .payment-dropdown { top: calc(100% + 0.65em); }
 }
 
 /* Tabletas */
@@ -1346,10 +1363,15 @@ body {
         width: 90%;
         justify-content: center;
         text-align: center;
+        font-size: 1em;
     }
 
     .answer,
     .datepicker { width: 90%; }
+
+    .datepicker-header { font-size: 1em; }
+
+    .dates { font-size: 0.9em; }
 
     .answer.motive { height: 9em; }
     
@@ -1501,21 +1523,26 @@ body {
         width: 90%;
         justify-content: center;
         text-align: center;
-        font-size: 1em; 
+        font-size: 0.95em; 
     }
 
     .answer { 
         width: 90%;
-        font-size: 0.95em; 
+        font-size: 0.85em; 
     }
 
-    .answer.destination i { font-size: 1em; }
+    .answer.destination i { font-size: 0.9em; }
+
+    .answer.destination input,
+    .payment-selector { transform: translateY(5%); }
 
     .datepicker { width: 90%; }
 
-    .datepicker-header { font-size: 0.9em; }
+    .datepicker-header { font-size: 0.85em; }
 
     .days-header span { font-size: 0.6em; }
+
+    .dates { font-size: 0.65em; }
 
     .flags img,
     .currency-option img,
@@ -1524,7 +1551,9 @@ body {
         height: 1em;
     }
 
-    .flags p { font-size: 0.85em; }
+    .flags p { font-size: 0.75em; }
+
+    .flags i { transform: translateY(-5%); }
 
     .agave-mobile {
         display: flex;
