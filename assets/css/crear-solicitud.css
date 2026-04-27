@@ -1145,7 +1145,9 @@ body {
 
     .container { padding: 1em 1.3em 0 1.3em; }
 
-    .content-form { padding: 1em 0; }
+    .content-form { padding: 0.7em 0 1em 0; }
+
+    .first-column .content:last-child { margin-bottom: 0; }
 
     .titles .title { font-size: 2.8em; }
 
@@ -1165,6 +1167,8 @@ body {
     .datepicker-header,
     .answer.motive textarea,
     .payment-selector { font-size: 0.75em; }
+
+    .answer.motive { height: 5.5em; }
 
     .datepicker-header { font-size: 0.8em; }
 
@@ -1224,8 +1228,9 @@ body {
 
     .content-form { padding: 0.7em 0 1em; }
 
-    .content,
-    .content:last-child { margin-bottom: 1em; }
+    .second-column .content { margin-bottom: 1.5em; }
+
+    .first-column .content:last-child { margin-bottom: 0;}
 
     .titles .title { font-size: 2.3em; }
 
@@ -1237,7 +1242,7 @@ body {
 
     .button:last-child { margin-right: 0; }
 
-    .question { font-size: 0.8em; }
+    .question { font-size: 0.75em; }
 
     .answer input,
     .answer.money .symbol,
@@ -1245,13 +1250,13 @@ body {
     .answer.motive textarea,
     .payment-selector { font-size: 0.7em; }
 
-    .answer.destination i { font-size: 0.8em; }
+    .answer.destination i { font-size: 0.75em; }
 
     .days-header span { font-size: 0.6em; }
 
     .dates { font-size: 0.6em; }
 
-    .answer.motive { height: 5em; }
+    .answer.motive { height: 4.5em; }
 
     .flags img,
     .currency-option img,
