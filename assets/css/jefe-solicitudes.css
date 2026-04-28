@@ -2233,17 +2233,33 @@ body {
 
     /* INFORMATION */
     .info-wrapper { 
-        width: 28em; 
+        width: 26em; 
         height: 99%;
     }
 
-    .request-destination p { font-size: 2.4em; }
+    .info-folio,
+    .info-date,
+    .info-update { font-size: 0.7em; }
+
+    .request-destination .info-subtitle,
+    .departure-date .info-subtitle { font-size: 0.7em; }
+
+    .request-generals .status { font-size: 0.7em; }
+
+    .request-destination p { font-size: 2.2em; }
 
     .departure-date p,
-    .return-date p { font-size: 0.85em; }
+    .return-date p { font-size: 0.8em; }
 
     .info-motive p,
-    .info-payment { font-size: 0.95em; }
+    .info-payment { font-size: 0.85em; }
+
+    .currency-flag {
+        width: 13px;
+        height: 13px;
+    }
+
+    .info-currency p { font-size: 0.75em }
 }
 
 /* Tabletas */

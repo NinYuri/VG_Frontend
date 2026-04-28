@@ -346,7 +346,6 @@ body {
     -webkit-text-security: disc !important;
     text-security: disc !important;
     opacity: 1;
-    font-family: -apple-system, 'CenturyGothic', sans-serif !important;
 }
 
 .form .field-back input[type="password"]::placeholder {
