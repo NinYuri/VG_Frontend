@@ -1420,11 +1420,11 @@ body {
         padding-bottom: 0.3em;
     }
 
-    .card-text p { font-size: 1.2em; }
+    .card-text p { font-size: 1.1em; }
 
     .card-text .rejected-number,
     .card-text .approved-number,
-    .card-text .pending-number { font-size: 3.3em; }
+    .card-text .pending-number { font-size: 3em; }
 
     /* GRAPHS */
     .graph-back { padding: 0.9em; }
@@ -1432,11 +1432,14 @@ body {
     .graph-wrapper { border-radius: 15px; }
 
     .graph-back.status .graph-wrapper p,
-    .graph-back.total .graph-wrapper p { font-size: 1.6em; }
+    .graph-back.total .graph-wrapper p { font-size: 1.5em; }
 
-    .chartst-container { gap: 1.3em; }
+    .chartst-container { 
+        gap: 1em;
+        height: 10em; 
+    }
 
-    .chartst-container canvas { max-width: 64% !important; }
+    .chartst-container canvas { max-width: 65% !important; }
 
     .prev.status-button,
     .next.status-button {
@@ -1449,13 +1452,13 @@ body {
 
     .center-text .year { font-size: 1.8em; }
 
-    .center-text .month { font-size: 1.1em; }
+    .center-text .month { font-size: 1em; }
 
-    .legend-item { font-size: 1.3em; }
+    .legend-item { font-size: 1.2em; }
 
     .color-dot {
-        width: 22px;
-        height: 22px;
+        width: 21px;
+        height: 21px;
     }
 
     .prev,
@@ -1482,13 +1485,13 @@ body {
     .graph-back.total .graph-desc { margin-top: 0.7em; }
 
     .graph-back.total .graph-wrapper .total-money {
-        font-size: 3.4em;
+        font-size: 3em;
         margin-top: 0.3em;
     }
 
     .agave {
-        height: 98%;
-        right: 0.1em;
+        height: 98.5%;
+        right: 0.4em;
     }
 }
 
@@ -1821,10 +1824,7 @@ body {
     }
 
     .prev.status-button i,
-    .next.status-button i {
-        font-size: 0.8em;
-        transform: translateY(10%);
-    }
+    .next.status-button i { font-size: 0.8em; }
 
     .center-text .year { font-size: 1.2em; }
 
