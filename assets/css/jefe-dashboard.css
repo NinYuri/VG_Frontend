@@ -766,599 +766,6 @@ body {
 
 
 /* ======================== RESPONSIVE DESKTOP FIRST ======================== */
-/*@media(min-width: 1920px) {
-    .logo .name { font-size: 1.3em; }
-
-    .options,
-    .logout {
-        font-size: 1.5em;
-        gap: 1em;
-        padding-left: 0.8em;
-    }
-
-    .options .option,
-    .logout .option { gap: 0.5em; }
-
-    .option img { width: 20px; }
-
-    .option .fa-plane-departure { font-size: 0.8em; }
-
-    .option .fa-arrow-right-from-bracket { font-size: 0.9em; }
-
-    .content-container { padding: 2em 2.5em 2em 3em; }
-
-    .container { padding: 2em 2.5em; }
-
-    .content { margin-top: 3em; }
-
-    .titles .title { font-size: 3.6em; }
-
-    .titles .subtitle { font-size: 1.5em; }
-
-    .card-wrapper { width: 17%; }
-
-    .cards { 
-        height: 25%;
-        gap: 2em; 
-    }
-    
-    .card-text p { font-size: 1em; }
-
-    .card-text .rejected-number,
-    .card-text .approved-number,
-    .card-text .pending-number { font-size: 2.5em; }
-
-    .graph-back.status .graph-wrapper { padding: 1.5em 0; }
-
-    .graph-back.status .graph-wrapper p,
-    .graph-back.total .graph-wrapper p { font-size: 1.3em; }
-
-    .chartst-container { gap: 0.7em; }
-
-    .chartst-container canvas { max-width: 65% !important; }
-
-    .prev.status-button,
-    .next.status-button {
-        width: 1.5em;
-        height: 1.5em;
-    }
-
-    .prev.status-button i,
-    .next.status-button i { font-size: 1em; }
-
-    .center-text .year { font-size: 1.8em; }
-
-    .center-text .month { font-size: 1em; }
-
-    .legend-item { font-size: 1.2em; }
-
-    .color-dot { 
-        width: 21px;
-        height: 21px; 
-    }
-
-    .graph-back.requests .graph-wrapper,
-    .graph-back.expenses .graph-wrapper { padding: 0.7em; }
-
-    .graph-back.requests,
-    .graph-back.expenses { font-size: 1.2em; }
-
-    .graph-desc { margin-bottom: 0.6em; }
-
-    .prev.request-button,
-    .next.request-button,
-    .prev.expense-button,
-    .next.expense-button { 
-        width: 1em;
-        height: 1em; 
-    }
-
-    .prev.request-button i,
-    .next.request-button i,
-    .prev.expense-button i,
-    .next.expense-button i { 
-        font-size: 0.5em; 
-        transform: translateY(10%);
-    }
-
-    .graph-back.total .graph-wrapper p { line-height: 1.5em; }
-
-    .prev.total-button,
-    .next.total-button {
-        width: 1.3em;
-        height: 1.3em;
-    }
-
-    .prev.total-button i,
-    .next.total-button i { font-size: 0.8em; }
-
-    .graph-back.total .graph-wrapper .total-money { 
-        font-size: 3.3em; 
-        margin-top: 0;
-    }
-
-    .graph-back.total .graph-wrapper .graph-desc { margin-bottom: 0; }
-
-    .agave { height: 99%; }
-}
-
-@media(min-width: 1025px) and (max-width: 1366px) and (max-resolution: 1.5dppx) {
-    .logo .name { font-size: 1em; }
-    
-    .options,
-    .logout { 
-        font-size: 1.1em; 
-        gap: 0.6em;
-    }
-
-    .options .option,
-    .logout .option { gap: 0.5em; }
-
-    .option img { width: 15px; }
-
-    .option .fa-plane-departure { font-size: 0.75em; }
-
-    .content-container { padding: 1em 1.5em 1em 2.2em; }
-
-    .container { background-size: 33% auto; }
-
-    .content {
-        gap: 1em; 
-        margin-top: 1.4em;
-    }
-
-    .titles .title{ font-size: 2.7em; }
-
-    .titles .subtitle { font-size: 1.1em; }
-
-    .cards { gap: 1.8em; }
-
-    .card-wrapper { width: 21%; }
-
-    .card-text p { font-size: 0.9em; }
-
-    .card-text .rejected-number,
-    .card-text .approved-number,
-    .card-text .pending-number { font-size: 2.2em; }
-
-    .graph-back.status .graph-wrapper { padding: 0.5em 0; }
-
-    .chartst-container { gap: 0.7em }
-
-    .chartst-container canvas { max-width: 60% !important; }
-
-    .graph-back.status .graph-wrapper p,
-    .graph-back.total .graph-wrapper p { font-size: 1em; }
-
-    .prev,
-    .next { 
-        width: 1.1em;
-        height: 1.1em; 
-    }
-
-    .prev i,
-    .next i { font-size: 0.65em; }
-
-    .prev.status-button,
-    .next.status-button {
-        height: 1.2em;
-        width: 1.2em;
-    }
-
-    .prev.status-button i,
-    .next.status-button i { 
-        font-size: 0.7em;
-        transform: translateY(-5%); 
-    }
-
-    .prev.request-button i,
-    .next.request-button i { transform: translateY(5%); }
-
-    .center-text .year { font-size: 1.4em; }
-
-    .center-text .month { font-size: 0.7em; }
-
-    .legend-item { font-size: 0.9em; }
-
-    .graph-back.requests,
-    .graph-back.expenses { font-size: 0.8em; }
-
-    .graph-back.total .graph-wrapper .total-money {
-        font-size: 2.3em;
-        margin-top: 0.1em;
-    }
-
-    .prev.total-button,
-    .next.total-button {
-        width: 1em;
-        height: 1em;
-    }
-
-    .prev.total-button i,
-    .next.total-button i { 
-        font-size: 0.5em;
-        transform: translateY(-5%); }
-
-    .agave { 
-        height: 90%;
-        right: 0.1em; 
-    }
-}
-
-@media (min-width: 1280px) and (max-width: 1439px) {
-    .content-container { 
-        padding: 1.6em 1.4em 1.6em 2.2em; 
-    }
-    
-    .container { 
-        padding: 1.5em 1.4em; 
-        border-radius: 32px;
-    }
-
-    .titles .title { font-size: 3.1em; }
-    .titles .subtitle { font-size: 1.2em; }
-
-    .cards { 
-        gap: 1.8em; 
-        height: 19%; 
-    }
-    
-    .card-wrapper { width: 23.5%; }
-    .card-text .rejected-number,
-    .card-text .approved-number,
-    .card-text .pending-number { 
-        font-size: 2.45em; 
-    }
-
-    .graph-back.status .graph-wrapper { 
-        padding: 1em 0; 
-    }
-    
-    .chartst-container canvas { 
-        max-width: 63% !important; 
-    }
-
-    .center-text .year { font-size: 1.5em; }
-    .center-text .month { font-size: 0.8em; }
-
-    .legend-item { font-size: 0.97em; }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-    html { background-color: var(--html-back); }
-
-    body { height: -webkit-fill-available; }
-
-    ::-webkit-scrollbar-thumb { background-color: transparent; }
-
-    .option-bar {
-        display: flex;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 50%;
-        height: 100vh;
-        background: var(--option-bar);
-        z-index: 999;
-        padding: 110px 30px;
-        transform: translateX(-100%);
-        transition: transform 0.4s ease;
-        overflow-y: auto;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
-        visibility: visible;
-    }
-
-    .option-bar.active { transform: translateX(0); }
-
-    .hamburger { display: block; }
-
-    .hamburger.active { background-image: none; }
-
-    .logo { 
-        padding: 0; 
-        width: 70%;
-    }
-
-    .logo .name { font-size: 1.1em; }
-
-    .options,
-    .logout { 
-        font-size: 1.5em;
-        gap: 1em; 
-    }
-
-    .options .option,
-    .logout .option { 
-        width: 90%;
-        gap: 0.6em; 
-    }
-
-    .background { flex-direction: column; }
-
-    .content-container {
-        padding: 70px 20px 60px;
-        height: 100vh; 
-        margin-top: 1em;
-        overflow-y: auto;
-    }
-
-    .container {
-        border-radius: 22px;
-        padding: 1.3em 1.1em 0em 1.1em;
-        height: auto;;
-    }
-
-    .titles { 
-        width: 100%; 
-        text-align: center; 
-    }
-
-    .cards { 
-        flex-direction: column; 
-        height: auto;
-        gap: 1.3em;
-    }
-
-    .card-wrapper { 
-        width: 60%; 
-        height: auto;
-    }
-
-    .card-background {
-        width: 96%;
-        left: 2%;
-    }
-
-    .card-text { 
-        padding: 0.3em 0; 
-        gap: 0.4em; 
-    }
-
-    .graphs {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.3em;
-        height: auto;
-    }
-
-    .graph-back.status,
-    .graph-back.total { width: 60%; }
-
-    .graph-back.status .graph-wrapper {
-        height: auto;
-        gap: 2em;
-    }
-
-    .chartst-container { gap: 2em; }
-
-    .chartst-container canvas { max-width: 50% !important; }
-
-    .prev.status-button,
-    .next.status-button {
-        width: 2em;
-        height: 2em;
-    }
-
-    .prev.status-button i,
-    .next.status-button i { font-size: 1em; }
-
-    .month-requests { 
-        width: 90%; 
-        height: auto;
-        gap: 1.3em;
-    }
-
-    .graph-back.requests,
-    .graph-back.expenses { height: 200px; }
-
-    .graph-back.total .graph-wrapper { padding: 1em 0; }
-
-    .graph-back.total .graph-wrapper .total-money { margin-top: 0.3em; }
-
-    .agave-mobile {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-top: 2em;
-    }
-
-    .agave-mobile img { width: 70px; }
-
-    .agave { display: none; }
-}
-
-@media(max-width: 480px) {
-    html { background-color: var(--html-back); }
-
-    body { height: -webkit-fill-available; }
-
-    ::-webkit-scrollbar-thumb { background-color: transparent; }
-
-    .option-bar {
-        display: flex;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 70%;
-        height: 100vh;
-        background: var(--option-bar);
-        z-index: 999;
-        padding: 150px 30px;
-        transform: translateX(-100%);
-        transition: transform 0.4s ease;
-        overflow-y: auto;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
-        visibility: visible;
-    }
-
-    .option-bar.active { transform: translateX(0); }
-
-    .hamburger { display: block; }
-
-    .hamburger.active { background-image: none; }
-
-    .logo { padding-left: 0; }
-
-    .logo .name { font-size: 1em; }
-
-    .options,
-    .logout { 
-        padding-left: 0;
-        font-size: 1.2em;
-        gap: 1.5em; 
-    }
-
-    .options .option,
-    .logout .option { gap: 0.5em; }
-
-    .option img { width: 15px; }
-
-    .background { flex-direction: column; }
-
-    .content-container {
-        width: 100%;
-        padding: 70px 20px 80px;
-        height: 100vh;
-        margin-top: 1em;
-        overflow-y: auto;
-    }
-
-    .container {
-        border-radius: 20px;
-        padding: 1.2em 1em 0 1em;
-        height: auto;
-        min-height: calc(100vh - 90px);
-    }
-
-    .titles {
-        align-items: center; 
-        text-align: center;
-        padding: 0em; 
-    }
-
-    .titles .title { 
-        font-size: 2.7em; 
-        font-weight: 600;
-        margin-bottom: 0.3em; 
-    }
-
-    .titles .subtitle { 
-        font-size: 1em;
-        line-height: 1.5em; 
-    }
-
-    .cards {
-        flex-direction: column;
-        height: auto;
-        gap: 1.5em;
-    }
-
-    .card-wrapper {
-        width: 100%;
-        height: 90px;
-    }
-
-    .card-text { gap: 0.2em; }
-
-    .card-text .rejected-number,
-    .card-text .approved-number,
-    .card-text .pending-number { font-size: 2.5em; }
-
-    .graphs {
-        flex-direction: column;
-        gap: 1.5em;
-        height: auto;
-    }
-
-    .graph-back.status {
-        width: 100%;
-        height: auto;
-        min-height: 420px;
-    }
-
-    .graph-back.status .graph-wrapper {
-        height: auto;
-        min-height: 400px;
-    }
-
-    .chartst-container {
-        width: 100%;
-        height: 100%;
-        gap: 0.6em;
-    }
-
-    .chartst-container canvas { max-width: 70% !important; }
-
-    .prev.status-button,
-    .next.status-button {
-        width: 1.7em;
-        height: 1.7em;
-    }
-
-    .prev.status-button i,
-    .next.status-button i { font-size: 1em; }
-
-    .center-text .year { font-size: 1.6em; }
-
-    .center-text .month { font-size: 0.9em; }
-
-    .month-requests { 
-        width: 100%;
-        height: 450px;
-        padding: 0; 
-        gap: 1.5em;
-    }
-
-    .graph-desc { gap: 0.7em; }
-
-    .graph-back.requests, 
-    .graph-back.expenses { font-size: 0.9em; }
-
-    .graph-back.requests .graph-wrapper, 
-    .graph-back.expenses .graph-wrapper { 
-        gap: 0.5em; 
-        text-align: center;
-        padding: 0.6em 0.5em;
-    }
-
-    .prev.request-button,
-    .next.request-button {
-        width: 1.3em;
-        height: 1.2em;
-    }
-
-    .graph-back.total { width: 100%; }
-
-    .graph-back.total .graph-wrapper { padding: 0.6em 0; }
-
-    .graph-back.total .graph-wrapper p:first-child { margin-bottom: 0.3em; }
-
-    .prev.total-button,
-    .next.total-button {
-        width: 1.3em;
-        height: 1.3em;
-    }
-
-    .prev.total-button i,
-    .next.total-button i { font-size: 0.75em; }
-
-    .graph-back.total .graph-wrapper .total-money { margin-top: 0.5em; }
-
-    .agave-mobile {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-top: 2em;
-    }
-
-    .agave-mobile img { width: 70px; }
-
-    .agave { display: none; }
-}*/
-
-
 @media(min-width: 1801px) {
     /* OPTION BAR */
     .option-bar { padding: 7em 0; }
@@ -1490,14 +897,195 @@ body {
     }
 
     .agave {
-        height: 98.5%;
-        right: 0.4em;
+        height: 90%;
+        right: 0.1em;
     }
 }
 
 /* Escritorios medianos (1440px + 1800px) */
 @media(min-width: 1470px) and (max-width: 1800px) and (max-resolution: 1.5dppx) {
+    /* OPTION BAR */
+    .logo .name { font-size: 1.1em; }
 
+    .options,
+    .logout {
+        font-size: 1.2em;
+        gap: 0.6em;
+    }
+
+    .option img { width: 15px; }
+
+    .option.fa-plane-departure,
+    .option.fa-arrow-right-from-bracket { font-size: 0.9em; }
+
+    /* CONTAINER */
+    .container { background-size: 33% auto; }
+
+    .titles .title { font-size: 2.9em; }
+
+    .titles .subtitle { font-size: 1.2em; }
+}
+
+@media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
+    /* OPTION BAR */
+    .logo .name { font-size: 1.1em; }
+
+    .options,
+    .logout { font-size: 1.2em; }
+
+    .options img { 
+        width: 17px;
+        transform: translateY(5%); 
+    }
+
+    /* CONTAINER */
+    .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
+
+    .container { 
+        background-size: 30% auto; 
+        padding: 1.5em 1.3em 0 1.3em;
+    }
+
+    .content { margin-top: 0.7em; }
+
+    .titles .title { font-size: 3em; }
+
+    .titles .subtitle { font-size: 1.2em; }
+}
+
+/* Laptops tipo del trabajo */
+@media(min-width: 1251px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
+    /* OPTION BAR */
+    .logo .name { font-size: 1em; }
+
+    .options,
+    .logout { font-size: 1.1em; }
+
+    .options img { 
+        width: 15px;
+        transform: translateY(5%); 
+    }
+
+    /* CONTAINER */
+    .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
+
+    .container { 
+        background-size: 30% auto; 
+        padding: 1em 1.3em 0 1.3em;
+    }
+
+    .content { 
+        margin-top: 1.5em;
+        gap: 1.5em; 
+    }
+
+    .titles .title { font-size: 2.8em; }
+
+    .titles .subtitle { font-size: 1.1em; }
+
+    .card-wrapper { width: 21%; }
+
+    .card-text p { font-size: 0.9em; }
+
+    .card-text .pending-number,
+    .card-text .rejected-number,
+    .card-text .approved-number { font-size: 2.3em; }
+
+    /* GRAPHS */
+    .graph-back.status .graph-wrapper p,
+    .graph-back.total .graph-wrapper p { font-size: 1em; }
+
+    .chartst-container { height: 11em; }
+
+    .chartst-container canvas { max-width: 60% !important; }
+
+    .prev.status-button i,
+    .next.status-button i { transform: translateY(5%); }
+
+    .center-text .year { font-size: 1.2em; }
+
+    .center-text .month { font-size: 0.7em; }
+
+    .legend-item { font-size: 1em; }
+
+    .color-dot { 
+        width: 16px; 
+        height: 16px;
+    }
+
+    .graph-back.requests .graph-wrapper p,
+    .graph-back.expenses .graph-wrapper p { font-size: 0.8em; }
+
+    .prev,
+    .next {
+        width: 1em;
+        height: 1em;
+    }
+
+    .prev i,
+    .next i { font-size: 0.6em; }
+
+    .graph-back.total .graph-desc p { font-size: 0.9em; }
+
+    .prev.total-button,
+    .next.total-button {
+        width: 1em;
+        height: 1em;
+    }
+
+    .prev.total-button i,
+    .next.total-button i { 
+        font-size: 0.55em; 
+        transform: translateY(15%);
+    }
+
+    .graph-back.total .graph-wrapper .total-money { font-size: 2.3em; }
+
+    .agave {
+        height: 90%;
+        right: -0.1em;
+    }
+}
+
+/* Laptops pequeñas (1024px - 1250px) */
+@media(min-width: 1025px) and (max-width: 1250px) {
+    /* OPTION BAR */
+    .option-bar { width: 23%; }
+
+    .logo { width: 97%; }
+
+    .logo .name { font-size: 0.9em; }
+
+    .options .option { width: 100%; }
+
+    .options,
+    .logout { 
+        font-size: 1em;
+        gap: 0.8em; 
+    }
+
+    .options .option,
+    .options .logout { gap: 0.5em; }
+
+    .option img { width: 14px; }
+
+    /* CONTAINER */
+    .content-container { padding: 1.5em 1em 1.5em 1.3em; }
+
+    .container { 
+        padding: 1em 1.3em 0 1.3em;
+        background-size: 31% auto; 
+    }
+
+    .titles .title { font-size: 2.3em; }
+
+    .titles .subtitle { font-size: 1.1em; }
+
+    .card-text p { font-size: 0.7em; }
+
+    .card-text .pending-number,
+    .card-text .rejected-number,
+    .card-text .approved-number { font-size: 1.9em; }
 }
 
 /* Tabletas */
