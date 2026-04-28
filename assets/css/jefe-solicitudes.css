@@ -1962,7 +1962,7 @@ body {
 }
 
 /* Laptops tipo del trabajo */
-@media(min-width: 1251px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
+@media(min-width: 1251px) and (max-width: 1365px) {
     /* TOAST */
     body.swal2-toast-shown .swal2-container { width: 520px !important; }
 

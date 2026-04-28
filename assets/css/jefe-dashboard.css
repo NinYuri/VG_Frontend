@@ -946,15 +946,78 @@ body {
         padding: 1.5em 1.3em 0 1.3em;
     }
 
-    .content { margin-top: 0.7em; }
+    .content { margin-top: 1.3em; }
 
     .titles .title { font-size: 3em; }
 
     .titles .subtitle { font-size: 1.2em; }
+
+    .card-wrapper { width: 22%; }
+
+    .card-text p { font-size: 0.9em; }
+
+    .card-text .pending-number,
+    .card-text .rejected-number,
+    .card-text .approved-number { font-size: 2.3em; }
+
+    /* GRAPHS */
+    .graph-back.status .graph-wrapper p,
+    .graph-back.total .graph-wrapper p { font-size: 1em; }
+
+    .chartst-container { height: 11em; }
+
+    .chartst-container canvas { max-width: 60% !important; }
+
+    .prev.status-button i,
+    .next.status-button i { transform: translateY(5%); }
+
+    .center-text .year { font-size: 1.2em; }
+
+    .center-text .month { font-size: 0.7em; }
+
+    .legend-item { font-size: 1em; }
+
+    .color-dot { 
+        width: 16px; 
+        height: 16px;
+    }
+
+    .graph-back.requests .graph-wrapper p,
+    .graph-back.expenses .graph-wrapper p { font-size: 0.8em; }
+
+    .prev,
+    .next {
+        width: 1em;
+        height: 1em;
+    }
+
+    .prev i,
+    .next i { font-size: 0.6em; }
+
+    .graph-back.total .graph-desc p { font-size: 0.9em; }
+
+    .prev.total-button,
+    .next.total-button {
+        width: 1em;
+        height: 1em;
+    }
+
+    .prev.total-button i,
+    .next.total-button i { 
+        font-size: 0.55em; 
+        transform: translateY(15%);
+    }
+
+    .graph-back.total .graph-wrapper .total-money { font-size: 2.3em; }
+
+    .agave {
+        height: 90%;
+        right: -0.1em;
+    }
 }
 
 /* Laptops tipo del trabajo */
-@media(min-width: 1251px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
+@media(min-width: 1251px) and (max-width: 1365px) {
     /* OPTION BAR */
     .logo .name { font-size: 1em; }
 
