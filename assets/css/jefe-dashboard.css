@@ -924,8 +924,28 @@ body {
     .titles .title { font-size: 2.9em; }
 
     .titles .subtitle { font-size: 1.2em; }
-}
 
+    /* GRAPHS */
+    .chartst-container { height: 12em; }
+
+    .chartst-container canvas { max-width: 60% !important; }
+
+    .center-text .year { font-size: 1.4em; }
+
+    .center-text .month { font-size: 0.7em; }
+
+    .legend-item { font-size: 0.9em; }
+
+    .graph-back.requests .graph-wrapper p,
+    .graph-back.expenses .graph-wrapper p { font-size: 0.9em; }
+
+    .graph-back.total .graph-wrapper .graph-desc .total-month { font-size: 0.75em; }
+
+    .prev.total-button i,
+    .next.total-button i { transform: translateY(15%); }
+
+    .graph-back.total .graph-wrapper .total-money { font-size: 2.4em; }
+}
 
 @media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
     /* OPTION BAR */
@@ -966,7 +986,7 @@ body {
     .graph-back.total .graph-wrapper p { font-size: 1em; }
 
     .chartst-container { 
-        height: 10em;
+        height: 11em;
         gap: 1em; 
     }
 
