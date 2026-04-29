@@ -245,7 +245,10 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
     transform: translateY(-20px) !important;
 }
 
-.swal2-toast div:where(.swal2-html-container) { margin: 0 !important; }
+.swal2-toast div:where(.swal2-html-container) { 
+    margin: 0 !important; 
+    font-size: 1em;
+}
 
 .swal2-popup.swal2-toast.colored-toast.swal2-show { padding: 0; }
 
@@ -256,6 +259,8 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
     border-radius: 30px !important;
     overflow: hidden;
 }
+
+.custom-reject-modal { width: 500px !important; }
 
 .colored-toast .text {
     display: flex;
@@ -273,7 +278,7 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
     margin-bottom: 0.7em;
 }
 
-.colored-toast span { font-size: 1.1rem; }
+.colored-toast span { font-size: 1rem; }
 
 .agave-icon {
     height: 6.5em; 
@@ -299,7 +304,7 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
     padding: 0.2em 1.3em !important;
     filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.25)) !important;
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 1em;
     background-image: var(--toast-buttons) !important;
     border: none !important;
     box-shadow: 0 0 0 3px rgba(0, 117, 141, 0.5) !important;
@@ -919,7 +924,7 @@ body {
 .table-body tr:last-child { border-bottom: none; }
 
 .table-body td {
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 400;
     padding: 0 0.8em;
 }
@@ -2165,7 +2170,7 @@ body {
 
     .tab.selected { padding: 0.8em 0 0.8em 1.5em; }
 
-    .tab p { font-size: 0.8em; }
+    .tab p { font-size: 0.85em; }
 
     .tab.selected p { font-size: 1em; }
 
@@ -2219,21 +2224,31 @@ body {
 
     /* INFORMATION */
     .info-wrapper { 
-        width: 28em; 
+        width: 26em; 
         height: 98%;
     }
 
-    .request-generals .both-status .status:only-child { margin-bottom: 3em; }
+    .info-folio,
+    .info-date,
+    .info-update { font-size: 0.7em; }
 
-    .request-generals .both-status .status.second { margin-bottom: 0.3em; }
+    .request-destination .info-subtitle,
+    .request-generals .status { font-size: 0.75em; }
 
-    .request-destination p { font-size: 2.4em; }
+    .request-destination p { font-size: 2.2em; }
 
     .departure-date p,
-    .return-date p { font-size: 0.85em; }
+    .return-date p { font-size: 0.8em; }
 
     .info-motive p,
-    .info-payment { font-size: 0.95em; }
+    .info-payment { font-size: 0.85em; }
+
+    .currency-flag {
+        width: 13px;
+        height: 13px;
+    }
+
+    .info-currency p { font-size: 0.75em }
 }
 
 /* Tabletas */
