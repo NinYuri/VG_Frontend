@@ -635,7 +635,7 @@ body {
 
 .tab.pending.selected { margin-right: 9px; }
 
-.tab.approved.selected { margin: 0 4px; }
+.tab.delivered.selected { margin: 0 4px; }
 
 .tab p {
     font-size: 1em;
