@@ -1037,7 +1037,7 @@ body {
     }
 }
 
-@media(min-width: 1281px) and (max-width: 1365px) {
+@media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
     /* OPTION BAR */
     .logo .name { font-size: 1em; }
 

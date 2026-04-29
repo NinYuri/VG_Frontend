@@ -1130,7 +1130,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 29em;
-    height: 90%;
+    height: 85%;
     background-color: var(--transparent-blue);
     border-radius: 15px;
     padding: 0.8em;
@@ -1748,7 +1748,7 @@ body {
     /* INFORMATION */
     .info-wrapper { 
         width: 30em;
-        height: 93%; 
+        height: 95%; 
     }
 
     .info-back::before,
@@ -1758,6 +1758,10 @@ body {
     }
 
     .request-generals { padding: 0.7em 0.9em 0 0.7em; }
+
+    .request-generals .both-status .status:only-child { margin-bottom: 3em; }
+
+    .request-generals .both-status .status.second { margin-bottom: 0.7em; }
 
     .arrow-back {
         width: 2.7em;
@@ -1775,14 +1779,17 @@ body {
     .request-destination .info-subtitle,
     .departure-date .info-subtitle,
     .return-date .info-subtitle,
-    .info-bottom .info-subtitle { font-size: 0.8em; }
+    .info-bottom .info-subtitle { font-size: 0.75em; }
 
     .request-dates-wrapper { 
         height: 100%; 
         padding: 0 1.8em;
     }
 
-    .request-destination p { font-size: 2.5em; }
+    .request-destination p { font-size: 2.4em; }
+
+    .colab::before,
+    .colab::after { height: 30%; }
 
     .departure-date p,
     .return-date p { font-size: 0.9em; }
@@ -1811,7 +1818,7 @@ body {
     .info-currency p { font-size: 0.8em; }
 }
 
-@media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx)  {
+@media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
@@ -1914,41 +1921,42 @@ body {
     }
 
     .arrow-back {
-        width: 37px;
-        height: 37px;
+        width: 35px;
+        height: 35px;
         border: 5px solid var(--toast);
     }
 
-    .arrow-back i { font-size: 1em; }
+    .arrow-back i { font-size: 0.9em; }
 
     .info-folio,
     .info-date,
     .payment-date,
-    .info-update { font-size: 0.75em; }
+    .info-update { font-size: 0.7em; }
 
     .request-generals .status { 
-        font-size: 0.75em; 
+        font-size: 0.7em; 
         padding: 0.4em 0.9em;
     }
 
     .request-generals .both-status .status:only-child { margin-bottom: 3.5em; }
 
-    .request-generals .both-status .status.second { margin-bottom: 1em; }
+    .request-generals .both-status .status.second { margin-bottom: 0.6em; }
 
     .request-destination p { font-size: 2.3em; }
+
+    .info-subtitle { font-size: 0.7em; }
 
     .request-dates { margin-top: 0.3em; }
 
     .departure-date p { font-size: 0.8em; }
 
     .info-motive p,
-    .info-payment { font-size: 0.95em; }
+    .info-payment { font-size: 0.9em; }
 
     .info-currency p { font-size: 0.75em; }
 }
 
-/* Laptops tipo del trabajo */
-@media(min-width: 1251px) and (max-width: 1365px) {
+@media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx)  {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
@@ -2066,31 +2074,38 @@ body {
     .info-folio,
     .info-date,
     .payment-date,
-    .info-update { font-size: 0.7em; }
+    .info-update { font-size: 0.66em; }
 
     .request-generals .status { 
         font-size: 0.7em; 
         padding: 0.4em 0.9em;
     }
 
-    .request-generals .both-status .status:only-child { margin-bottom: 3.5em; }
+    .request-generals .both-status .status:only-child { margin-bottom: 3em; }
     
     .request-generals .both-status .status.second { margin-bottom: 1em; }
 
     .request-destination p { font-size: 2.3em; }
+
+    .colab::before,
+    .colab::after { height: 35%; }
+
+    .info-subtitle { font-size: 0.7em; }
+
+    .request-destination .info-subtitle { font-size: 0.75em; }
 
     .request-dates { margin-top: 0.3em; }
 
     .departure-date p { font-size: 0.8em; }
 
     .info-motive p,
-    .info-payment { font-size: 0.95em; }
+    .info-payment { font-size: 0.9em; }
 
     .info-currency p { font-size: 0.75em; }
 }
 
 /* Laptops pequeñas (1024px - 1250px) */
-@media(min-width: 1025px) and (max-width: 1250px) {
+@media(min-width: 1025px) and (max-width: 1280px) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 390px !important; }
 
