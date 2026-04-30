@@ -1223,9 +1223,9 @@ body {
 /* Laptops pequeñas (1024px - 1250px) */
 @media(min-width: 1025px) and (max-width: 1280px) {
     /* TOAST */ 
-    body.swal2-toast-shown .swal2-container { width: 390px !important; }
+    body.swal2-toast-shown .swal2-container { width: 410px !important; }
 
-    .colored-toast p { font-size: 0.9em; }
+    .colored-toast p { font-size: 1em; }
 
     .colored-toast span { font-size: 0.9em; }
 
@@ -1259,12 +1259,6 @@ body {
         background-size: 75% auto; 
     }
 
-    .content-form { padding: 0.7em 0 1em; }
-
-    .second-column .content { margin-bottom: 1.5em; }
-
-    .first-column .content:last-child { margin-bottom: 0;}
-
     .titles .title { font-size: 2.3em; }
 
     .titles .subtitle { font-size: 1.1em; }
@@ -1275,6 +1269,14 @@ body {
 
     .button:last-child { margin-right: 0; }
 
+    .content-form { padding: 1.1em 0; }
+
+    .second-column .content { margin-bottom: 1.7em; }
+
+    .second-column .content:last-child { margin-bottom: 0.5em; }
+
+    .first-column .content:last-child { margin-bottom: 0;}
+
     .question { font-size: 0.75em; }
 
     .answer input,
@@ -1284,6 +1286,11 @@ body {
     .payment-selector { font-size: 0.7em; }
 
     .answer.destination i { font-size: 0.75em; }
+
+    .answer,
+    .datepicker { padding: 0.35em 0.6em; }
+
+    .days-header { padding: 0.3em 0; }
 
     .days-header span { font-size: 0.5em; }
 
@@ -1301,10 +1308,13 @@ body {
         height: 0.8em;
     }
 
-    .currency-option span,
-    .flags p { font-size: 0.65em; }
+    .currency-option span { font-size: 0.65em; }
 
-    .payment-dropdown { top: calc(100% + 0.65em); }
+    .flags p { font-size: 0.6em; }
+
+    .currency-dropdown { top: calc(100% + 0.42em); }
+
+    .payment-dropdown { left: -1em; }
 }
 
 /* Tabletas */
