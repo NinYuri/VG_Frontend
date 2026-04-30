@@ -223,7 +223,10 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
     transform: translateY(-20px) !important;
 }
 
-.swal2-toast div:where(.swal2-html-container) { margin: 0 !important; }
+.swal2-toast div:where(.swal2-html-container) { 
+    margin: 0 !important;
+    font-size: 1em; 
+}
 
 .swal2-popup.swal2-toast.colored-toast.swal2-show { padding: 0; }
 
@@ -249,7 +252,7 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
     margin-bottom: 0.7em;
 }
 
-.colored-toast span { font-size: 1.1rem; }
+.colored-toast span { font-size: 1rem; }
 
 .agave-icon {
     height: 6.5em; 
@@ -768,13 +771,13 @@ body {
 .flags img,
 .currency-option img,
 .answer.payment img {
-    width: 1.1em;
-    height: 1.1em;
+    width: 1em;
+    height: 1em;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.flags p { font-size: 0.9em; }
+.flags p { font-size: 0.8em; }
 
 .flags i,
 .payment-selector i { 
@@ -857,7 +860,7 @@ body {
 .currency-option:hover,
 .payment-option:hover { background-color: rgba(0, 0, 0, 0.1); }
 
-.currency-option span { font-size: 0.9em; }
+.currency-option span { font-size: 0.8em; }
 
 .payment-selector {
     position: relative;
@@ -867,6 +870,7 @@ body {
     width: 100%;
     height: 100%;
     margin-left: 0.6em;
+    font-size: 1em;
     font-weight: 500;
 }
 
@@ -1007,6 +1011,8 @@ body {
     .option.fa-arrow-right-from-bracket { font-size: 0.9em; }
 
     /* CONTAINER */
+    .container { background-size: 70% auto; }
+
     .titles .title { font-size: 2.9em; }
 
     .titles .subtitle { font-size: 1.2em; }
@@ -1015,22 +1021,33 @@ body {
 
     .button { font-size: 0.9em; }
 
-    .question { font-size: 1em; }
+    .answer,
+    .datepicker { padding: 0.4em 0.6em; }
+
+    .question { font-size: 0.95em; } 
+
+    .answer.destination i { font-size: 0.9em; }
+
+    .days-header { padding: 0.4em 0 0.3em 0; }
+
+    .days-header span { font-size: 0.6em; }
+    
+    .dates { font-size: 0.65em; } 
 
     .answer input,
     .answer.money .symbol,
     .datepicker-header,
     .answer.motive textarea,
-    .payment-selector { font-size: 0.85em; }
+    .payment-selector { font-size: 0.83em; }
 
-    .answer.destination i { font-size: 0.95em; }
+    .second-column .content { margin-bottom: 1.7em; }
 
-    .answer.motive { height: 7em; }
+    .answer.motive { height: 6.1em; }
 
     .payment-dropdown,
-    .currency-dropdown { top: calc(100% + 0.54em); }
+    .currency-dropdown { top: calc(100% + 0.4em); }
 
-    .payment-dropdown { left: -1em; }
+    .payment-dropdown { left: -1.2em; }
 
     .flags img,
     .currency-option img,
@@ -1040,6 +1057,8 @@ body {
     }
 
     .flags p { font-size: 0.8em; }
+
+    .currency-option span { font-size: 0.75em; }
 }
 
 @media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
@@ -1069,43 +1088,44 @@ body {
         padding: 1.5em 1.3em 0 1.3em;
     }
 
-    .content-form { padding: 0.7em 0 1em; }
-    
     .content { margin-bottom: 1.3em; }
 
-    .content:last-child { margin-bottom: 0; }
+    .content:last-child,
+    .second-column .content:last-child { margin-bottom: 0; }
 
     .titles .title { font-size: 3em; }
 
     .titles .subtitle { font-size: 1.2em; }
 
-    .button { font-size: 0.85em; }
-
     .second-column .content { margin-bottom: 1.5em; }
-
-    .question { font-size: 0.85em; }
+    
+    .button,
+    .question,
+    .answer.destination i { font-size: 0.85em; }
 
     .answer input,
     .answer.money .symbol,
     .datepicker-header,
     .answer.motive textarea,
-    .payment-selector { font-size: 0.75em; }
-
-    .answer.destination i { font-size: 0.85em; }
-
+    .payment-selector,
     .datepicker-header { font-size: 0.75em; }
 
-    .days-header span { font-size: 0.65em; }
+    .answer,
+    .datepicker { padding: 0.37em 0.6em; }
+
+    .days-header { padding: 0.4em 0 0.3em 0; }
+
+    .days-header span { font-size: 0.6em; }
 
     .dates { 
-        font-size: 0.65em; 
-        gap: 0.2em;
+        font-size: 0.6em; 
+        gap: 0.25em;
     }
 
     .answer.motive { height: 5.3em; }
 
     .payment-dropdown,
-    .currency-dropdown { top: calc(100% + 0.64em); }
+    .currency-dropdown { top: calc(100% + 0.47em); }
 
     .payment-dropdown { left: -1.1em; }
 
@@ -1120,8 +1140,7 @@ body {
     .flags p { font-size: 0.65em; }
 }
 
-/* Laptops de trabajo */
-@media(min-width: 1251px) and (max-width: 1365px) {
+@media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
@@ -1143,11 +1162,10 @@ body {
     /* CONTAINER */
     .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
 
-    .container { padding: 1em 1.3em 0 1.3em; }
-
-    .content-form { padding: 0.7em 0 1em 0; }
-
-    .first-column .content:last-child { margin-bottom: 0; }
+    .container {
+        background-size: 70% auto; 
+        padding: 1em 1.3em 0 1.3em; 
+    }
 
     .titles .title { font-size: 2.8em; }
 
@@ -1155,26 +1173,36 @@ body {
 
     .action-buttons { gap: 1.3em; }
 
-    .button { font-size: 0.7em; }
+    .button { font-size: 0.8em; }
 
     .button.send i { margin-right: 0.6em; }
 
+    .content-form { padding: 0.7em 0 1em 0; }
+
+    .second-column .content { margin-bottom: 1.7em; }
+
+    .content:last-child { margin-bottom: 0.5em; }
+
     .question,
-    .answer.destination i { font-size: 0.85em; }
+    .answer.destination i { font-size: 0.8em; }
 
     .answer input,
     .answer.money .symbol,
     .datepicker-header,
     .answer.motive textarea,
-    .payment-selector { font-size: 0.75em; }
+    .payment-selector,
+    .datepicker-header { font-size: 0.73em; }
+
+    .answer,
+    .datepicker { padding: 0.4em 0.6em; }
+
+    .days-header { padding: 0.3em 0; }
+
+    .days-header span { font-size: 0.55em; }
+
+    .dates { font-size: 0.57em; }
 
     .answer.motive { height: 5.5em; }
-
-    .datepicker-header { font-size: 0.8em; }
-
-    .days-header span { font-size: 0.6em; }
-
-    .dates { font-size: 0.65em; }
 
     .flags img,
     .currency-option img,
@@ -1183,12 +1211,17 @@ body {
         height: 0.9em;
     }
 
-    .currency-option span,
-    .flags p { font-size: 0.7em; }
+    .currency-option span { font-size: 0.7em; }
+
+    .flags p { font-size: 0.65em; }
+
+    .currency-dropdown { top: calc(100% + 0.5em); }
+
+    .payment-dropdown { left: -1em; }
 }
 
 /* Laptops pequeñas (1024px - 1250px) */
-@media(min-width: 1025px) and (max-width: 1250px) {
+@media(min-width: 1025px) and (max-width: 1280px) {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 390px !important; }
 

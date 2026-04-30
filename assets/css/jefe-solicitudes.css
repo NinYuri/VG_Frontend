@@ -1907,7 +1907,7 @@ body {
     /* TABLE */
     .table-head th { font-size: 1.2em; }
 
-    .table-body .folio { font-size: 1.1em; }
+    .table-body .folio { font-size: 1em; }
 
     .table-body td { font-size: 0.9em; }
 

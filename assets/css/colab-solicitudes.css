@@ -1901,7 +1901,7 @@ body {
     /* TABLE */
     .table-head th { font-size: 1.2em; }
 
-    .table-body .folio { font-size: 1.1em; }
+    .table-body .folio { font-size: 1em; }
 
     .table-body td { font-size: 0.9em; }
 
@@ -1968,7 +1968,7 @@ body {
     /* TOAST */ 
     body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
-    .swal2-popup.custom-reject-modal { width: 490px !important; }
+    .swal2-popup.custom-reject-modal { width: 440px !important; }
 
     .colored-toast span { font-size: 0.95em; }
 
