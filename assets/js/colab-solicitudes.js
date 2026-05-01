@@ -760,7 +760,7 @@ function ToastReceived(folio, imageLeft = './assets/images/Icon_agave1.webp', im
         backdrop: 'rgba(0, 0, 0, 0)',
         allowOutsideClick: false,
         scrollbarPadding: false,
-        width:'595px',
+        width:'543px',
         heightAuto: false, 
         customClass: {
             popup: 'custom-received-modal',
