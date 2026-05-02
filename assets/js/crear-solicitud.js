@@ -6,11 +6,12 @@ document.addEventListener("DOMContentLoaded", function() {
     currencyOptions();
     paymentOptions();
     sendButton();
+    saveButton();
     cancelButton();
 });
 
 
-/* ============================== PHONE MENU ============================== */
+/* ============================== VARIABLES ============================== */
 let globalStartDate = null;
 let globalEndDate = null;
 
@@ -95,7 +96,7 @@ function optionsBar() {
 
         if(currentPath.includes('colab-dashboard.html'))
             dashboard.classList.add('active');
-        else if(currentPath.includes('colab-solicitudes.html') || currentPath.includes('crear-solicitud.html'))
+        else if(currentPath.includes('colab-solicitudes.html') || currentPath.includes('crear-solicitud.html') || currentPath.includes('editar-solicitud.html'))
             request.classList.add('active');
         else if(currentPath.includes('colab-comprobaciones.html'))
             expenses.classList.add('active');
@@ -126,6 +127,7 @@ function optionsBar() {
 
 
 /* =============================== FORM BUTTONS =============================== */
+// Cancel
 function cancelButton() {
     const cancelButton = document.querySelector('.button.cancel');
 
@@ -143,7 +145,7 @@ function sendButton() {
     sendButton.addEventListener('click', (e) => {
         e.stopPropagation();
 
-        if(!validateForm()) return;
+        if(!validateForm(false)) return;
 
         // Recopilar datos
         // const usuario_id
@@ -180,32 +182,55 @@ function sendButton() {
     });
 }
 
+// Save
+function saveButton() {
+    const saveButton = document.querySelector('.button.save');
+    if(!saveButton) return;
+
+    saveButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        if(!validateForm(true)) return;
+
+        Toast('SOLICITUD EDITADA', 'Tu solicitud ha sido editada correctamente y se encuentra en proceso de aprobación');
+        setTimeout(() => {
+            setTimeout(() => {
+                window.location.href = 'colab-solicitudes.html';
+            }, 600);
+        }, 4000);
+    });
+}
+
 // Validation
-function validateForm() {
+function validateForm(isEdit = false) {
     const destination = document.getElementById('ans-destination')?.value.trim();
     const motive = document.querySelector('.answer.motive textarea')?.value.trim();
     const amount = document.querySelector('.answer.money input')?.value.trim();
+
+    const errorTitle = isEdit 
+        ? 'ERROR AL GUARDAR CAMBIOS' 
+        : 'ERROR AL ENVIAR SOLICITUD';
     
     if(!destination) {
-        Toast('ERROR AL ENVIAR SOLICITUD', 'Por favor, ingresa la ciudad de destino de tu viaje');
+        Toast(errorTitle, 'Por favor, ingresa la ciudad de destino de tu viaje');
         return false;
     }
 
     if(!globalStartDate || !globalEndDate) {
-        Toast('ERROR AL ENVIAR SOLICITUD', 'Por favor, selecciona ambas fechas de tu viaje');
+        Toast(errorTitle, 'Por favor, selecciona ambas fechas de tu viaje');
         return false;
     } else if(globalStartDate === globalEndDate) {
-        Toast('ERROR AL ENVIAR SOLICITUD', 'Por favor, selecciona un rango de fechas válido');
+        Toast(errorTitle, 'Por favor, selecciona un rango de fechas válido');
         return false;
     }
 
     if(!motive) {
-        Toast('ERROR AL ENVIAR SOLICITUD', 'Por favor, ingresa el motivo de tu viaje');
+        Toast(errorTitle, 'Por favor, ingresa el motivo de tu viaje');
         return false;
     }
 
     if(!amount) {
-        Toast('ERROR AL ENVIAR SOLICITUD', 'Por favor, ingresa el monto que necesitas para tu viaje');
+        Toast(errorTitle, 'Por favor, ingresa el monto que necesitas para tu viaje');
         return false;
     }
 

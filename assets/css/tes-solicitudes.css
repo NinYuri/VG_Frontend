@@ -21,6 +21,7 @@
     --transparent-white: rgba(255, 255, 255, 0.5);
     --transparent-blue: rgba(217, 217, 217, 0.5);
     --transparent-gray: rgba(140, 146, 146, 0.5);
+    --transparent-agave: rgba(42, 81, 86, 0.1);
     --tr-medium-blue: rgba(217, 217, 217, 0.7);
     --tr-dark-blue: rgba(217, 217, 217, 0.8);
     --tr-status-pending: rgba(208, 175, 6, 0.25);
@@ -43,6 +44,15 @@
         #002A32 18%,
         #004C5B 53%,
         var(--agave) 100%
+    );
+    --button-hover: linear-gradient(90deg, 
+        #428188 0%,
+        #112022 100%
+    );
+    --shine-hover: linear-gradient(120deg,
+        transparent 30%,
+        rgba(217, 217, 217, 0.6),
+        transparent 70%
     );
     --status-pending: linear-gradient(90deg,
         #D0AF06 0%,
@@ -219,134 +229,6 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
 ::-webkit-scrollbar-track { background-color: transparent; }
 
 
-/* ============================== TOAST ============================== */
-.swal2-toast { 
-    margin: 0.5em 0.5em 0 0 !important;
-    padding: 0; 
-    transition: all 0.3s ease-out !important;
-}
-
-.swal2-toast.swal2-hide {
-    opacity: 0 !important;
-    transform: translateY(-20px) !important;
-}
-
-.swal2-toast div:where(.swal2-html-container) { margin: 0 !important; }
-
-.swal2-popup.swal2-toast.colored-toast.swal2-show { padding: 0; }
-
-.colored-toast,
-.custom-reject-modal { 
-    background-color: var(--toast) !important;
-    font-family: 'CenturyGothic', sans-serif;
-    border-radius: 30px !important;
-}
-
-.custom-reject-modal { width: 500px !important; }
-
-.colored-toast .text {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    color: var(--white);
-    padding: 12px 30px 15px 0 !important;
-    text-align: center;
-}
-
-.colored-toast p,
-.reject-title {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin-bottom: 0.5em;
-}
-
-.colored-toast span { font-size: 1rem; }
-
-.agave-icon {
-    height: 6.5em; 
-    object-fit: contain; 
-    transform: translateY(10px);
-}
-
-.swal2-popup.swal2-modal.custom-reject-modal.swal2-show { 
-    position: relative;
-    margin: 0.5em 0.5em 0 0; 
-    padding-bottom: 0.5em !important;
-}
-
-.swal2-html-container { padding: 0em !important; }
-
-.swal2-textarea {
-    width: 75% !important;
-    height: 6em !important;
-    margin: 0em !important;
-    border-radius: 12px !important;
-    border: none !important;
-    resize: none !important;
-    font-family: 'CenturyGothic', sans-serif;
-    font-size: 0.9em;
-    background: var(--tr-dark-blue) !important;
-    color: var(--black) !important;
-    margin-bottom: 1em !important;
-}
-
-.swal2-textarea::placeholder { color: var(--black) !important; }
-
-.reject-question { 
-    font-size: 0.95em; 
-    font-weight: 600;
-}
-
-.swal2-actions { 
-    margin-top: 0.5em !important; 
-    gap: 0.5em;
-}
-
-.swal-confirm-btn, .swal-cancel-btn {
-    border-radius: 25px !important;
-    padding: 0.2em 1.3em !important;
-    filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.25)) !important;
-    font-weight: 600;
-    font-size: 1em;
-    background-image: var(--toast-buttons) !important;
-    border: none !important;
-    box-shadow: 0 0 0 3px rgba(0, 117, 141, 0.5) !important;
-    border-radius: 50px !important;
-}
-
-.swal2-validation-message {
-    width: 75%;
-    background-color: var(--tr-dark-blue);
-    border-radius: 12px;
-    color: var(--black);
-    font-family: 'CenturyGothic', sans-serif;
-    font-size: 1em;
-    font-weight: 600;
-    margin: 16px auto 8px;
-}
-
-div:where(.swal2-container) div:where(.swal2-validation-message)::before { background-color: var(--red) !important; }
-
-.agave-half {
-    position: absolute;
-    top: 0;
-    height: 13.9em;
-    object-fit: contain;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.agave-half.left { 
-    left: 0;
-    border-radius: 0 0 0 30px;
-}
-
-.agave-half.right { 
-    right: 0;
-    border-radius: 0 0 30px 0; 
-}
-
-
 /* ============================== BODY ============================== */
 body {
     display: flex;
@@ -361,6 +243,103 @@ body {
     align-items: center;
     width: 100vw;
     background-image: var(--background);
+}
+
+
+/* ============================== TOAST ============================== */
+.swal2-toast {
+    margin: 0.5em 0.5em 0 0 !important;
+    padding: 0;
+    transition: all 0.3s ease-out !important;
+}
+
+.swal2-toast.swal2-hide {
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
+}
+
+.swal2-toast div:where(.swal2-html-container) { 
+    margin: 0 !important; 
+    font-size: 1em;
+}
+
+.swal2-popup.swal2-toast.colored-toast.swal2-show { padding: 0; }
+
+.colored-toast,
+.custom-received-modal {
+    background-color: var(--toast) !important;
+    font-family: 'CenturyGothic', sans-serif;
+    border-radius: 30px !important;
+    overflow: hidden;
+}
+
+.colored-toast .text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--white);
+    padding: 12px 30px 15px 0 !important;
+    text-align: center;
+}
+
+.colored-toast p,
+.reject-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0.7em;
+}
+
+.colored-toast span { font-size: 1rem }
+
+.received-text { 
+    padding: 0 4em; 
+    margin-bottom: 1.3em;
+}
+
+.agave-icon {
+    height: 6.5em; 
+    object-fit: contain; 
+    transform: translateY(10px);
+}
+
+.swal2-html-container { 
+    padding: 0em !important; 
+    font-size: 1em !important;
+}
+
+.swal2-actions { 
+    margin-top: 0.5em !important; 
+    gap: 0.5em;
+}
+
+.swal-confirm-btn, .swal-cancel-btn {
+    padding: 0.2em 1.3em !important;
+    filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.25)) !important;
+    font-weight: 600;
+    font-size: 0.9em;
+    background-image: var(--toast-buttons) !important;
+    border: none !important;
+    box-shadow: 0 0 0 3px rgba(0, 117, 141, 0.5) !important;
+    border-radius: 50px !important;
+}
+
+.agave-half {
+    position: absolute;
+    top: 0;
+    height: 12.6em;
+    object-fit: contain;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.agave-half.left { 
+    left: -4%;
+    border-radius: 0 0 0 30px;
+}
+
+.agave-half.right { 
+    right: -4%;
+    border-radius: 0 0 30px 0; 
 }
 
 
@@ -480,7 +459,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.5em;
+    gap: 0.7em;
     font-weight: 300;
     font-size: 1.3em;
     color: var(--white);
@@ -550,6 +529,7 @@ body {
 .content-header {
     width: 100%;
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
 }
 
@@ -1101,7 +1081,7 @@ body {
 }
 
 
-/* ============================== INFORMATION ============================== */
+/* =========================== TRANSFER RECEIPT =========================== */
 .container::before {
     content: '';
     position: absolute;
@@ -1120,23 +1100,22 @@ body {
 
 .container.modal-open::before { opacity: 1; }
 
-.info-wrapper {
+.transfer-wrapper {
     display: none;
     justify-content: center;
     align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 43em;
     transform: translate(-50%, -50%);
-    width: 29em;
-    height: 90%;
     background-color: var(--transparent-blue);
     border-radius: 15px;
     padding: 0.8em;
     z-index: 2000;
 }
 
-.info-back {
+.transfer-back {
     position: relative;
     width: 100%;
     height: 100%;
@@ -1146,287 +1125,97 @@ body {
     padding: 0;
 }
 
-.info-back::before,
-.info-back::after {
-    position: absolute;
-    content: '';
-    top: 50%;
-    transform: translateY(-50%);
-    width: 52px;
-    height: 52px;
-    background-color: transparent;
-    border-radius: 50%;
-    z-index: 10;
-}
-
-.info-back::before { 
-    left: -26px; 
-    box-shadow: inset -5px 3px 8px rgba(0, 0, 0, 0.25);
-}
-
-.info-back::after { 
-    right: -26px; 
-    box-shadow: inset 5px 3px 8px rgba(0, 0, 0, 0.25);
-}
-
-.info-decor {
-    position: relative;
+.top-decor {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 9%;
-    overflow: hidden;
-}
-
-.info-decor.top { border-radius: 10px 10px 0 0; }
-
-.info-decor.bottom { border-radius: 0 0 10px 10px; }
-
-.stripes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(135deg,
-        transparent,
-        transparent 20px,
-        var(--toast) 20px,
-        var(--toast) 40px
-    );
-}
-
-.arrow-back {
-    position: absolute;
-    left: 0.5em;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 2.7em;
-    height: 2.7em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--blue-white);
-    border-radius: 50%;
-    border: 6px solid var(--toast);
-    z-index: 2;
-    cursor: pointer;
-    transition: background-color 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1),
-                color 0.3s ease,
-                transform 0.2s ease;
-}
-
-.arrow-back:hover {
+    padding: 0.5em 1.3em 0.5em 0;
+    border-radius: 10px 10px 0 0;
     background-color: var(--toast);
+    font-size: 1.2em;
+    font-weight: 550;
+    letter-spacing: 0.07em;
     color: var(--white);
 }
 
-.info-container {
-    width: 100%;
-    height: 82%;
-}
-
-.info-top,
-.info-bottom {
-    position: relative;
-    width: 100%;
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.request-generals {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0.7em 0.7em 0 0.5em;
-}
-
-.info-folio,
-.info-date,
-.info-update { 
-    font-size: 0.8em; 
-    font-weight: 700;
-}
-
-.info-folio span,
-.info-date span,
-.info-update span { font-weight: 500; }
-
-.request-generals .status { padding: 0em 1em; }
-
-.request-destination {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2em;
-}
-
-.request-destination .info-subtitle {
-    font-size: 0.8em;
-    font-weight: 620;
-    color: var(--passport-gray);
-}
-
-.request-destination p {
-    font-size: 2.5em;
-    font-weight: 500;
-    line-height: 1.2em;
-}
-
-.colab {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 0.2em;
-    gap: 0.5em;
-}
-
-.colab::before,
-.colab::after {
-    content: '';
+.top-decor p {
     flex: 1;
-    height: 40%;
-    background-color: var(--icons);
+    text-align: center;
 }
 
-.request-dates-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    width: 100%;
-    height: 40%;
-    padding: 0 1.6em;
-}
+.top-decor i { cursor: pointer; }
 
-.request-dates {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: space-between;
-    align-items: end;
-    width: 100%;
-    height: 100%;
-    padding: 0.5em 0.7em 0.2em 0.7em;
-}
-
-.departure-date,
-.return-date { 
-    width: auto; 
-    padding-bottom: 0.4em;
-}
-
-.departure-date .info-subtitle,
-.return-date .info-subtitle {
-    font-size: 0.75em;
-    font-weight: 650;
-    color: var(--passport-gray);
-}
-
-.departure-date p,
-.return-date p { font-size: 0.9em; }
-
-.return-date { 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; 
-}
-
-.travel-days {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0px;
-}
-
-.travel-days img,
-.travel-days p {
-    margin: 0;
-    padding: 0;
-}
-
-.travel-days img:first-child {
-    width: 20%;
-    rotate: 45deg;
-    transform: translateY(10%);
-}
-
-.travel-days img:nth-child(2) {
-    width: 100%;
-    object-fit: contain;
-}
-
-.total-days {
-    font-size: 0.6em;
-    font-weight: 600;
-    color: var(--passport-gray);
-    line-height: 1.2;
-}
-
-.passport-line { 
-    width: 100%;
-    border-bottom: 1.5px dashed var(--line-gray);
-}
-
-.info-bottom { 
-    justify-content: center; 
-    padding-bottom: 0.7em;
-}
-
-.info-row { 
-    display: flex;
-    align-items: center;
-    height: 90%;
-    align-items: stretch;
-}
-
-.info-bottom .info-subtitle {
-    font-size: 0.75em;
-    font-weight: 650;
-    color: var(--passport-gray);
-}
-
-.info-motive,
-.info-money { 
+.bottom-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50%; 
-    height: 100%;
-}
-
-.info-motive { padding: 0em 0.7em 0 2.2em; }
-
-.info-money {
-    text-align: end;
-    padding: 0em 2.2em 0 0.7em;
-}
-
-.info-amount { font-size: 1.7em; }
-
-.info-currency {
-    display: flex;
-    justify-content: end;
     align-items: center;
-    gap: 0.3em;
-    margin-bottom: 1.5em;
-    transform: translateY(-10%);
+    text-align: center;
+    padding: 0.7em 1.5em 1.5em 1.5em;
+    font-size: 1em;
 }
 
-.currency-flag {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    object-fit: cover;
+.receipt-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 11em;
+    margin: 1.5em 0;
+    border: 2px dashed var(--line-gray);
+    border-radius: 10px;
+    font-size: 0.9em;
+    color: var(--line-gray);
+    gap: 0.8em;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 
-.info-currency p { font-size: 0.8em; }
+.receipt-container:hover { 
+    border: 2px dashed var(--icons); 
+    color: var(--icons);
+    background-color: var(--transparent-agave);
+}
 
-.info-update { margin-left: 0.7em; }
+.receipt-container i { font-size: 2.7em; }
 
+.button-receipt {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: var(--button-hover);
+    border-radius: 70px;
+    color: var(--white);
+    padding: 0.3em 1.7em;
+    font-size: 0.97em;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.button-receipt:hover::before { animation: shine 1.5s ease-out infinite; }
+
+.button-receipt::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: var(--shine-hover);
+    top: 0;
+    left: -100%;
+    opacity: 0.6;
+}
+
+@keyframes shine {
+    0% { left: -100px; }
+    60% { left: 100%; }
+    to { left: 100%; }
+}
+
+
+/* ============================== MOBILE ============================== */
 .cards-mobile,
 .agave-mobile { display: none; }
 
@@ -1435,29 +1224,20 @@ body {
 /* Escritorios grandes (1920px) */
 @media(min-width: 1801px) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 710px !important; }
+    body.swal2-toast-shown .swal2-container { width: 690px !important; }
 
-    .swal2-popup.custom-reject-modal { width: 670px !important; }
+    .swal2-popup.custom-received-modal { width: 790px !important; }
 
     .colored-toast p,
-    .reject-title { font-size: 1.5em; }
-
-    .colored-toast span { font-size: 1.4em; }
+    .reject-title { font-size: 1.5em }
+    
+    .colored-toast span,
+    .received-text { font-size: 1.4em; }
 
     .agave-icon { height: 7.5em; }
 
-    .swal2-textarea {
-        width: 80% !important;
-        height: 7em !important;
-        font-size: 1.1em;
-    }
-
-    .reject-question { font-size: 1.1em; }
-
     .swal-confirm-btn, 
-    .swal-cancel-btn { font-size: 1.2em; }
-
-    .swal2-validation-message { font-size: 1.2em; }
+    .swal-cancel-btn { font-size: 1.3em; }
 
     .agave-half { height: 17.9em; }
 
@@ -1551,8 +1331,7 @@ body {
 
     .datepicker-header button { font-size: 0.8em; }
 
-    .days-header span { font-size: 1em; }
-
+    .days-header span,
     .dates { font-size: 1em; }
 
     /* TABLE */
@@ -1587,80 +1366,27 @@ body {
 
     .page { font-size: 1.5em; }
 
-    /* INFORMATION */
-    .info-wrapper {
-        width: 35em;
-        height: 95%;
+    /* TRANSFER RECEIPT */
+    .transfer-wrapper {
         border-radius: 25px;
         padding: 1em;
+        width: 53em
     }
 
-    .info-back { border-radius: 15px; }
+    .transfer-back { border-radius: 15px; }
 
-    .info-back::before,
-    .info-back::after {
-        width: 60px;
-        height: 60px;
+    .top-decor { 
+        font-size: 1.5em; 
+        border-radius: 15px 15px 0 0;
     }
 
-    .arrow-back {
-        width: 3.5em;
-        height: 3.5em;
-        border: 8px solid var(--toast);
+    .receipt-container { 
+        border-radius: 15px;
+        font-size: 1em;
     }
 
-    .arrow-back i { 
-        font-size: 1.3em; 
-        transform: translateY(5%);
-    }
-
-    .request-generals { padding: 0.7em 0.9em 0 0.7em; }
-
-    .info-folio,
-    .info-date,
-    .info-update { font-size: 0.9em; }
-
-    .request-generals .status { font-size: 0.9em; }
-
-    .request-destination .info-subtitle,
-    .departure-date .info-subtitle,
-    .return-date .info-subtitle,
-    .info-bottom .info-subtitle { font-size: 1em; }
-
-    .request-destination { margin-top: 4em; }
-
-    .request-destination p { font-size: 3em; }
-
-    .request-dates-wrapper { 
-        height: 100%; 
-        padding: 0 2.1em;
-    }
-
-    .departure-date p,
-    .return-date p { font-size: 1.1em; }
-
-    .travel-days img:first-child { 
-        width: 25%; 
-        transform: translateY(5%);
-    }
-
-    .total-days { font-size: 0.8em; }
-
-    .passport-line { border-bottom: 2.5px dashed var(--line-gray); } 
-
-    .info-motive p,
-    .info-payment { font-size: 1.2em; }
-
-    .info-amount { font-size: 2.2em; }
-
-    .info-currency { gap: 0.5em; }
-
-    .currency-flag {
-        width: 19px;
-        height: 19px;
-    }
-
-    .info-currency p { font-size: 1em; }
+    .bottom-info,
+    .buttton-receipt { font-size: 1.25em }
 }
 
 /* Escritorios medianos (1440px + 1800px) */
@@ -1668,29 +1394,20 @@ body {
     /* TOAST */
     body.swal2-toast-shown .swal2-container { width: 560px !important; }
 
-    .swal2-popup.custom-reject-modal { width: 540px !important; }
+    .swal2-popup.custom-received-modal { width: 547px !important; }
 
     .colored-toast p,
     .reject-title { font-size: 1.2em; }
 
-    .colored-toast span { font-size: 1em; }
+    .colored-toast span,
+    .received-text { font-size: 1em; }
 
     .agave-icon { height: 7em; }
-
-    .swal2-textarea {
-        width: 75% !important;
-        height: 6.5em !important;
-        font-size: 0.9em;
-    }
-
-    .reject-question { font-size: 1em; }
 
     .swal-confirm-btn, 
     .swal-cancel-btn { font-size: 1em; }
 
-    .swal2-validation-message { font-size: 1em; }
-
-    .agave-half { height: 14.4em; }
+    .agave-half { height: 13em; }
 
     /* OPTION BAR */
     .logo .name { font-size: 1.1em; }
@@ -1737,8 +1454,7 @@ body {
 
     .datepicker-header { font-size: 1em; }
 
-    .datepicker-header button { font-size: 0.8em; }
-
+    .datepicker-header button,
     .days-header span,
     .dates { font-size: 0.8em; }
 
@@ -1761,92 +1477,25 @@ body {
 
     .page { font-size: 1em; }
 
-    /* INFORMATION */
-    .info-wrapper { 
-        width: 30em;
-        height: 93%; 
-    }
-
-    .info-back::before,
-    .info-back::after {
-        width: 50px;
-        height: 50px;
-    }
-
-    .request-generals { padding: 0.7em 0.9em 0 0.7em; }
-
-    .arrow-back {
-        width: 2.7em;
-        height: 2.7em;
-        border: 6px solid var(--toast);
-    }
-
-    .arrow-back i { font-size: 1em; }
-
-    .info-folio,
-    .info-date,
-    .info-update { font-size: 0.75em; }
-
-    .request-destination .info-subtitle,
-    .departure-date .info-subtitle,
-    .return-date .info-subtitle,
-    .info-bottom .info-subtitle { font-size: 0.8em; }
-
-    .request-dates-wrapper { 
-        height: 100%; 
-        padding: 0 1.8em;
-    }
-
-    .request-destination p { font-size: 2.5em; }
-
-    .departure-date p,
-    .return-date p { font-size: 0.9em; }
-
-    .travel-days img:first-child { 
-        width: 20%; 
-        transform: translateY(5%);
-    }
-
-    .total-days { font-size: 0.6em; }
-
-    .passport-line { border-bottom: 2px dashed var(--line-gray); } 
-
-    .info-motive p,
-    .info-payment { font-size: 1em; }
-
-    .info-amount { font-size: 1.7em; }
-
-    .info-currency { gap: 0.3em; }
-
-    .currency-flag {
-        width: 15px;
-        height: 15px;
-    }
-
-    .info-currency p { font-size: 0.8em; }
+    /* TRANSFER RECEIPT */
 }
 
 @media(min-width: 1366px) and (max-width: 1469px) and (max-resolution: 1.5dppx) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 520px !important; }
+    body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
-    .swal2-popup.custom-reject-modal { width: 490px !important; }
+    .swal2-popup.custom-received-modal { width: 520px !important; }
 
-    .colored-toast span { font-size: 0.95em; }
+    .colored-toast span,
+    .received-text { font-size: 0.95em; }
 
     .colored-toast p,
     .reject-title { font-size: 1em; }
 
-    .swal2-textarea { font-size: 0.85em; }
-
-    .reject-question { font-size: 0.85em; }
-
     .swal-confirm-btn, 
-    .swal-cancel-btn { font-size: 0.9em; }
+    .swal-cancel-btn { font-size: 0.91em; }
 
-    .swal2-validation-message { font-size: 0.9em; }
-
-    .agave-half { height: 12.7em; }
+    .agave-half { height: 11.8em; }
 
     /* OPTION BAR */
     .logo .name { font-size: 1.1em; }
@@ -1907,11 +1556,14 @@ body {
     /* TABLE */
     .table-head th { font-size: 1.2em; }
 
-    .table-body .folio { font-size: 1.1em; }
+    .table-body .folio { font-size: 1em; }
 
     .table-body td { font-size: 0.9em; }
 
-    .status { font-size: 0.9em; }
+    .status { 
+        font-size: 0.9em; 
+        padding: 0.2em 0.6em;
+    }
 
     .tab-buttons { margin-top: 1em; }
 
@@ -1922,68 +1574,25 @@ body {
 
     .page { font-size: 0.9em; }
 
-    /* INFORMATION */
-    .info-wrapper {
-        width: 27em; 
-        height: 95%; 
-    }
-
-    .info-back::after,
-    .info-back::before { 
-        width: 48px; 
-        height: 47px;
-    }
-
-    .arrow-back {
-        width: 37px;
-        height: 37px;
-        border: 5px solid var(--toast);
-    }
-
-    .arrow-back i { font-size: 1em; }
-
-    .info-folio,
-    .info-date,
-    .info-update { font-size: 0.75em; }
-
-    .request-generals .status { 
-        font-size: 0.75em; 
-        padding: 0.4em 0.9em;
-    }
-
-    .request-destination p { font-size: 2.3em; }
-
-    .request-dates { margin-top: 0.3em; }
-
-    .departure-date p { font-size: 0.8em; }
-
-    .info-motive p,
-    .info-payment { font-size: 0.95em; }
-
-    .info-currency p { font-size: 0.75em; }
+    /* TRANSFER RECEIPT */
 }
 
 @media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 520px !important; }
+    body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
-    .swal2-popup.custom-reject-modal { width: 500px !important; }
+    .swal2-popup.custom-received-modal { width: 510px !important; }
 
-    .colored-toast span { font-size: 0.95em; }
+    .colored-toast span,
+    .received-text { font-size: 0.93em; }
 
     .colored-toast p,
     .reject-title { font-size: 1em; }
 
-    .swal2-textarea { font-size: 0.85em; }
-
-    .reject-question { font-size: 0.85em; }
-
     .swal-confirm-btn, 
     .swal-cancel-btn { font-size: 0.9em; }
 
-    .swal2-validation-message { font-size: 0.9em; }
-
-    .agave-half { height: 12.8em; }
+    .agave-half { height: 11.8em; }
 
     /* OPTION BAR */
     .logo .name { font-size: 1em; }
@@ -2041,10 +1650,8 @@ body {
 
     .date-header { font-size: 0.9em; }
 
-    .datepicker-header button { font-size: 0.7em; }
-
-    .days-header span { font-size: 0.7em; }
-
+    .datepicker-header button,
+    .days-header span,
     .dates { font-size: 0.7em; }
 
     /* TABLE */
@@ -2070,76 +1677,28 @@ body {
 
     .page { font-size: 0.9em; }
 
-    /* INFORMATION */
-    .info-wrapper {
-        width: 27em; 
-        height: 95%; 
-    }
-
-    .info-back::after,
-    .info-back::before { 
-        width: 48px; 
-        height: 47px;
-    }
-
-    .arrow-back {
-        width: 37px;
-        height: 37px;
-        border: 5px solid var(--toast);
-    }
-
-    .arrow-back i { font-size: 0.9em; }
-
-    .info-folio,
-    .info-date,
-    .info-update { font-size: 0.7em; }
-
-    .request-generals .status { 
-        font-size: 0.7em; 
-        padding: 0em 0.8em;
-    }
-
-    .request-destination { margin-top: 1.5em; }
-
-    .request-destination p { font-size: 2.3em; }
-
-    .request-dates { margin-top: 0.3em; }
-
-    .departure-date p { font-size: 0.8em; }
-
-    .info-motive p,
-    .info-payment { font-size: 0.95em; }
-
-    .info-currency p { font-size: 0.75em; }
+    /* TRANSFER RECEIPT */
 }
 
 /* Laptops pequeñas (1024px - 1299px) */
 @media(min-width: 1025px) and (max-width: 1280px) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 500px !important; }
+    body.swal2-toast-shown .swal2-container { width: 430px !important; }
 
-    .swal2-popup.custom-reject-modal { width: 450px !important; }
+    .swal2-popup.custom-received-modal { width: 495px !important; }
 
     .colored-toast p,
     .reject-title { font-size: 1em; }
 
-    .colored-toast span { font-size: 0.9em; }
+    .colored-toast span,
+    .received-text { font-size: 0.9em; }
 
     .agave-icon { height: 6em; }
-
-    .swal2-textarea {
-        width: 80% !important;
-        font-size: 0.85em;
-    }
-
-    .reject-question { font-size: 0.8em; }
 
     .swal-confirm-btn, 
     .swal-cancel-btn { font-size: 0.85em; }
 
-    .swal2-validation-message { font-size: 0.9em; }
-
-    .agave-half { height: 12.6em; }
+    .agave-half { height: 13em; }
 
     /* OPTION BAR */
     .option-bar { width: 23%; }
@@ -2233,33 +1792,7 @@ body {
 
     .page { font-size: 0.9em; }
 
-    /* INFORMATION */
-    .info-wrapper { 
-        width: 26em; 
-        height: 99%;
-    }
-
-    .info-folio,
-    .info-date,
-    .info-update,
-    .request-destination .info-subtitle,
-    .departure-date .info-subtitle,
-    .request-generals .status { font-size: 0.7em; }
-
-    .request-destination p { font-size: 2.2em; }
-
-    .departure-date p,
-    .return-date p { font-size: 0.8em; }
-
-    .info-motive p,
-    .info-payment { font-size: 0.85em; }
-
-    .currency-flag {
-        width: 13px;
-        height: 13px;
-    }
-
-    .info-currency p { font-size: 0.75em }
+    /* TRANSFER RECEIPT */
 }
 
 /* Tabletas */
@@ -2511,7 +2044,7 @@ body {
     /* TOAST */
     .swal2-toast { margin: 0 !important; }
 
-    .swal2-popup.swal2-modal.custom-reject-modal.swal2-show { margin: 0 !important; }
+    .swal2-popup.swal2-modal.custom-received-modal.swal2-show { margin: 0 !important; }
 
     .colored-toast .text { padding: 12px 10px 15px 0 !important; }
 
@@ -2520,24 +2053,22 @@ body {
     .colored-toast p,
     .reject-title { font-size: 1em; }
 
-    .colored-toast span { font-size: 0.9em; }
+    .colored-toast span,
+    .received-text { font-size: 0.9em; }
 
-    .swal2-textarea {
-        width: 80% !important;
-        font-size: 0.9em;
+    .received-text { 
+        line-height: 1.5; 
+        margin-bottom: 1em;
     }
-
-    .reject-question { font-size: 0.9em; }
 
     .swal-confirm-btn, 
-    .swal-cancel-btn { font-size: 0.9em; }
-
-    .swal2-validation-message { 
-        width: 80%;
-        font-size: 0.8em; 
-    }
+    .swal-cancel-btn { font-size: 0.95em; }
 
     .agave-half { height: 12em; }
+    
+    .agave-half.left { left: -11%; }
+
+    .agave-half.right { right: -11%; }
     
     /* BODY */
     html { background-color: var(--html-back); }

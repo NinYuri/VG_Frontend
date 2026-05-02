@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initCalendar();
     setupCalendar();
     updateCurrency();
+    buttonTransfer();
 });
 
 
@@ -572,4 +573,112 @@ function updateCurrency() {
     if(!currency) return;
 
     symbolSpan.textContent = currency.symbol;
+}
+
+
+/* ============================== TABLE BUTTONS ============================== */
+// Transfer Receipt
+function buttonTransfer() {
+    const buttons = document.querySelectorAll('.fa-circle-dollar-to-slot');
+    const container = document.querySelector('.container');
+    if(!buttons) return;
+
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            const row = button.closest('tr');
+            let folio;
+            let payment;
+
+            if(row) {
+                const paymentCell = row.querySelector('.payment');
+                const folioCell = row.querySelector('.folio');
+
+                if(paymentCell) payment = paymentCell.textContent.trim();
+                if(folioCell) folio = folioCell.textContent.trim();
+            } else return;
+
+            if(payment === 'Transferencia') {
+                const receipt = document.querySelector('.transfer-wrapper');
+                const buttonClose = document.querySelector('.top-decor i');
+                if(!receipt || !buttonClose) return;
+
+                receipt.style.display = 'flex';
+                container.classList.add('modal-open');
+
+                buttonClose.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    receipt.style.display = 'none';
+                    container.classList.remove('modal-open');
+                });
+            } else 
+                ToastButtons(folio);
+        });
+    });
+}
+
+
+/* ================================== TOAST ================================== */
+// Toast -> Simple
+const ToastMixin = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: true,
+    width: '540px',
+    customClass: { popup: 'colored-toast' },
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+});
+
+function Toast(title, content, imageUrl = './assets/images/Icon_agave.webp') {
+    ToastMixin.fire({
+        icon: undefined,
+        html: `
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <img src="${imageUrl}" alt="Agave" class="agave-icon">
+                <div class="text">
+                    <p>${title}</p>
+                    <span>${content}</span>
+                </div>
+            </div>
+        `
+    });
+}
+
+// Toast -> Buttons
+function ToastButtons(folio, imageLeft = './assets/images/Icon_agave1.webp', imageRight = './assets/images/Icon_agave2.webp') {
+    Swal.fire({
+        title: 'CONFIRMAR ENTREGA DE ANTICIPO',
+        html: `
+            <img src="${imageLeft}" alt="Agave" class="agave-half left">
+            <img src="${imageRight}" alt="Agave" class="agave-half right">
+            <p class="received-text">¿Se ha entregado el anticipo en efectivo al colaborador para la solicitud con folio ${folio}?</p>
+        `,
+        position: 'top-end',
+        background: '#00333E',
+        color: '#FFFFFF',
+        showCancelButton: true,
+        cancelButtonText: 'NO, AÚN NO',
+        confirmButtonText: 'SÍ, FUE ENTREGADO',
+        backdrop: 'rgba(0, 0, 0, 0)',
+        allowOutsideClick: false,
+        scrollbarPadding: false,
+        width:'543px',
+        heightAuto: false, 
+        customClass: {
+            popup: 'custom-received-modal',
+            title: 'reject-title',
+            confirmButton: 'swal-confirm-btn',
+            cancelButton: 'swal-cancel-btn'
+        }
+    }).then((result) => {
+        if(result.isConfirmed) {
+            Toast('ENTREGA DE ANTICIPO', '¡Listo! Hemos notificado al colaborador para que confirme la recepción del anticipo');
+        }
+    });
 }

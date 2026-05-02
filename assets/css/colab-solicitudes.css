@@ -988,12 +988,14 @@ body {
 }
 
 .st-pending { background-color: var(--tr-status-pending); }
-.st-approved { background-color: var(--tr-status-approved); }
+.st-approved,
+.st-liquidated { background-color: var(--tr-status-approved); }
 .st-rejected { background-color: var(--tr-status-rejected); }
 .st-canceled { background-color: var(--tr-status-canceled); }
 
 .st-pending::before { background: var(--status-pending); }
-.st-approved::before { background: var(--status-approved); }
+.st-approved::before,
+.st-liquidated::before { background: var(--status-approved); }
 .st-rejected::before { background: var(--status-rejected); }
 .st-canceled::before { background: var(--status-canceled); }
 
@@ -1929,7 +1931,10 @@ body {
 
     .table-body td { font-size: 0.9em; }
 
-    .status { font-size: 0.9em; }
+    .status { 
+        font-size: 0.9em; 
+        padding: 0.2em 0.6em;
+    }
 
     .tab-buttons { margin-top: 1em; }
 
@@ -2561,6 +2566,11 @@ body {
     .colored-toast span,
     .reject-question,
     .received-text { font-size: 0.9em; }
+
+    .received-text { 
+        line-height: 1.5; 
+        margin-bottom: 1em;
+    }
 
     .canceled-text { 
         padding: 0 2em;

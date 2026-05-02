@@ -496,7 +496,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 3.5em;
-    margin-top: 1em;
+    margin-top: 0.7em;
     border-radius: 80px;
     color: var(--white);
     font-size: 0.95em;
@@ -514,6 +514,11 @@ body {
 
 .button.cancel {
     background-image: var(--button-cancel);
+    width: 12.5em;
+}
+
+.button.save {
+    background-image: var(--button-send);
     width: 12.5em;
 }
 
@@ -541,7 +546,8 @@ body {
     font-weight: 500;
 }
 
-.button.send i { margin-right: 0.5em; }
+.button.send i,
+.button.save i { margin-right: 0.5em; }
 
 .button.cancel i { margin-right: 0.4em; }
 
@@ -947,6 +953,7 @@ body {
 
     .button.send { width: 12em; }
 
+    .button.save,
     .button.cancel { width: 13.5em; }
 
     .question { font-size: 1.4em; }
@@ -1175,7 +1182,8 @@ body {
 
     .button { font-size: 0.8em; }
 
-    .button.send i { margin-right: 0.6em; }
+    .button.send i,
+    .button-save i { margin-right: 0.6em; }
 
     .content-form { padding: 0.7em 0 1em 0; }
 
@@ -1401,12 +1409,13 @@ body {
     .button:last-child { margin: 0 0 3em 0; }
 
     .button.send i,
-    .button.cancel i { 
+    .button.cancel i,
+    .button.save i { 
         font-size: 0.85em;
         transform: translateY(-5%);
     }
 
-    .button-create:hover::before { animation: shine 2.5s ease-out infinite; }
+    .button:hover::before { animation: shine 2.5s ease-out infinite; }
 
     /* CONTENT */
     .content-form { flex-direction: column; }
@@ -1563,7 +1572,9 @@ body {
 
     .button { font-size: 0.7em; }
 
-    .button.send i { margin-right: 0.6em; }
+    .button.send i,
+    .button.save i { margin-right: 0.6em; }
+
     .button.cancel i { margin-right: 0.5em; }
 
     .button:hover::before { animation: shine 2.5s ease-out infinite; }

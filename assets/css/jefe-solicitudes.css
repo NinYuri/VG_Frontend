@@ -1550,8 +1550,7 @@ body {
 
     .datepicker-header button { font-size: 0.8em; }
 
-    .days-header span { font-size: 1em; }
-
+    .days-header span,
     .dates { font-size: 1em; }
 
     /* TABLE */
@@ -1617,8 +1616,7 @@ body {
 
     .info-folio,
     .info-date,
-    .info-update { font-size: 0.9em; }
-
+    .info-update,
     .request-generals .status { font-size: 0.9em; }
 
     .request-destination .info-subtitle,
@@ -1735,8 +1733,7 @@ body {
 
     .datepicker-header { font-size: 1em; }
 
-    .datepicker-header button { font-size: 0.8em; }
-
+    .datepicker-header button,
     .days-header span,
     .dates { font-size: 0.8em; }
 
@@ -1909,7 +1906,10 @@ body {
 
     .table-body td { font-size: 0.9em; }
 
-    .status { font-size: 0.9em; }
+    .status { 
+        font-size: 0.9em; 
+        padding: 0.2em 0.6em;
+    }
 
     .tab-buttons { margin-top: 1em; }
 
@@ -2038,10 +2038,8 @@ body {
 
     .date-header { font-size: 0.9em; }
 
-    .datepicker-header button { font-size: 0.7em; }
-
-    .days-header span { font-size: 0.7em; }
-
+    .datepicker-header button,
+    .days-header span,
     .dates { font-size: 0.7em; }
 
     /* TABLE */

@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     buttonRequest();
     buttonReceived();
     buttonCanceled();
+    buttonEdit();
     buttonInfo();
 });
 
@@ -573,7 +574,7 @@ function calculateDays() {
         days.textContent = '00';
 }
 
-// Request
+// New Request
 function buttonRequest() {
     const button = document.querySelector('.button-create');
     if(!button) return;
@@ -639,6 +640,20 @@ function buttonCanceled() {
             } else return;
 
             ToastCanceled(folio);
+        });
+    });
+}
+
+// Edit
+function buttonEdit() {
+    const buttons = document.querySelectorAll('.fa-pen-to-square');
+    if(!buttons) return;
+
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            window.location.href = 'editar-solicitud.html';
         });
     });
 }
@@ -770,7 +785,8 @@ function ToastReceived(folio, imageLeft = './assets/images/Icon_agave1.webp', im
         }
     }).then((result) => {
         if(result.isConfirmed) {
-            Toast('SOLICITUD CANCELADA', 'Ahora puedes consultarla en la pestaña de Canceladas');
-        }
+            Toast('RECEPCIÓN DE ANTICIPO', '¡Listo! Tu anticipo ha sido confirmado correctamente');
+        } else
+            Toast('RECEPCIÓN DE ANTICIPO', 'Hemos notificado a Tesorería para dar seguimiento a la entrega de tu anticipo');
     });
 }
