@@ -1370,7 +1370,7 @@ body {
     .transfer-wrapper {
         border-radius: 25px;
         padding: 1em;
-        width: 53em
+        width: 53em;
     }
 
     .transfer-back { border-radius: 15px; }
@@ -1380,13 +1380,10 @@ body {
         border-radius: 15px 15px 0 0;
     }
 
-    .receipt-container { 
-        border-radius: 15px;
-        font-size: 1em;
-    }
+    .receipt-container { border-radius: 15px; }
 
     .bottom-info,
-    .buttton-receipt { font-size: 1.25em }
+    .buttton-receipt { font-size: 1.25em; }
 }
 
 /* Escritorios medianos (1440px + 1800px) */
@@ -1476,13 +1473,11 @@ body {
     }
 
     .page { font-size: 1em; }
-
-    /* TRANSFER RECEIPT */
 }
 
 @media(min-width: 1366px) and (max-width: 1469px) and (max-resolution: 1.5dppx) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 470px !important; }
+    body.swal2-toast-shown .swal2-container { width: 500px !important; }
 
     .swal2-popup.custom-received-modal { width: 520px !important; }
 
@@ -1575,11 +1570,20 @@ body {
     .page { font-size: 0.9em; }
 
     /* TRANSFER RECEIPT */
+    .transfer-wrapper { width: 39em; } 
+
+    .top-decor { font-size: 1.05em; }
+
+    .bottom-info { font-size: 0.9em; }
+
+    .receipt-container { font-size: 0.87em; }
+
+    .button-receipt { font-size: 1em; }
 }
 
 @media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 470px !important; }
+    body.swal2-toast-shown .swal2-container { width: 520px !important; }
 
     .swal2-popup.custom-received-modal { width: 510px !important; }
 
@@ -1678,12 +1682,21 @@ body {
     .page { font-size: 0.9em; }
 
     /* TRANSFER RECEIPT */
+    .transfer-wrapper { width: 37em; }
+
+    .top-decor { font-size: 0.95em; }
+
+    .bottom-info { font-size: 0.85em; }
+
+    .receipt-container { font-size: 0.8em; }
+
+    .button-receipt { font-size: 0.9em; }
 }
 
 /* Laptops pequeñas (1024px - 1299px) */
 @media(min-width: 1025px) and (max-width: 1280px) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 430px !important; }
+    body.swal2-toast-shown .swal2-container { width: 470px !important; }
 
     .swal2-popup.custom-received-modal { width: 495px !important; }
 
@@ -1793,6 +1806,14 @@ body {
     .page { font-size: 0.9em; }
 
     /* TRANSFER RECEIPT */
+    .transfer-wrapper { width: 35em; }
+
+    .top-decor { font-size: 0.9em; }
+
+    .bottom-info,
+    .receipt-container { font-size: 0.8em; }
+
+    .button-receipt { font-size: 0.9em; }
 }
 
 /* Tabletas */
@@ -2065,7 +2086,7 @@ body {
     .swal-cancel-btn { font-size: 0.95em; }
 
     .agave-half { height: 12em; }
-    
+
     .agave-half.left { left: -11%; }
 
     .agave-half.right { right: -11%; }
