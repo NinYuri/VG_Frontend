@@ -6,9 +6,18 @@ document.addEventListener("DOMContentLoaded", function() {
     searchColab();
     initCalendar();
     setupCalendar();
+    activeCards();
     updateCurrency();
     buttonTransfer();
+    initReceiptUpload();
 });
+
+
+/* ============================== VARIABLES ============================== */
+// Transfer receipt
+let selectedFile = null;
+let isUploading = false;
+let uploadComplete = false;
 
 
 /* ============================== PHONE MENU ============================== */
@@ -516,6 +525,23 @@ function setupCalendar() {
 }
 
 
+/* ============================= ACTIVE CARD ============================= */
+function activeCards() {
+    const cards = document.querySelectorAll('.cards-mobile .card');
+    if(!cards.length) return;
+
+    cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            if(e.target.closest('.fa-circle-dollar-to-slot, .buttons-mobile')) return;
+            cards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+        });
+    });
+}
+
+
 /* ============================== FLAG CURRENCY ============================== */
 function updateCurrency() {
     const currencies = [
@@ -557,22 +583,6 @@ function updateCurrency() {
 
         symbolSpan.textContent = currency.symbol;
     }); 
-
-
-    // INFORMATION
-    const info = document.querySelector('.info-wrapper');
-    if(!info) return;
-
-    const img = info.querySelector('.currency-flag');
-    const symbolSpan = info.querySelector('.symbol-money');
-
-    if(!img || !symbolSpan) return;
-
-    let currencyCode = img.getAttribute('alt')?.toUpperCase();
-    const currency = currencies.find(c => c.code === currencyCode);
-    if(!currency) return;
-
-    symbolSpan.textContent = currency.symbol;
 }
 
 
@@ -588,12 +598,19 @@ function buttonTransfer() {
             e.stopPropagation();
 
             const row = button.closest('tr');
+            const card = button.closest('.card');
             let folio;
             let payment;
 
             if(row) {
                 const paymentCell = row.querySelector('.payment');
                 const folioCell = row.querySelector('.folio');
+
+                if(paymentCell) payment = paymentCell.textContent.trim();
+                if(folioCell) folio = folioCell.textContent.trim();
+            } else if(card) {
+                const paymentCell = card.querySelector('.payment-mobile');
+                const folioCell = card.querySelector('.folio-mobile');
 
                 if(paymentCell) payment = paymentCell.textContent.trim();
                 if(folioCell) folio = folioCell.textContent.trim();
@@ -615,6 +632,148 @@ function buttonTransfer() {
             } else 
                 ToastButtons(folio);
         });
+    });
+}
+
+function initReceiptUpload() {
+    const receiptContainer = document.querySelector('.receipt-container');
+    const uploadButton = document.querySelector('.button-receipt');
+    const fileInput = document.createElement('input');
+    const container = document.querySelector('.container');
+    const receiptModal = document.querySelector('.transfer-wrapper');
+    const closeButton = document.querySelector('.top-decor i');
+
+    if(!receiptContainer || !uploadButton || !container || !receiptModal || !closeButton) return;
+
+    fileInput.type = 'file';
+    fileInput.accept = '.jpg, .jpeg, .png';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    // Original
+    function resetContainer() {
+        receiptContainer.innerHTML = `
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>Selecciona o arrastra tu comprobante (JPG o PNG)</p>
+        `;
+
+        receiptContainer.style.backgroundImage = '';
+        receiptContainer.style.border = '2px dashed var(--line-gray)';
+        receiptContainer.classList.remove('has-image');
+        
+        selectedFile = null;
+        isUploading = false;
+        uploadComplete = false;
+    }
+
+    // Loader
+    function showLoaderReceipt() {
+        receiptContainer.innerHTML = `
+            <div class="loader-receipt"></div>
+            <p>Subiendo comprobante...</p>
+        `;
+    }
+
+    // Image
+    function showUploadedImage(imageUrl) {
+        receiptContainer.innerHTML = '';
+        receiptContainer.style.backgroundImage = `url(${imageUrl})`;
+        receiptContainer.style.backgroundSize = 'cover';
+        receiptContainer.style.backgroundPosition = 'center';
+        receiptContainer.style.border = 'none';
+        receiptContainer.classList.add('has-image');
+
+        uploadComplete = true;
+        isUploading = false;
+
+        const removeText = receiptContainer.querySelector('p');
+        if(removeText) removeText.remove();
+    }
+
+    function handleFile(file) {
+        const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if(!validTypes.includes(file.type)) {
+            Toast('FORMATO DE ARCHIVO INVÁLIDO', 'Solo se permiten archivos en formato JPG o PNG');
+            resetContainer();
+            return;
+        }
+
+        selectedFile = file;
+        receiptContainer.style.backgroundImage = '';
+        receiptContainer.style.border = '2px dashed var(--line-gray)';
+        receiptContainer.classList.remove('has-image');
+        showLoaderReceipt();
+
+        isUploading = true;
+        uploadComplete = false;
+
+        setTimeout(() => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                showUploadedImage(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }, 2000);
+    }
+
+    function openFileSelector() {
+        if(!isUploading)
+            fileInput.click();
+    }
+
+    receiptContainer.addEventListener('click', openFileSelector);
+
+    receiptContainer.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        receiptContainer.classList.add('dragover');
+    });
+
+    receiptContainer.addEventListener('dragleave', () => {
+        receiptContainer.classList.remove('dragover');
+    });
+
+    receiptContainer.addEventListener('drop', (e) => {
+        e.preventDefault();
+        receiptContainer.classList.remove('dragover');
+
+        const file = e.dataTransfer.files[0];
+        if(file)
+            handleFile(file);
+    });
+
+    uploadButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        if(uploadComplete) {
+            Toast('COMPROBANTE CARGADO', '¡Listo! Hemos notificado al colaborador para que confirme la recepción del anticipo');
+
+            setTimeout(() => {
+                receiptModal.style.display = 'none';
+                container.classList.remove('modal-open');
+                resetContainer();
+            }, 2000);
+        } else if(selectedFile === null && !isUploading)
+                Toast('COMPROBANTE REQUERIDO', 'Debes adjuntar el comprobante de la transferencia para continuar');
+            else if(selectedFile !== null && !isUploading)
+                handleFile(selectedFile);
+            else
+                Toast('ACHIVO EN PROCESO', 'Ya se está subiendo un archivo. Por favor, espera');
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        if(e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            handleFile(file);
+        }
+
+        fileInput.value = '';
+    });
+
+    // Cierre del modal
+    closeButton.addEventListener('click', () => {
+        receiptModal.style.display = 'none';
+        container.classList.remove('modal-open');
+        resetContainer();
     });
 }
 

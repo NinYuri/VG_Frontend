@@ -2379,6 +2379,35 @@ body {
         gap: 1em;
     }
 
+    .tabs {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-top: 25px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar { display: none }
+
+    .tab { 
+        padding: 0.5em 0.1em 0.5em 1.5em; 
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+
+    .tab::after { right: -21px; }
+
+    .tab:first-child { z-index: 5; }
+    .tab:nth-child(2) { z-index: 4; }
+    .tab:nth-child(3) { z-index: 3; }
+    .tab:nth-child(4) { z-index: 2; }
+    .tab:nth-child(5) { z-index: 1; }
+
+    .tab.selected { z-index: 10; }
+
     .search { margin-left: auto; }
 
     .datepicker-wrapper { 
@@ -2434,7 +2463,7 @@ body {
 
     .both-status-mobile {
         display: flex;
-        gap: 1.5em;
+        gap: 0.7em;
     }
 
     .complete-info {
@@ -2445,6 +2474,8 @@ body {
 
     .card.active .complete-info { display: grid; }
 
+    .folio-mobile { font-weight: 600; }
+
     .info-mobile.second { 
         display: flex; 
         align-items: center;
@@ -2452,8 +2483,8 @@ body {
     }
 
     .info-mobile .st-mobile { 
-        font-size: 0.9em;
-        padding: 0.5em 1.3em; 
+        font-size: 0.85em;
+        padding: 0.5em 1em; 
     }
 
     .first-column,

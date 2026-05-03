@@ -2405,8 +2405,8 @@ body {
     }
 
     .info-mobile .st-mobile { 
-        font-size: 0.9em;
-        padding: 0.5em 1.3em; 
+        font-size: 0.85em;
+        padding: 0.5em 1em; 
     }
 
     .first-column,
@@ -2424,6 +2424,8 @@ body {
     }
 
     .first-column { padding-right: 1em; }
+
+    .folio-mobile { font-weight: 600; }
 
     .info-mobile p { font-size: 1em; }
 

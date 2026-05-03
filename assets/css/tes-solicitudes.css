@@ -253,6 +253,8 @@ body {
     transition: all 0.3s ease-out !important;
 }
 
+.swal2-container { z-index: 2000; }
+
 .swal2-toast.swal2-hide {
     opacity: 0 !important;
     transform: translateY(-20px) !important;
@@ -354,7 +356,7 @@ body {
     padding: 10px 20px;
     background: transparent;
     transition: all 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 2500;
 }
 
 .mobile-nav::before {
@@ -902,13 +904,13 @@ body {
 .table-body tr:last-child { border-bottom: none; }
 
 .table-body td {
-    font-size: 1em;
+    font-size: 0.95em;
     font-weight: 400;
     padding: 0 0.8em;
 }
 
 .table-body .folio {
-    font-size: 1.1em;
+    font-size: 1.05em;
     font-weight: 600;
 }
 
@@ -1180,6 +1182,37 @@ body {
 
 .receipt-container i { font-size: 2.7em; }
 
+.receipt-container.has-image {
+    position: relative;
+    cursor: pointer;
+}
+
+.receipt-container.has-image::after {
+    content: "Cambiar imagen";
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--white);
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.receipt-container.has-image:hover::after { opacity: 1; }
+
+.receipt-container.dragover {
+    background-color: var(--transparent-agave);
+    transition: all 0.2s ease;
+}
+
 .button-receipt {
     position: relative;
     display: flex;
@@ -1214,6 +1247,19 @@ body {
     to { left: 100%; }
 }
 
+.loader-receipt {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--line-gray);
+    border-top: 4px solid var(--icons);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 /* ============================== MOBILE ============================== */
 .cards-mobile,
@@ -1477,7 +1523,7 @@ body {
 
 @media(min-width: 1366px) and (max-width: 1469px) and (max-resolution: 1.5dppx) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 500px !important; }
+    body.swal2-toast-shown .swal2-container { width: 520px !important; }
 
     .swal2-popup.custom-received-modal { width: 520px !important; }
 
@@ -1696,7 +1742,7 @@ body {
 /* Laptops pequeñas (1024px - 1299px) */
 @media(min-width: 1025px) and (max-width: 1280px) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 470px !important; }
+    body.swal2-toast-shown .swal2-container { width: 500px !important; }
 
     .swal2-popup.custom-received-modal { width: 495px !important; }
 
@@ -1818,6 +1864,9 @@ body {
 
 /* Tabletas */
 @media (min-width: 766px) and (max-width: 1024px) {
+    /* TOAST */
+    .swal2-container { z-index: 3000; }
+    
     /* BODY */
     html { background-color: var(--html-back); }
 
@@ -1951,21 +2000,15 @@ body {
 
     .complete-info {
         display: none;
-        grid-template-columns: 50% 25% 25%;
+        grid-template-columns: 32% 36% 32%;
         padding-top: 1em;
     }
 
     .card.active .complete-info { display: grid; }
 
-    .info-mobile.second { 
-        display: flex; 
-        align-items: center;
-        justify-content: space-between;
-    }
-
     .info-mobile .st-mobile { 
-        font-size: 0.9em;
-        padding: 0.5em 1.3em; 
+        font-size: 0.85em;
+        padding: 0.5em 1em; 
     }
 
     .first-column,
@@ -1973,18 +2016,17 @@ body {
     .third-column {
         display: flex;
         flex-direction: column;
+        justify-content: start;
+        align-items: center;
         padding: 1em 0;
     }
 
     .first-column,
-    .second-column { 
-        border-right: 1.5px solid var(--tabs-hover); 
-        gap: 1.2em;
-    }
+    .second-column { border-right: 1.5px solid var(--tabs-hover); }
 
-    .first-column { padding-right: 1em; }
+    .second-column { gap: 1.2em; }
 
-    .info-mobile p { font-size: 1em; }
+    .info-mobile p { font-size: 1.2em; }
 
     .info-mobile .subt-mobile {
         font-size: 0.8em;
@@ -1992,19 +2034,15 @@ body {
         color: var(--passport-gray);
     }
 
-    .info-mobile .destiny,
+    .folio-mobile { font-weight: 600; }
+
     .info-mobile .amount-mobile { font-size: 1.4em; }
 
     .info-mobile.return { text-align: right; }
 
-    .second-column,
-    .third-column {
-        justify-content: start;
-        align-items: center;
-    }
-
     .third-column { gap: 1.6em; }
 
+    .first-column .info-mobile,
     .second-column .info-mobile,
     .third-column .info-mobile { text-align: center; }
 
@@ -2017,21 +2055,6 @@ body {
         object-fit: cover;
         transform: translateY(15%);
         margin-right: 0.3em;
-    }
-
-    .map-img {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 5em;
-        overflow: hidden;
-        padding-top: 0.5em;
-    }
-
-    .map-img img { 
-        height: 100%;
-        object-fit: cover;
     }
 
     .buttons-mobile {
@@ -2049,6 +2072,19 @@ body {
 
     .tab-buttons { margin-top: 2em; }
 
+    /* TRANSFER RECEIPT */
+    .container::before { border-radius: 20px; }
+
+    .transfer-wrapper {
+        position: fixed;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 80%;
+        margin: 0;
+    }
+
+    /* AGAVE */
     .agave-mobile {
         display: flex;
         justify-content: center;
@@ -2063,6 +2099,8 @@ body {
 /* Móviles */
 @media(max-width: 765px) {
     /* TOAST */
+    .swal2-container { z-index: 3000; }
+
     .swal2-toast { margin: 0 !important; }
 
     .swal2-popup.swal2-modal.custom-received-modal.swal2-show { margin: 0 !important; }
@@ -2319,18 +2357,9 @@ body {
     .first-column,
     .second-column { margin-bottom: 1em; }
 
-    .info-mobile .destiny,
     .info-mobile .amount-mobile { 
         font-size: 1.3em; 
         font-weight: 600;
-    }
-
-    .info-mobile.second { 
-        display: flex; 
-        flex-direction: column;
-        align-items: center;
-        gap: 1em;
-        width: 100%;
     }
 
     .info-mobile p { font-size: 1.1em; }
@@ -2340,21 +2369,6 @@ body {
         font-weight: 700;
         color: var(--passport-gray);
         margin-bottom: 0.5em;
-    }
-
-    .map-img { 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 5em;
-        overflow: hidden;
-        margin-bottom: 0.8em;
-    }
-
-    .map-img img { 
-        height: 100%;
-        object-fit: cover;
     }
 
     .info-mobile .amount-mobile-currency { font-size: 0.75em; }
@@ -2379,6 +2393,37 @@ body {
         font-size: 1.4em;
         margin-top: 1em;
     }
+
+    /* TRANSFER RECEIPT */
+    .container::before { border-radius: 20px; }
+
+    .transfer-wrapper {
+        position: fixed;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 85%;
+        margin: 0;
+        padding: 0.5em;
+    }
+
+    .top-decor { 
+        justify-content: center;
+        flex-direction: column-reverse;
+        gap: 0.5em;
+        padding: 0.5em 0 0.7em 0;
+        font-size: 1.1em;
+    }
+
+    .top-decor i { 
+        margin-top: 0.3em;
+        margin-left: auto;
+        transform: translateX(-0.6em);
+    }
+
+    .receipt-container { font-size: 0.8em; }
+
+    .receipt-container p { padding: 0 1em; }
 
     /* PAGE */
     .tab-buttons { margin-top: 2.5em; }
