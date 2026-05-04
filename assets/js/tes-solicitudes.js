@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCurrency();
     buttonTransfer();
     initReceiptUpload();
+    buttonInfoDelivered();
+    buttonPreview();
+    buttonDownload();
 });
 
 
@@ -587,7 +590,7 @@ function updateCurrency() {
 
 
 /* ============================== TABLE BUTTONS ============================== */
-// Transfer Receipt
+// Transfer Receipt -> Pending Tab
 function buttonTransfer() {
     const buttons = document.querySelectorAll('.fa-circle-dollar-to-slot');
     const container = document.querySelector('.container');
@@ -618,7 +621,7 @@ function buttonTransfer() {
 
             if(payment === 'Transferencia') {
                 const receipt = document.querySelector('.transfer-wrapper');
-                const buttonClose = document.querySelector('.top-decor i');
+                const buttonClose = receipt.querySelector('.top-decor i');
                 if(!receipt || !buttonClose) return;
 
                 receipt.style.display = 'flex';
@@ -641,7 +644,7 @@ function initReceiptUpload() {
     const fileInput = document.createElement('input');
     const container = document.querySelector('.container');
     const receiptModal = document.querySelector('.transfer-wrapper');
-    const closeButton = document.querySelector('.top-decor i');
+    const closeButton = document.querySelector('.transfer-wrapper .top-decor i');
 
     if(!receiptContainer || !uploadButton || !container || !receiptModal || !closeButton) return;
 
@@ -774,6 +777,126 @@ function initReceiptUpload() {
         receiptModal.style.display = 'none';
         container.classList.remove('modal-open');
         resetContainer();
+    });
+}
+
+// Information -> Delivered Tab
+function buttonInfoDelivered() {
+    const buttons = document.querySelectorAll('.fa-circle-info.delivered');
+    const container = document.querySelector('.container');
+    if(!buttons) return;
+
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            const row = button.closest('tr');
+            const card = button.closest('.card');
+            let folio;
+            let payment;
+
+            if(row) {
+                const paymentCell = row.querySelector('.payment');
+                const folioCell = row.querySelector('.folio');
+
+                if(paymentCell) payment = paymentCell.textContent.trim();
+                if(folioCell) folio = folioCell.textContent.trim();
+            } else if(card) {
+                const paymentCell = card.querySelector('.payment-mobile');
+                const folioCell = card.querySelector('.folio-mobile');
+
+                if(paymentCell) payment = paymentCell.textContent.trim();
+                if(folioCell) folio = folioCell.textContent.trim();
+            } else return;
+
+            const info = document.querySelector('.info-wrapper');
+            const folioInfo = info.querySelector('.info-folio');
+            const buttonClose = info.querySelector('.top-decor i');
+            const bottomCash = info.querySelector('.bottom-decor.cash');
+            const bottomTransfer = info.querySelector('.bottom-decor.transfer');
+            if(!info || !folioInfo || !buttonClose || !bottomCash) return;
+
+            if(payment) {
+                if(payment === 'Efectivo') {
+                    info.style.display = 'flex';
+                    container.classList.add('modal-open');
+                    folioInfo.innerHTML = `${folio}`;
+                    bottomCash.style.display = 'flex';
+                } else {
+                    info.style.display = 'flex';
+                    container.classList.add('modal-open');
+                    folioInfo.innerHTML = `${folio}`;
+                    bottomTransfer.style.display = 'flex';
+                }
+            }
+
+            buttonClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                info.style.display = 'none';
+                container.classList.remove('modal-open');
+                bottomCash.style.display = 'none';
+                bottomTransfer.style.display = 'none';
+            });
+        });
+    });
+}
+
+// Preview Transfer Receipt
+function previewReceipt(imageSrc) {
+    if(!imageSrc) return;
+
+    Swal.fire({
+        imageUrl: imageSrc,
+        imageAlt: 'Comprobante',
+        imageHeight: 'auto',
+        imageWidth: '50%',
+        background: 'transparent',
+        showConfirmButton: false,
+        showCloseButton: true,
+        customClass: {
+            popup: 'receipt-preview'
+        }
+    });
+}
+
+function buttonPreview() {
+    const button = document.querySelector('.button-verification');
+    if(!button) return;
+
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        const img = document.querySelector('.transfer-ver img');
+        if(img && img.src) 
+            previewReceipt(img.src);
+        else 
+            Toast('DESCARGAR COMPROBANTE', 'Lo siento, no existe un comprobante para descargar');
+    });
+}
+
+// Download Transfer Receipt
+function downloadReceipt(imageSrc, filename) {
+    const link = document.createElement('a');
+    link.href = imageSrc;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function buttonDownload() {
+    const button = document.querySelector('.button-download');
+    if(!button) return;
+
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        const img = document.querySelector('.transfer-ver img');
+        if(img && img.src) {
+            const folio = document.querySelector('.info-folio')?.textContent || 'Comprobante';
+            downloadReceipt(img.src, `Comprobante de Solicitud ${folio}.jpg`);
+        } else 
+            Toast('DESCARGAR COMPROBANTE', 'Lo siento, no existe un comprobante para descargar');
     });
 }
 

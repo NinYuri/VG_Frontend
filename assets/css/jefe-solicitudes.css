@@ -1118,7 +1118,10 @@ body {
     transition: opacity 0.4s ease;
 }
 
-.container.modal-open::before { opacity: 1; }
+.container.modal-open::before { 
+    opacity: 1; 
+    pointer-events: unset;
+}
 
 .info-wrapper {
     display: none;

@@ -253,7 +253,10 @@ body {
     transition: all 0.3s ease-out !important;
 }
 
-.swal2-container { z-index: 2000; }
+.swal2-container { 
+    z-index: 3000; 
+    overflow: hidden !important;
+}
 
 .swal2-toast.swal2-hide {
     opacity: 0 !important;
@@ -342,6 +345,43 @@ body {
 .agave-half.right { 
     right: -4%;
     border-radius: 0 0 30px 0; 
+}
+
+/* PREVIEW MODAL */
+.swal2-height-auto .background { height: 100vh; }
+
+.receipt-preview {
+    box-shadow: none !important;
+    padding: 0 !important;
+    height: 95vh !important;
+    width: 95vw !important;
+    overflow: hidden !important;
+    align-items: center;
+}
+
+.swal2-popup.receipt-preview .swal2-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.receipt-preview .swal2-image {
+    border-radius: 12px;
+    width: 90% !important;
+    height: 90% !important;
+    max-width: 25% !important;
+    max-height: 90% !important;
+    object-fit: contain;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important; }
+
+.receipt-preview .swal2-close {
+    color: var(--white) !important;
+    filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));
 }
 
 
@@ -1100,9 +1140,13 @@ body {
     transition: opacity 0.4s ease;
 }
 
-.container.modal-open::before { opacity: 1; }
+.container.modal-open::before { 
+    opacity: 1; 
+    pointer-events: unset;
+}
 
-.transfer-wrapper {
+.transfer-wrapper,
+.info-wrapper {
     display: none;
     justify-content: center;
     align-items: center;
@@ -1117,7 +1161,8 @@ body {
     z-index: 2000;
 }
 
-.transfer-back {
+.transfer-back,
+.info-back {
     position: relative;
     width: 100%;
     height: 100%;
@@ -1153,7 +1198,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0.7em 1.5em 1.5em 1.5em;
+    padding: 0.9em 1.5em 1.2em 1.5em;
     font-size: 1em;
 }
 
@@ -1213,7 +1258,9 @@ body {
     transition: all 0.2s ease;
 }
 
-.button-receipt {
+.button-receipt,
+.button-verification,
+.button-download {
     position: relative;
     display: flex;
     justify-content: center;
@@ -1228,9 +1275,13 @@ body {
     overflow: hidden;
 }
 
-.button-receipt:hover::before { animation: shine 1.5s ease-out infinite; }
+.button-receipt:hover::before,
+.button-verification:hover::before,
+.button-download:hover::before { animation: shine 1.5s ease-out infinite; }
 
-.button-receipt::before {
+.button-receipt::before,
+.button-verification::before,
+.button-download::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -1261,6 +1312,73 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+.top-decor.bottom { border-radius: 0 0 10px 10px; }
+
+.bottom-decor {
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.bottom-decor.cash,
+.bottom-decor.transfer { display: none; }
+
+.info-agave { height: 5em; }
+
+.info-agave img {
+    height: 150%;
+    object-fit: contain;
+}
+
+.info-agave.left img { transform: translateX(-10%); }
+.info-agave.right img { transform: translateX(10%); }
+
+.info-text { 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.95em; 
+    line-height: 1.7em;
+    padding: 0.9em 0 1.5em 0;
+}
+
+.info-text span { font-weight: 600; }
+
+.info-text.transfer { width: 100%; }
+
+.transfer-ver {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5em 0 2.5em 0;
+    border: 2px solid var(--gray);
+    width: 85%;
+    height: 13em;
+    overflow: hidden;
+}
+
+.transfer-ver img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.buttons-info { 
+    display: flex; 
+    gap: 1.5em;
+}
+
+.info-icons { 
+    position: absolute;
+    display: flex; 
+    justify-content: space-between;
+    width: 110%;
+    bottom: 0;
+    pointer-events: none;
+}
+
 /* ============================== MOBILE ============================== */
 .cards-mobile,
 .agave-mobile { display: none; }
@@ -1286,6 +1404,9 @@ body {
     .swal-cancel-btn { font-size: 1.3em; }
 
     .agave-half { height: 17.9em; }
+
+    /* PREVIEW MODAL */
+    .receipt-preview .swal2-close { font-size: 3.5em; }
 
     /* OPTION BAR */
     .option-bar { padding: 7em 0; }
@@ -1413,13 +1534,15 @@ body {
     .page { font-size: 1.5em; }
 
     /* TRANSFER RECEIPT */
-    .transfer-wrapper {
+    .transfer-wrapper,
+    .info-wrapper {
         border-radius: 25px;
         padding: 1em;
         width: 53em;
     }
 
-    .transfer-back { border-radius: 15px; }
+    .transfer-back,
+    .info-back { border-radius: 15px; }
 
     .top-decor { 
         font-size: 1.5em; 
@@ -1430,6 +1553,17 @@ body {
 
     .bottom-info,
     .buttton-receipt { font-size: 1.25em; }
+
+    .info-text { font-size: 1.15em; }
+
+    .transfer-ver { margin: 2em 0 2.5em 0; }
+
+    .button-verification,
+    .button-download { font-size: 1em; }
+
+    .info-agave { height: 6em; }
+
+    .top-decor.bottom { border-radius: 0 0 15px 15px; }
 }
 
 /* Escritorios medianos (1440px + 1800px) */
@@ -1616,7 +1750,8 @@ body {
     .page { font-size: 0.9em; }
 
     /* TRANSFER RECEIPT */
-    .transfer-wrapper { width: 39em; } 
+    .transfer-wrapper,
+    .info-wrapper { width: 39em; } 
 
     .top-decor { font-size: 1.05em; }
 
@@ -1728,7 +1863,8 @@ body {
     .page { font-size: 0.9em; }
 
     /* TRANSFER RECEIPT */
-    .transfer-wrapper { width: 37em; }
+    .transfer-wrapper,
+    .info-wrapper { width: 37em; }
 
     .top-decor { font-size: 0.95em; }
 
@@ -1852,7 +1988,8 @@ body {
     .page { font-size: 0.9em; }
 
     /* TRANSFER RECEIPT */
-    .transfer-wrapper { width: 35em; }
+    .transfer-wrapper,
+    .info-wrapper { width: 35em; }
 
     .top-decor { font-size: 0.9em; }
 
@@ -1863,10 +2000,7 @@ body {
 }
 
 /* Tabletas */
-@media (min-width: 766px) and (max-width: 1024px) {
-    /* TOAST */
-    .swal2-container { z-index: 3000; }
-    
+@media (min-width: 766px) and (max-width: 1024px) {    
     /* BODY */
     html { background-color: var(--html-back); }
 
@@ -2075,7 +2209,8 @@ body {
     /* TRANSFER RECEIPT */
     .container::before { border-radius: 20px; }
 
-    .transfer-wrapper {
+    .transfer-wrapper,
+    .info-wrapper {
         position: fixed;
         top: 50% !important;
         left: 50% !important;
@@ -2099,8 +2234,6 @@ body {
 /* Móviles */
 @media(max-width: 765px) {
     /* TOAST */
-    .swal2-container { z-index: 3000; }
-
     .swal2-toast { margin: 0 !important; }
 
     .swal2-popup.swal2-modal.custom-received-modal.swal2-show { margin: 0 !important; }
@@ -2116,7 +2249,7 @@ body {
     .received-text { font-size: 0.9em; }
 
     .received-text { 
-        line-height: 1.5; 
+        line-height: 1.5em; 
         margin-bottom: 1em;
     }
 
@@ -2397,7 +2530,8 @@ body {
     /* TRANSFER RECEIPT */
     .container::before { border-radius: 20px; }
 
-    .transfer-wrapper {
+    .transfer-wrapper,
+    .info-wrapper {
         position: fixed;
         top: 50% !important;
         left: 50% !important;
@@ -2410,7 +2544,7 @@ body {
     .top-decor { 
         justify-content: center;
         flex-direction: column-reverse;
-        gap: 0.5em;
+        gap: 0.8em;
         padding: 0.5em 0 0.7em 0;
         font-size: 1.1em;
     }
@@ -2421,7 +2555,13 @@ body {
         transform: translateX(-0.6em);
     }
 
-    .receipt-container { font-size: 0.8em; }
+    .bottom-info { padding: 1.2em 1.5em 1.5em; }
+
+    .receipt-container { 
+        margin: 1.8em 0em;
+        font-size: 0.8em; 
+        line-height: 1.2em;
+    }
 
     .receipt-container p { padding: 0 1em; }
 
