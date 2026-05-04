@@ -627,6 +627,8 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 .tab:first-child { z-index: 5; }
 .tab:nth-child(2) { z-index: 4; }
 .tab:nth-child(3) { z-index: 3; }
+.tab:nth-child(4) { z-index: 2; }
+.tab:nth-child(5) { z-index: 1; }
 
 .tab::after {
     content: '';
@@ -657,7 +659,9 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
 .tab.pending.selected { margin-right: 9px; }
 
-.tab.delivered.selected { margin: 0 4px; }
+.tab.delivered.selected,
+.tab.refund.selected,
+.tab.returned.selected { margin: 0 4px; }
 
 .tab p {
     font-size: 1em;
@@ -699,7 +703,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: 28%;
     height: 2.5em;
     background-color: var(--transparent-blue);
     border-radius: 10px;
@@ -1918,6 +1922,9 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
     .agave-half { height: 13em; }
 
+    /* PREVIEW MODAL */
+    .receipt-preview .swal2-image { height: 75% !important; }
+
     /* OPTION BAR */
     .option-bar { width: 23%; }
 
@@ -2120,6 +2127,35 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
         flex-direction: column-reverse; 
         gap: 1em;
     }
+    
+    .tabs {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-top: 25px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar { display: none }
+
+    .tab { 
+        padding: 0.5em 0.1em 0.5em 1.5em; 
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+
+    .tab::after { right: -21px; }
+
+    .tab:first-child { z-index: 5; }
+    .tab:nth-child(2) { z-index: 4; }
+    .tab:nth-child(3) { z-index: 3; }
+    .tab:nth-child(4) { z-index: 2; }
+    .tab:nth-child(5) { z-index: 1; }
+
+    .tab.selected { z-index: 10; }
 
     .search { margin-left: auto; }
 
@@ -2308,7 +2344,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
     /* PREVIEW MODAL */
     .receipt-preview {
-        width: 89vw !important;
+        width: 80vw !important;
         height: 98vh !important;
     }
 
@@ -2416,6 +2452,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
     }
 
     .tabs {
+        display: flex;
         overflow-x: auto;
         overflow-y: hidden;
         padding-top: 25px;
@@ -2431,7 +2468,6 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
         white-space: nowrap;
         flex-shrink: 0;
         transition: all 0.3s ease;
-        z-index: 1;
     }
 
     .tab::after {
@@ -2446,6 +2482,12 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
         z-index: -1;
         transition: background-color 0.3s ease;
     }
+
+    .tab:first-child { z-index: 5; }
+    .tab:nth-child(2) { z-index: 4; }
+    .tab:nth-child(3) { z-index: 3; }
+    .tab:nth-child(4) { z-index: 2; }
+    .tab:nth-child(5) { z-index: 1; }
 
     .tab p { font-size: 0.9em; }
 

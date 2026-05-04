@@ -8,6 +8,7 @@
     --yellow: #C9C867;
     --graphs: #2A5156;
     --gray: #919A9B;
+    --dark-gray: #5C5F60;
     --html-back: #002027;
 
     /* ============= TRANSLUCENT COLORS ============= */
@@ -341,6 +342,9 @@ body {
     padding-left: 0.9em;
 }
 
+.options.treasury,
+.logout.treasury { gap: 0.7em; }
+
 .options .option,
 .logout .option {
     display: flex;
@@ -454,6 +458,9 @@ body {
     cursor: pointer;
 }
 
+.card-wrapper.treasury:nth-child(2) { width: 31%; }
+.card-wrapper.treasury:last-child { width: 28%; }
+
 .card-background {
     position: absolute;
     background-color: var(--transparent-blue);
@@ -558,9 +565,15 @@ body {
     overflow: visible !important; 
 }
 
-.graph-back.status .graph-wrapper p { font-size: 1.2em; }
+.graph-back.status .graph-wrapper p { 
+    font-size: 1.2em; 
+    text-align: center;
+}
 
-.graph-wrapper p { font-weight: 600; }
+.graph-wrapper p { 
+    font-weight: 600; 
+    font-size: 0.95em;
+}
 
 .chartst-container {
     position: relative;
@@ -734,6 +747,8 @@ body {
     z-index: 2;
 }
 
+.graph-back.total.treasury { height: 65%; }
+
 .graph-back.total .graph-wrapper p { font-size: 1.2em; }
 
 .graph-back.total .graph-wrapper .graph-desc .total-month { font-size: 0.8em; }
@@ -753,15 +768,29 @@ body {
     margin-top: 0.1em;
 }
 
+.graph-back.total .graph-wrapper .expense-subtitle { 
+    font-size: 0.9em; 
+    color: var(--dark-gray);
+    font-weight: 600;
+    margin-top: 1.5em;
+}
+
+.graph-back.total .graph-wrapper .total-money.treasury { margin-top: -0.2em; }
+
 .agave-mobile { display: none; }
 
 .agave {
     position: absolute;
-    bottom: 0;
-    right: -0.3em;
+    bottom: -0.5em;
+    right: -0.1em;
     height: 95%;
     z-index: 1;
     pointer-events: none;
+}
+
+.agave.treasury {
+    right: -9em;
+    bottom: -1em;
 }
 
 
