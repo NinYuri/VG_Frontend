@@ -378,7 +378,8 @@ body {
 .option .fa-plane-departure { font-size: 0.7em; }
 
 .option .fa-clock-rotate-left,
-.option .fa-arrow-right-from-bracket { font-size: 0.85em; }
+.option .fa-arrow-right-from-bracket,
+.option .fa-hand-holding-dollar { font-size: 0.85em; }
 
 
 /* ============================== CONTAINER ============================== */
@@ -450,16 +451,13 @@ body {
 
 .card-wrapper {
     position: relative;
-    width: 24%;
+    width: auto;
     height: 100%;
     padding: 0.5em;
     border-radius: 15px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
     cursor: pointer;
 }
-
-.card-wrapper.treasury:nth-child(2) { width: 31%; }
-.card-wrapper.treasury:last-child { width: 26%; }
 
 .card-background {
     position: absolute;
@@ -496,7 +494,7 @@ body {
     width: 100%;
     height: 100%;
     color: var(--black);
-    padding-top: 0.3em;
+    padding: 0.3em 1em;
     z-index: 5;
 }
 
@@ -824,7 +822,8 @@ body {
 
     .option .fa-plane-departure { font-size: 0.8em; }
 
-    .option .fa-arrow-right-from-bracket { font-size: 0.9em; }
+    .option .fa-arrow-right-from-bracket,
+    .option .fa-hand-holding-dollar { font-size: 0.9em; }
 
     /* CONTAINER */
     .content-container { padding: 2.5em 2em 2.5em 2.5em; }
@@ -847,11 +846,6 @@ body {
     .cards { gap: 3em }
 
     .card-wrapper,
-    .card-wrapper.treasury:last-child { width: 22%; }
-
-    .card-wrapper.treasury:nth-child(2) { width: 27%; }
-
-    .card-wrapper,
     .card,
     .graph-back { border-radius: 20px; }
 
@@ -862,8 +856,8 @@ body {
     }
 
     .card-text { 
-        gap: 0.2em; 
-        padding-bottom: 0.3em;
+        gap: 0.2em;
+        padding: 0.3em 1.5em; 
     }
 
     .card-text p { font-size: 1.1em; }
@@ -968,9 +962,6 @@ body {
 
     .option img { width: 15px; }
 
-    .option.fa-plane-departure,
-    .option.fa-arrow-right-from-bracket { font-size: 0.9em; }
-
     /* CONTAINER */
     .container { background-size: 33% auto; }
 
@@ -979,9 +970,7 @@ body {
     .titles .subtitle { font-size: 1.2em; }
 
     /* GRAPHS */
-    .card-wrapper.treasury:nth-child(2) { width: 29%; }
-
-    .card-wrapper.treasury:last-child { width: 26%; }
+    .card-text { padding: 0.3em 1.2em; }
 
     .card-text .rejected-number,
     .card-text .approved-number,
@@ -1034,6 +1023,11 @@ body {
         transform: translateY(5%); 
     }
 
+    .option .fa-plane-departure { font-size: 0.75em; }
+
+    .option .fa-hand-holding-dollar,
+    .option .fa-arrow-right-from-bracket { font-size: 0.9em; }
+
     /* CONTAINER */
     .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
 
@@ -1048,11 +1042,7 @@ body {
 
     .titles .subtitle { font-size: 1.2em; }
 
-    .card-wrapper { width: 22%; }
-
-    .card-wrapper.treasury:nth-child(2) { width: 29%; }
-
-    .card-wrapper.treasury:last-child { width: 24%; }
+    .card-text { padding: 0.3em 1.2em; }
 
     .card-text p { font-size: 0.9em; }
 
@@ -1160,12 +1150,6 @@ body {
     .titles .title { font-size: 2.8em; }
 
     .titles .subtitle { font-size: 1.1em; }
-
-    .card-wrapper { width: 21%; }
-
-    .card-wrapper.treasury:nth-child(2) { width: 26%; }
-
-    .card-wrapper.treasury:last-child { width: 23%; }
 
     .card-text p { font-size: 0.8em; }
 
@@ -1295,13 +1279,7 @@ body {
 
     .cards { gap: 2em; }
 
-    .card-wrapper { width: 22%; }
-
-    .card-wrapper.treasury:nth-child(2) { width: 27%; }
-
-    .card-wrapper.treasury:last-child { width: 25%; }
-
-    .card-text { padding-top: 0; }
+    .card-text { padding: 0 0.8em; }
 
     .card-text p { font-size: 0.8em; }
 

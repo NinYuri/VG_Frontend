@@ -10,7 +10,7 @@
     <meta name="description" content="Gestión de solicitudes, anticipos y comprobación de gastos">
 
     <!-- ======================= CSS ======================= -->
-    <link rel="stylesheet" href="./assets/css/tes-solicitudes.css">
+    <link rel="stylesheet" href="./assets/css/tes-liquidaciones.css">
 
     <!-- ======================= ICONS ======================= -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -77,8 +77,8 @@
                 <!-- ==================== CONTENT HEADER ==================== -->
                 <div class="content-header">
                     <div class="titles">
-                        <h1 class="title">ANTICIPOS DE VIÁTICOS</h1>
-                        <p class="subtitle">Registra la entrega de anticipos de solicitudes aprobadas</p>
+                        <h1 class="title">LIQUIDACIONES</h1>
+                        <p class="subtitle">Gestiona reembolsos y devoluciones derivados de las comprobaciones de viáticos</p>
                     </div>
                 </div>
 
@@ -90,48 +90,20 @@
                                 <div class="amount selected">6</div>
                             </div>
 
-                            <div class="tab delivered"><p>Entregados</p></div>
-                            <div class="tab settled"><p>Liquidados</p></div>
+                            <div class="tab paid"><p>Pagadas</p></div>
+                            <div class="tab returns"><p>Devueltas</p></div>
+                            <div class="tab money-exact"><p>Saldadas</p></div>
                         </div>
 
                         <div class="search">
                             <div class="search-back">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                                 <input type="text" placeholder="Folio. . .">
-                                <i class="fa-regular fa-calendar"></i>
-                                <i class="fa-regular fa-circle-user"></i>
-                            </div>
-                        </div>
-
-                        <!-- ======================== CALENDARIO ======================== -->
-                        <div class="datepicker-wrapper">
-                            <div class="datepicker">
-                                <div class="datepicker-header">
-                                    <button class="prev-month" type="button"><i class="fa-solid fa-angle-left"></i></button>
-
-                                    <div class="date-header">
-                                        <div class="month"></div>
-                                        <div class="year"></div>
-                                    </div>
-
-                                    <button class="next-month" type="button"><i class="fa-solid fa-angle-right"></i></button>
-                                </div>
-
-                                <div class="days-header">
-                                    <span>DOM</span>
-                                    <span>LUN</span>
-                                    <span>MAR</span>
-                                    <span>MIE</span>
-                                    <span>JUE</span>
-                                    <span>VIE</span>
-                                    <span>SAB</span>
-                                </div>
-
-                                <div class="dates"></div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- ======================== TABLE ======================== -->
                     <div class="table-background">
                         <div class="table-container">
                             <table>
@@ -143,58 +115,41 @@
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
                                                 </div>
-                                                Folio
+                                                Solicitud
                                             </div>
                                         </th>
-                                        <th>Colaborador</th>
-                                        <th>Fecha</th>
-                                        <th>
-                                            <div class="order-div">
-                                                <div class="order">
-                                                    <i class="fa-solid fa-angle-up"></i>
-                                                    <i class="fa-solid fa-angle-down"></i>
-                                                </div>
-                                                Monto
-                                            </div>
-                                        </th>
-                                        <th>Pago</th>
-                                        <th>Financiero</th>
+                                        <th>Anticipo</th>
+                                        <th>Comprobado</th>
+                                        <th>Diferencia</th>
+                                        <th>Ajuste</th>
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
 
                                 <tbody class="table-body">
                                     <tr>
                                         <td class="folio"><p>SOL-26-001</p></td>
-                                        <td><p>Yuriana Ibarra Granados</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/EUR.webp" alt="EUR">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
+                                        <td class="anticipo-cell">
+                                            <div class="anticipo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money anticipo"></span>10,000.00</p>
                                             </div>
                                         </td>
-                                        <td class="payment">Transferencia</td>
-                                        <td><div class="status st-liquidated">
-                                            Liquidada
+                                        <td class="comprobado-cell">
+                                            <div class="comprobado-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money comprobado"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="saldo-cell">
+                                            <div class="saldo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td><div class="status st-adjustment return">
+                                            Devolución
                                         </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-002</p></td>
-                                        <td><p>Yuriana Ibarra Granados</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="payment">Efectivo</td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
@@ -206,106 +161,199 @@
                                     </tr>
 
                                     <tr>
-                                        <td class="folio"><p>SOL-26-005</p></td>
-                                        <td><p>Giovanni Martínez Zavala</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
+                                        <td class="folio"><p>SOL-26-002</p></td>
+                                        <td class="anticipo-cell">
+                                            <div class="anticipo-content">
                                                 <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
+                                                <p><span class="symbol-money anticipo"></span>10,000.00</p>
                                             </div>
                                         </td>
-                                        <td class="payment">Efectivo</td>
+                                        <td class="comprobado-cell">
+                                            <div class="comprobado-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money comprobado"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="saldo-cell">
+                                            <div class="saldo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td><div class="status st-adjustment refund">
+                                            Reembolso
+                                        </div></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
                                         <td>
                                             <div class="actions">
-                                                <i class="fa-solid fa-circle-info delivered"></i>
+                                                <i class="fa-solid fa-circle-dollar-to-slot"></i>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td class="folio"><p>SOL-26-007</p></td>
-                                        <td><p>Estefanía Cabrera Quintana</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
+                                        <td class="folio"><p>SOL-26-001</p></td>
+                                        <td class="anticipo-cell">
+                                            <div class="anticipo-content">
                                                 <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
+                                                <p><span class="symbol-money anticipo"></span>10,000.00</p>
                                             </div>
                                         </td>
-                                        <td class="payment">Transferencia</td>
+                                        <td class="comprobado-cell">
+                                            <div class="comprobado-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money comprobado"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="saldo-cell">
+                                            <div class="saldo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td><div class="status st-adjustment return">
+                                            Devolución
+                                        </div></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
                                         <td>
                                             <div class="actions">
-                                                <i class="fa-solid fa-circle-info delivered"></i>
+                                                <i class="fa-solid fa-circle-dollar-to-slot"></i>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td class="folio"><p>SOL-26-008</p></td>
-                                        <td><p>Joahan Mota Sandoval</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
+                                        <td class="folio"><p>SOL-26-002</p></td>
+                                        <td class="anticipo-cell">
+                                            <div class="anticipo-content">
                                                 <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
+                                                <p><span class="symbol-money anticipo"></span>10,000.00</p>
                                             </div>
                                         </td>
-                                        <td class="payment">Transferencia</td>
+                                        <td class="comprobado-cell">
+                                            <div class="comprobado-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money comprobado"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="saldo-cell">
+                                            <div class="saldo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td><div class="status st-adjustment refund">
+                                            Reembolso
+                                        </div></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
                                         <td>
                                             <div class="actions">
-                                                <i class="fa-solid fa-circle-info delivered"></i>
+                                                <i class="fa-solid fa-circle-dollar-to-slot"></i>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td class="folio"><p>SOL-26-010</p></td>
-                                        <td><p>Yuriana Ibarra Granados</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
+                                        <td class="folio"><p>SOL-26-001</p></td>
+                                        <td class="anticipo-cell">
+                                            <div class="anticipo-content">
                                                 <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
+                                                <p><span class="symbol-money anticipo"></span>10,000.00</p>
                                             </div>
                                         </td>
-                                        <td class="payment">Efectivo</td>
+                                        <td class="comprobado-cell">
+                                            <div class="comprobado-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money comprobado"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="saldo-cell">
+                                            <div class="saldo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td><div class="status st-adjustment return">
+                                            Devolución
+                                        </div></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
                                         <td>
                                             <div class="actions">
-                                                <i class="fa-solid fa-circle-info delivered"></i>
+                                                <i class="fa-solid fa-circle-dollar-to-slot"></i>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td class="folio"><p>SOL-26-015</p></td>
-                                        <td><p>Teresa Hernández Campos</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
+                                        <td class="folio"><p>SOL-26-002</p></td>
+                                        <td class="anticipo-cell">
+                                            <div class="anticipo-content">
                                                 <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
+                                                <p><span class="symbol-money anticipo"></span>10,000.00</p>
                                             </div>
                                         </td>
-                                        <td class="payment">Transferencia</td>
+                                        <td class="comprobado-cell">
+                                            <div class="comprobado-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money comprobado"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="saldo-cell">
+                                            <div class="saldo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td><div class="status st-adjustment refund">
+                                            Reembolso
+                                        </div></td>
                                         <td><div class="status st-pending">
                                             Pendiente
                                         </div></td>
                                         <td>
                                             <div class="actions">
-                                                <i class="fa-solid fa-circle-info delivered"></i>
+                                                <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="folio"><p>SOL-26-002</p></td>
+                                        <td class="anticipo-cell">
+                                            <div class="anticipo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money anticipo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="comprobado-cell">
+                                            <div class="comprobado-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money comprobado"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td class="saldo-cell">
+                                            <div class="saldo-content">
+                                                <img src="./assets/images/MXN.webp" alt="MXN">
+                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
+                                            </div>
+                                        </td>
+                                        <td><div class="status st-adjustment refund">
+                                            Reembolso
+                                        </div></td>
+                                        <td><div class="status st-pending">
+                                            Pendiente
+                                        </div></td>
+                                        <td>
+                                            <div class="actions">
+                                                <i class="fa-solid fa-circle-dollar-to-slot"></i>
                                             </div>
                                         </td>
                                     </tr>
@@ -784,6 +832,6 @@
         </div>
     </div>
 
-    <script src="./assets/js/tes-solicitudes.js"></script>
+    <script src="./assets/js/tes-liquidaciones.js"></script>
 </body>
 </html>

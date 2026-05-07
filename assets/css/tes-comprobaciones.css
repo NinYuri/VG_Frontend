@@ -658,7 +658,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
 .tab.pending.selected { margin-right: 9px; }
 
-.tab.delivered.selected { margin: 0 4px; }
+.tab.approved.selected { margin: 0 4px; }
 
 .tab p {
     font-size: 1em;
@@ -955,16 +955,19 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
     font-weight: 600;
 }
 
-.monto-cell { vertical-align: middle; }
+.total-cell,
+.sado-cell { vertical-align: middle; }
 
-.monto-content {
+.total-content,
+.saldo-content {
     display: flex;
     align-items: center;
     gap: 10px;
     white-space: nowrap;
 }
 
-.monto-content img {
+.total-content img,
+.saldo-content img {
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -999,17 +1002,11 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 }
 
 .st-pending { background-color: var(--tr-status-pending); }
-
-.st-approved,
-.st-liquidated { background-color: var(--tr-status-approved); }
-
+.st-approved { background-color: var(--tr-status-approved); }
 .st-rejected { background-color: var(--tr-status-rejected); }
 
 .st-pending::before { background: var(--status-pending); }
-
-.st-approved::before,
-.st-liquidated::before { background: var(--status-approved); }
-
+.st-approved::before { background: var(--status-approved); }
 .st-rejected::before { background: var(--status-rejected); }
 
 .table-body .actions {
@@ -1529,7 +1526,8 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
     .table-body .folio { font-size: 1.4em; }
 
-    .monto-content img {
+    .total-content img,
+    .saldo-content img {
         width: 22px;
         height: 22px;
     }
@@ -1651,7 +1649,8 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
     .table-body .folio { font-size: 1.1em; }
 
-    .monto-content img {
+    .total-content img,
+    .saldo-content img {
         width: 20px;
         height: 20px;
     }
@@ -1871,9 +1870,11 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
     .table-body .folio { font-size: 1em; }
 
-    .monto-content { gap: 8px; }
+    .total-content,
+    .saldo-content { gap: 8px; }
 
-    .monto-content img {
+    .total-content img,
+    .saldo-content img {
         width: 16px;
         height: 16px;
     }
@@ -2008,9 +2009,11 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
     .table-body .folio { font-size: 0.9em; }
 
-    .monto-content { gap: 7px; }
+    .total-content,
+    .saldo-content { gap: 7px; }
 
-    .monto-content img {
+    .total-content img,
+    .saldo-content img {
         width: 15px;
         height: 15px;
     }
@@ -2159,8 +2162,6 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
     .tab:first-child { z-index: 5; }
     .tab:nth-child(2) { z-index: 4; }
     .tab:nth-child(3) { z-index: 3; }
-    .tab:nth-child(4) { z-index: 2; }
-    .tab:nth-child(5) { z-index: 1; }
 
     .tab.selected { z-index: 10; }
 
@@ -2519,8 +2520,6 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
     .tab:first-child { z-index: 5; }
     .tab:nth-child(2) { z-index: 4; }
     .tab:nth-child(3) { z-index: 3; }
-    .tab:nth-child(4) { z-index: 2; }
-    .tab:nth-child(5) { z-index: 1; }
 
     .tab p { font-size: 0.9em; }
 

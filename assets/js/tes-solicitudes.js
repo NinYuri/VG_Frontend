@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initMobileScroll();
     optionsBar();
     tabSelected();
+    cardLinks();
     searchColab();
     initCalendar();
     setupCalendar();
@@ -92,6 +93,7 @@ function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.request');
     const expenses = document.querySelector('.option.expenses');
+    const liquidation = document.querySelector('.option.liquidation');
     const logout = document.querySelector('.option.log-out');
 
     function setActiveOption() {
@@ -108,6 +110,8 @@ function optionsBar() {
             request.classList.add('active');
         else if(currentPath.includes('tes-comprobaciones.html'))
             expenses.classList.add('active');
+        else if(currentPath.includes('tes-liquidaciones.html'))
+            liquidation.classList.add('active');
     }
 
     setActiveOption();
@@ -125,6 +129,11 @@ function optionsBar() {
     expenses.addEventListener('click', (e) => {
         e.stopPropagation();
         window.location.href = 'tes-comprobaciones.html';
+    });
+
+    liquidation.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = 'tes-liquidaciones.html';
     });
 
     logout.addEventListener('click', (e) => {
@@ -150,6 +159,27 @@ function tabSelected() {
             this.querySelector('.amount')?.classList.add('selected');
         });
     });
+}
+
+// Links de las cards
+function cardLinks() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+
+    if(tabParam) {
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('selected');
+            const amount = tab.querySelector('.amount');
+            if(amount) amount.classList.remove('selected');
+        });
+
+        const activeTab = document.querySelector(`.tab.${tabParam}`);
+        if(activeTab) {
+            activeTab.classList.add('selected');
+            const amount = activeTab.querySelector('.amount');
+            if(amount) amount.classList.add('selected');
+        }
+    }
 }
 
 
@@ -538,7 +568,7 @@ function activeCards() {
         card.addEventListener('click', (e) => {
             e.stopPropagation();
 
-            if(e.target.closest('.fa-circle-dollar-to-slot, .buttons-mobile')) return;
+            if(e.target.closest('.fa-circle-dollar-to-slot, .fa-solid fa-image, .fa-solid fa-cloud-arrow-down, .buttons-mobile')) return;
             cards.forEach(c => c.classList.remove('active'));
             card.classList.add('active');
         });

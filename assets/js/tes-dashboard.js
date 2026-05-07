@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     phoneMenu();
     initMobileScroll();
     optionsBar();
+    cardLinks();
     expensesChart();
     trendsChart();
     advanceChart();
@@ -81,6 +82,7 @@ function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.request');
     const expenses = document.querySelector('.option.expenses');
+    const liquidation = document.querySelector('.option.liquidation');
     const logout = document.querySelector('.option.log-out');
 
     function setActiveOption() {
@@ -97,6 +99,8 @@ function optionsBar() {
             request.classList.add('active');
         else if(currentPath.includes('tes-comprobaciones.html'))
             expenses.classList.add('active');
+        else if(currentPath.includes('tes-liquidaciones.html'))
+            liquidation.classList.add('active');
     }
 
     setActiveOption();
@@ -116,9 +120,34 @@ function optionsBar() {
         window.location.href = 'tes-comprobaciones.html';
     });
 
+    liquidation.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = 'tes-liquidaciones.html';
+    });
+
     logout.addEventListener('click', (e) => {
         e.stopPropagation();
         window.location.href = 'index.html';
+    });
+}
+
+
+/* ============================== CARD LINKS ============================== */
+function cardLinks() {
+    const cards = document.querySelectorAll('.card-wrapper');
+
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            const tabToActivate = this.getAttribute('data-tab');
+            console.log('Card clicked, activating tab:', tabToActivate);
+
+            if(tabToActivate === 'pending')
+                window.location.href = 'tes-solicitudes.html?tab=pending';
+            else if(tabToActivate === 'expenses')
+                window.location.href = 'tes-comprobaciones.html?tab=pending';
+            else if(tabToActivate === 'liquidation')
+                window.location.href = 'tes-liquidaciones.html?tab=pending';
+        });
     });
 }
 

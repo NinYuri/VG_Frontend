@@ -2,18 +2,12 @@ document.addEventListener("DOMContentLoaded", function() {
     phoneMenu();
     initMobileScroll();
     optionsBar();
+    tabSelected();
+    searchFolio();
     initCalendar();
-    currencyOptions();
-    paymentOptions();
-    sendButton();
-    saveButton();
-    cancelButton();
+    setupCalendar();
+    updateCurrency();
 });
-
-
-/* ============================== VARIABLES ============================== */
-let globalStartDate = null;
-let globalEndDate = null;
 
 
 /* ============================== PHONE MENU ============================== */
@@ -82,41 +76,49 @@ function initMobileScroll() {
 /* ============================== OPTIONS BAR ============================== */
 function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
-    const request = document.querySelector('.option.requests');
+    const request = document.querySelector('.option.request');
     const expenses = document.querySelector('.option.expenses');
+    const liquidation = document.querySelector('.option.liquidation');
     const logout = document.querySelector('.option.log-out');
 
     function setActiveOption() {
         const allOptions = document.querySelectorAll('.option:not(.log-out)');
         const currentPath = window.location.pathname;
-
+        
         allOptions.forEach(option => {
             option.classList.remove('active');
         });
 
-        if(currentPath.includes('colab-dashboard.html'))
+        if(currentPath.includes('tes-dashboard.html'))
             dashboard.classList.add('active');
-        else if(currentPath.includes('colab-solicitudes.html') || currentPath.includes('crear-solicitud.html') || currentPath.includes('editar-solicitud.html'))
+        else if(currentPath.includes('tes-solicitudes.html'))
             request.classList.add('active');
-        else if(currentPath.includes('colab-comprobaciones.html'))
+        else if(currentPath.includes('tes-comprobaciones.html'))
             expenses.classList.add('active');
+        else if(currentPath.includes('tes-liquidaciones.html'))
+            liquidation.classList.add('active');
     }
 
     setActiveOption();
 
     dashboard.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = 'colab-dashboard.html';
+        window.location.href = 'tes-dashboard.html';
     });
 
     request.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = 'colab-solicitudes.html';
+        window.location.href = 'tes-solicitudes.html';
     });
 
     expenses.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = 'colab-comprobaciones.html';
+        window.location.href = 'tes-comprobaciones.html';
+    });
+
+    liquidation.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = 'tes-liquidaciones.html';
     });
 
     logout.addEventListener('click', (e) => {
@@ -126,293 +128,87 @@ function optionsBar() {
 }
 
 
-/* =============================== FORM BUTTONS =============================== */
-// Cancel
-function cancelButton() {
-    const cancelButton = document.querySelector('.button.cancel');
+/* ============================== TABLE TABS ============================== */
+// Selección manual
+function tabSelected() {
+    const tabs = document.querySelectorAll('.tab');
 
-    cancelButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.location.href = 'colab-solicitudes.html';
-    });
-}
-
-// Send
-function sendButton() {
-    const sendButton = document.querySelector('.button.send');
-    if(!sendButton) return;
-
-    sendButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-
-        if(!validateForm(false)) return;
-
-        const inicio_viaje = formatDate(globalStartDate);
-        const fin_viaje = formatDate(globalEndDate);
-        const destinoRaw = document.getElementById('ans-destination')?.value.trim();
-        const destino = destinoRaw 
-                        ? destinoRaw.charAt(0).toUpperCase() + destinoRaw.slice(1).toLowerCase()
-                        : '';
-        const motivoRaw = document.querySelector('.answer.motive textarea')?.value.trim();
-        const motivo = motivoRaw 
-                        ? motivoRaw.charAt(0).toUpperCase() + motivoRaw.slice(1)
-                        : '';
-        const monto_solicitado = parseFloat(document.querySelector('.answer.money input')?.value.trim());
-        const monto_moneda = document.querySelector('.currency-selector .flags p')?.textContent.trim();
-        const forma_pago = document.querySelector('.payment-selector p')?.textContent.trim();
-
-        // CORREGIR USUARIO_ID
-        const data = {
-            usuario_id: 2,
-            inicio_viaje: inicio_viaje,
-            fin_viaje: fin_viaje,
-            destino: destino,
-            motivo: motivo,
-            monto_solicitado: monto_solicitado,
-            monto_moneda: monto_moneda,
-            forma_pago: forma_pago
-        };
-        
-        // Implementar loader
-
-        /*fetch('http://localhost:3002/solicitudes', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if(!response.ok)
-                return response.json().then(err => { throw new Error(err.message || err.mensaje || 'Error desconocido') });
-            return response.json();
-        })
-        .then(result => {
-            Toast('SOLICITUD ENVIADA', 'Tu solicitud ha sido enviada y se encuentra en proceso de aprobación');
-            setTimeout(() => {
-                setTimeout(() => {
-                    window.location.href = 'colab-solicitudes.html';
-                }, 600);
-            }, 4000);
-        })
-        .catch(error => {
-            Toast('ERROR AL ENVIAR SOLICITUD', error.message);
-        });*/
-    });
-}
-
-// Save
-function saveButton() {
-    const saveButton = document.querySelector('.button.save');
-    if(!saveButton) return;
-
-    saveButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-
-        if(!validateForm(true)) return;
-
-        Toast('SOLICITUD EDITADA', 'Tu solicitud ha sido editada correctamente y se encuentra en proceso de aprobación');
-        setTimeout(() => {
-            setTimeout(() => {
-                window.location.href = 'colab-solicitudes.html';
-            }, 600);
-        }, 4000);
-    });
-}
-
-// Validation
-function validateForm(isEdit = false) {
-    const destination = document.getElementById('ans-destination')?.value.trim();
-    const motive = document.querySelector('.answer.motive textarea')?.value.trim();
-    const amount = document.querySelector('.answer.money input')?.value.trim();
-
-    const errorTitle = isEdit 
-        ? 'ERROR AL GUARDAR CAMBIOS' 
-        : 'ERROR AL ENVIAR SOLICITUD';
-    
-    if(!destination) {
-        Toast(errorTitle, 'Por favor, ingresa la ciudad de destino de tu viaje');
-        return false;
-    }
-
-    if(!globalStartDate || !globalEndDate) {
-        Toast(errorTitle, 'Por favor, selecciona ambas fechas de tu viaje');
-        return false;
-    } else if(globalStartDate === globalEndDate) {
-        Toast(errorTitle, 'Por favor, selecciona un rango de fechas válido');
-        return false;
-    }
-
-    if(!motive) {
-        Toast(errorTitle, 'Por favor, ingresa el motivo de tu viaje');
-        return false;
-    }
-
-    if(!amount) {
-        Toast(errorTitle, 'Por favor, ingresa el monto que necesitas para tu viaje');
-        return false;
-    } else if(!onlyNumbers(amount)) {
-        Toast(errorTitle, 'Por favor, ingresa un monto válido');
-        return false;
-    }
-
-    return true;
-}
-
-function onlyNumbers(number) { 
-    return /^\d+$/.test(number);
-}
-
-// Format Date
-function formatDate(dateStr) {
-    const date = new Date(dateStr);
-    
-    if(isNaN(date.getTime()))
-        return null;
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-}
-
-
-/* ============================== CURRENCY OPTIONS ============================== */
-function currencyOptions() {
-    const currencies = [
-        { code: 'MXN', name: 'MXN', flag: './assets/images/MXN.webp', symbol: '$' },
-        { code: 'USD', name: 'USD', flag: './assets/images/USD.webp', symbol: '$' },
-        { code: 'EUR', name: 'EUR', flag: './assets/images/EUR.webp', symbol: '€' },
-        { code: 'JPY', name: 'JPY', flag: './assets/images/JPY.webp', symbol: '¥' }
-    ];
-
-    const selector = document.querySelector('.currency-selector');
-    const flagsDiv = selector.querySelector('.flags');
-    const dropdown = selector.querySelector('.currency-dropdown');
-    const symbol = document.querySelector('.answer.money .symbol');
-    
-    // Construir lista
-    function buildDropdown(currentCurrency) {
-        dropdown.innerHTML = '';
-        const otherCurrencies = currencies.filter(c => c.code !== currentCurrency);
-        otherCurrencies.forEach(currency => {
-            const option = document.createElement('div');
-            option.className = 'currency-option';
-            option.setAttribute('data-currency', currency.code);
-            option.innerHTML = `
-                <img src="${currency.flag}" alt="${currency.code}">
-                <span>${currency.name}</span>
-            `;
-            option.addEventListener('click', (e) => {
-                e.stopPropagation();
-                updateSelectedCurrency(currency);
-                dropdown.classList.remove('show');
-                closeOtherDropdowns(selector);
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.remove('selected');
+                t.querySelector('.amount')?.classList.remove('selected');
             });
-            dropdown.appendChild(option);
+
+            this.classList.add('selected');
+            this.querySelector('.amount')?.classList.add('selected');
         });
-    }
-
-    function updateSelectedCurrency(currency) {
-        flagsDiv.innerHTML = `
-            <img src="${currency.flag}" alt="${currency.code}">
-            <p>${currency.name}</p>
-            <i class="fa-solid fa-angle-down"></i>
-        `;
-        symbol.innerHTML = `${currency.symbol}`;
-
-        buildDropdown(currency.code);
-    }
-
-    flagsDiv.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = dropdown.classList.contains('show');
-
-        closeOtherDropdowns(selector);
-        if(!isOpen)
-            dropdown.classList.add('show');
-        else
-            dropdown.classList.remove('show');
     });
-
-    document.addEventListener('click', (e) => {
-        if(!selector.contains(e.target))
-            dropdown.classList.remove('show');
-    });
-
-    const defaultCurrency = currencies.find(c => c.code === 'MXN');
-    updateSelectedCurrency(defaultCurrency);
 }
 
 
-/* ============================== PAYMENT OPTIONS ============================== */
-function paymentOptions() {
-    const payments = [
-        { name: 'Transferencia' },
-        { name: 'Efectivo' }
-    ];
+/* ============================== SEARCH ============================== */
+function searchFolio() {
+    const search = document.querySelector('.search-back');
+    const glass = search.querySelector('.fa-magnifying-glass');
+    const request = search.querySelector('.fa-plane');
+    const calendar = search.querySelector('.fa-calendar');
+    const input = search.querySelector('input');
 
-    const selector = document.querySelector('.payment-selector');
-    const pTag = selector.querySelector('p');
-    const dropdown = selector.querySelector('.payment-dropdown');
+    if(!glass || !request || !calendar || !input) return;
 
-    function buildDropdown(currentName) {
-        dropdown.innerHTML = '';
-        const others = payments.filter(p => p.name !== currentName);
-        others.forEach(payment => {
-            const option = document.createElement('div');
-            option.className = 'payment-option';
-            option.textContent = payment.name;
-            option.addEventListener('click', (e) => {
-                e.stopPropagation();
-                updateSelectedPayment(payment);
-                dropdown.classList.remove('show');
-                closeOtherDropdowns(selector);
-            });
-            dropdown.appendChild(option);
-        });
-    }
+    let swapped = false;
 
-    function updateSelectedPayment(payment) {
-        pTag.textContent = payment.name;
-        buildDropdown(payment.name);
-    }
+    function swapIcons() {
+        const parent = search;
 
-    selector.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = dropdown.classList.contains('show');
+        // Eliminar temporalmente los iconos
+        const glassRemoved = parent.removeChild(glass);
+        const requestRemoved = parent.removeChild(request);
 
-        closeOtherDropdowns(selector);
-        if(!isOpen)
-            dropdown.classList.add('show');
-        else
-            dropdown.classList.remove('show');
-    });
-
-    document.addEventListener('click', (e) => {
-        if(!selector.contains(e.target))
-            dropdown.classList.remove('show');
-    });
-
-    const defaultPayment = payments.find(n => n.name === 'Transferencia');
-    updateSelectedPayment(defaultPayment);
-}
-
-
-/* =========================== DROPDOWN FUNCTIONS =========================== */
-function closeOtherDropdowns(currentSelector) {
-    const allSelectors = ['.currency-selector', '.payment-selector'];
-    allSelectors.forEach(sel => {
-        const other = document.querySelector(sel);
-        if (other && other !== currentSelector) {
-            const dropdown = other.querySelector('.currency-dropdown, .payment-dropdown');
-            if (dropdown && dropdown.classList.contains('show'))
-                dropdown.classList.remove('show');
+        if(!swapped) {
+            parent.insertBefore(requestRemoved, input);
+            parent.insertBefore(glassRemoved, calendar.nextSibling);
+            input.placeholder = "Solicitud. . .";
+        } else {
+            parent.insertBefore(glassRemoved, input);
+            parent.insertBefore(requestRemoved, calendar.nextSibling);
+            input.placeholder = "Folio. . .";
         }
+
+        swapped = !swapped;
+    }
+
+    function fadeAndSwap(shouldSwap) {
+        if(shouldSwap) {
+            glass.classList.add('fade-out');
+            request.classList.add('fade-out');
+        }
+
+        setTimeout(() => {
+            if(shouldSwap) {
+                swapIcons();
+                glass.classList.remove('fade-out');
+                request.classList.remove('fade-out');
+            }
+        }, 200);
+    }
+
+    glass.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const shouldSwap = swapped;
+        fadeAndSwap(shouldSwap);
+    });
+
+    request.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const shouldSwap = !swapped;
+        fadeAndSwap(shouldSwap);
     });
 }
 
 
-/* =============================== DATE PICKER =============================== */
+/* ============================== CALENDAR ============================== */
 function initCalendar() {
     const monthLabel = document.querySelector('.date-header .month');
     const yearLabel = document.querySelector('.date-header .year');
@@ -525,9 +321,7 @@ function initCalendar() {
             if (startDate === null || (startDate && endDate !== null)) {
                 startDate = { year, month, day };
                 endDate = null;
-
-                globalStartDate = `${year}-${month+1}-${day}`;
-                globalEndDate = null;
+                console.log(`Rango reiniciado. Inicio: ${day}/${month+1}/${year}`);
             }
             // Si hay inicio pero no fin, se establece el fin (ordenando las fechas)
             else if (startDate && endDate === null) {
@@ -539,8 +333,7 @@ function initCalendar() {
                 } else
                     endDate = { year, month, day };
                 
-                globalStartDate = `${startDate.year}-${startDate.month+1}-${startDate.day}`;
-                globalEndDate = `${endDate.year}-${endDate.month+1}-${endDate.day}`;
+                console.log(`Rango seleccionado: ${startDate.day}/${startDate.month+1}/${startDate.year} - ${endDate.day}/${endDate.month+1}/${endDate.year}`);
             }
 
             renderCalendar();
@@ -670,39 +463,114 @@ function initCalendar() {
                     hideSelectors();
     });
 
-    renderCalendar();
+    window.addEventListener('calendar-closed', () => {
+        startDate = null;
+        endDate = null;
+        renderCalendar();
+    });
+
+    window.calendarRender = renderCalendar;
+}
+
+function setupCalendar() {
+    const calendarIcon = document.querySelector('.fa-calendar');
+    const datepicker = document.querySelector('.datepicker-wrapper');
+
+    if(!calendarIcon || !datepicker) return;
+
+    function clearRangeSelect() {
+        const dates = document.querySelectorAll('.date-cell.in-range');
+        const startDate = document.querySelector('.date-cell.start');
+        const endDate = document.querySelector('.date-cell.end');
+
+        dates.forEach(date => {
+            if (date && date.classList) 
+                date.classList.remove('in-range');
+        });
+        if(startDate && startDate.classList) 
+            startDate.classList.remove('start');
+        if(endDate && endDate.classList) 
+            endDate.classList.remove('end');
+
+        window.dispatchEvent(new CustomEvent('calendar-closed'));
+    }
+
+    calendarIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        const isVisible = datepicker.style.display === 'block';
+        if(isVisible) {
+            clearRangeSelect();
+            calendarIcon.classList.remove('icon-active');
+            datepicker.style.display = 'none';
+        } else {
+            calendarIcon.classList.add('icon-active');
+            datepicker.style.display = 'block';
+
+            const datesContainer = document.querySelector('.dates');
+            if(datesContainer && datesContainer.children.length === 0 && window.calendarRender)
+                window.calendarRender();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if(!datepicker.contains(e.target) && e.target !== calendarIcon) {
+            clearRangeSelect();
+            calendarIcon.classList.remove('icon-active');
+            datepicker.style.display = 'none';
+        }
+    });
 }
 
 
-/* =================================== TOAST =================================== */
-// Toast -> Simple
-const ToastMixin = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 4000,
-    timerProgressBar: true,
-    width: '540px',
-    customClass: {
-        popup: 'colored-toast'
-    },
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-    },
-});
+/* ============================== FLAG CURRENCY ============================== */
+function updateCurrency() {
+    const currencies = [
+        { code: 'MXN', flag: './assets/images/MXN.webp', symbol: '$' },
+        { code: 'USD', flag: './assets/images/USD.webp', symbol: '$' },
+        { code: 'EUR', flag: './assets/images/EUR.webp', symbol: '€' },
+        { code: 'JPY', flag: './assets/images/JPY.webp',  symbol: '¥' }
+    ];
 
-function Toast(title, content, imageUrl = './assets/images/Icon_agave.webp') {
-    ToastMixin.fire({
-        icon: undefined,
-        html: `
-            <div style="display: flex; align-items: center; gap: 20px;">
-                <img src="${imageUrl}" alt="Agave" class="agave-icon">
-                <div class="text">
-                    <p>${title}</p>
-                    <span>${content}</span>
-                </div>
-            </div>
-        `
+    // TABLE
+    const tableRows = document.querySelectorAll('.table-body tr');
+    tableRows.forEach(row => {
+        const totalCell = row.querySelector('.total-cell');
+        const totalImg = totalCell.querySelector('img');
+        const totalSymbol = totalCell.querySelector('.symbol-money.total');
+
+        const saldoCell = row.querySelector('.saldo-cell');
+        const saldoImg = saldoCell.querySelector('img');
+        const saldoSymbol = saldoCell.querySelector('.symbol-money.saldo');
+
+        if(!totalCell || !totalImg || !totalSymbol || !saldoCell || !saldoImg || !saldoSymbol) return;
+        
+        let currencyCode = totalImg.getAttribute('alt')?.toUpperCase();
+        const totalCurrency = currencies.find(c => c.code === currencyCode);
+
+        currencyCode = saldoImg.getAttribute('alt')?.toUpperCase();
+        const saldoCurrency = currencies.find(c => c.code === currencyCode);
+
+        if(!totalCurrency || !saldoCurrency) return;
+
+        totalSymbol.textContent = totalCurrency.symbol;
+        saldoSymbol.textContent = saldoCurrency.symbol;
     });
+
+
+    // CARDS -> corregir
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        const amountMobile = card.querySelector('.amount-mobile');
+        const img = card.querySelector('img');
+        const symbolSpan = amountMobile.querySelector('.symbol-money');
+
+        if(!amountMobile || !img || !symbolSpan) return;
+
+        let currencyCode = img.getAttribute('alt')?.toUpperCase();
+        const currency = currencies.find(c => c.code === currencyCode);
+        if(!currency) return;
+
+        symbolSpan.textContent = currency.symbol;
+    }); 
 }

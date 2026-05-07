@@ -27,6 +27,8 @@
     --tr-status-pending: rgba(208, 175, 6, 0.25);
     --tr-status-approved: rgba(113, 153, 144, 0.25);
     --tr-status-rejected: rgba(169, 56, 53, 0.25);
+    --tr-status-return: rgba(200, 162, 200, 0.4);
+    --tr-status-canceled: rgba(118, 180, 233, 0.25);
     --tr-amount-pending: rgba(153, 47,44, 0.85);
     --tr-date-range: rgba(66, 129, 136, 0.2);
     --tr-passport: rgba(217, 217, 217, 0.95);
@@ -65,6 +67,14 @@
     --status-rejected: linear-gradient(90deg,
         #A93835 0%,
         #3E1413 100%
+    );
+    --status-canceled: linear-gradient(90deg,
+        #58A5E7 0%,
+        #1A5B94 100%
+    );
+    --status-return: linear-gradient(90deg,
+        #C8A2C8 0%,
+        #824A82 100%
     );
     --toast-buttons: linear-gradient(90deg,
         var(--agave) 0%,
@@ -658,7 +668,8 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
 .tab.pending.selected { margin-right: 9px; }
 
-.tab.delivered.selected { margin: 0 4px; }
+.tab.paid.selected,
+.tab.returns.selected { margin: 0 4px; }
 
 .tab p {
     font-size: 1em;
@@ -740,150 +751,10 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
 .search-back i.fade-out { opacity: 0; }
 
-.search-back i:nth-child(3) { margin-right: 0.7em; }
-
 .search-back i:hover,
 .search-back .icon-active {
     color: var(--icons);
     font-weight: 700;
-}
-
-.datepicker-wrapper { 
-    display: none;
-    position: absolute;
-    top: 80%;
-    right: 0;
-    width: 30%;
-    z-index: 999;
-    background-color: var(--transparent-blue);
-    border-radius: 10px;
-    padding: 0.4em 0.5em;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.datepicker {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    background-color: var(--tr-dark-blue);
-    border-radius: 7px;
-    padding: 0.3em 0.6em 0.5em 0.6em;
-}
-
-.datepicker-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    border-bottom: 1px solid var(--line-gray);
-    font-weight: 500;
-    font-size: 1.1em;
-    padding-bottom: 0.3em;
-    gap: 2em;
-}
-
-.datepicker-header button { transform: translateY(2px); }
-
-.date-header { display: flex; }
-
-.date-header .month,
-.date-header .year {
-    cursor: pointer;
-    padding: 0.3em 0.4em;
-    border-radius: 5px;
-}
-
-.date-header .month:hover,
-.date-header .year:hover { background-color: var(--date); }
-
-.days-header {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 0.5em 0 0.3em 0;
-    gap: 0.5em;
-}
-
-.days-header span { 
-    font-size: 0.9em;
-    font-weight: 600; 
-    display: block;
-}
-
-.dates {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    align-items: center;
-    text-align: center;
-    color: var(--black);
-    font-weight: 500;
-    font-size: 0.9em;
-    gap: 0.3em;
-}
-
-.date-cell.other-month { 
-    color: var(--gray);
-    cursor: default;
-    pointer-events: none;
-}
-
-.date-cell { 
-    position: relative;
-    cursor: pointer;
-    padding: 0.2em 0;
-    border-radius: 5px;
-    transition: background-color 0.2s ease, color 0.2s;
-}
-
-.date-cell:not(.other-month):hover { 
-    background-color: var(--selected); 
-    color: var(--white);
-}
-
-.date-cell.in-range { background-color: var(--tr-date-range); }
-
-.date-cell.start,
-.date-cell.end {
-    background-color: var(--selected);
-    color: var(--white);
-    font-weight: 600;
-}
-
-.months-grid,
-.years-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8em;
-    padding: 1em 0;
-    font-size: 0.9em;
-}
-
-.month-item,
-.year-item {
-    text-align: center;
-    padding: 0.5em 0;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.year-item:first-child,
-.year-item:last-child { 
-    color: var(--gray);
-    cursor: default; 
-    pointer-events: none;
-}
-
-.month-item:hover,
-.year-item:not(:first-child):not(:last-child):hover {
-    background-color: var(--selected);
-    color: var(--white);
 }
 
 .table-background {
@@ -955,16 +826,22 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
     font-weight: 600;
 }
 
-.monto-cell { vertical-align: middle; }
+.anticipo-cell,
+.comprobado-cell,
+.saldo-cell { vertical-align: middle; }
 
-.monto-content {
+.anticipo-content,
+.comprobado-content,
+.saldo-content {
     display: flex;
     align-items: center;
     gap: 10px;
     white-space: nowrap;
 }
 
-.monto-content img {
+.anticipo-content img,
+.comprobado-content img,
+.saldo-content img {
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -1000,17 +877,13 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
 .st-pending { background-color: var(--tr-status-pending); }
 
-.st-approved,
-.st-liquidated { background-color: var(--tr-status-approved); }
-
-.st-rejected { background-color: var(--tr-status-rejected); }
+.st-adjustment { background-color: var(--tr-status-canceled); }
+.st-adjustment.return { background-color: var(--tr-status-return); }
 
 .st-pending::before { background: var(--status-pending); }
 
-.st-approved::before,
-.st-liquidated::before { background: var(--status-approved); }
-
-.st-rejected::before { background: var(--status-rejected); }
+.st-adjustment::before { background: var(--status-canceled); }
+.st-adjustment.return::before { background: var(--status-return); }
 
 .table-body .actions {
     display: flex;
