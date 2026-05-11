@@ -1179,7 +1179,7 @@ body {
         gap: 1.2em; 
     }
 
-    .content.colab { padding-bottom: 0em; }
+    .graphs.colab { padding-bottom: 0em; }
 
     .titles .title { font-size: 2.8em; }
 
@@ -1317,7 +1317,7 @@ body {
         margin: 1.3em 0 0 0;
     }
 
-    .content.colab { padding-bottom: 0em; }
+    .graphs.colab { padding-bottom: 0em; }
 
     .cards { gap: 2em; }
 
@@ -1388,6 +1388,11 @@ body {
     .next.status-button i,
     .prev.comp-button i,
     .next.comp-button i { transform: translateY(10%); }
+
+    .graphs.colab .prev.status-button i,
+    .graphs.colab .next.status-button i,
+    .graphs.colab .prev.comp-button i,
+    .graphs.colab .next.comp-button i { transform: translateY(0%); }
 
     .prev.request-button i,
     .next.request-button i,
