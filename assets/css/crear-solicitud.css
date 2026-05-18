@@ -211,6 +211,95 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
 ::-webkit-scrollbar-track { background-color: transparent; }
 
 
+/* ============================== LOADER ============================== */
+.loader-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center
+}
+
+.dot-spinner {
+    --uib-size: 5em;
+    --uib-speed: .9s;
+    --uib-color: var(--white);
+    height: var(--uib-size);
+    width: var(--uib-size);
+    position: relative;
+}
+
+.dot-spinner__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+}
+
+.dot-spinner__dot::before {
+  content: '';
+  height: 20%;
+  width: 20%;
+  border-radius: 50%;
+  background-color: var(--uib-color);
+  transform: scale(0);
+  opacity: 0.5;
+  animation: pulse0112 calc(var(--uib-speed) * 1.111) ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
+}
+
+.dot-spinner__dot:nth-child(2) { transform: rotate(45deg); }
+
+.dot-spinner__dot:nth-child(2)::before { animation-delay: calc(var(--uib-speed) * -0.875); }
+
+.dot-spinner__dot:nth-child(3) { transform: rotate(90deg); }
+
+.dot-spinner__dot:nth-child(3)::before { animation-delay: calc(var(--uib-speed) * -0.75); }
+
+.dot-spinner__dot:nth-child(4) { transform: rotate(135deg); }
+
+.dot-spinner__dot:nth-child(4)::before { animation-delay: calc(var(--uib-speed) * -0.625); }
+
+.dot-spinner__dot:nth-child(5) { transform: rotate(180deg); }
+
+.dot-spinner__dot:nth-child(5)::before { animation-delay: calc(var(--uib-speed) * -0.5); }
+
+.dot-spinner__dot:nth-child(6) { transform: rotate(225deg); }
+
+.dot-spinner__dot:nth-child(6)::before { animation-delay: calc(var(--uib-speed) * -0.375); }
+
+.dot-spinner__dot:nth-child(7) { transform: rotate(270deg); }
+
+.dot-spinner__dot:nth-child(7)::before { animation-delay: calc(var(--uib-speed) * -0.25); }
+
+.dot-spinner__dot:nth-child(8) { transform: rotate(315deg); }
+
+.dot-spinner__dot:nth-child(8)::before { animation-delay: calc(var(--uib-speed) * -0.125); }
+
+@keyframes pulse0112 {
+  0%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
 /* ============================== TOAST ============================== */
 .swal2-toast { 
     margin: 0.5em 0.5em 0 0 !important;
@@ -255,7 +344,7 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
 .colored-toast span { font-size: 1rem; }
 
 .agave-icon {
-    height: 6.5em; 
+    height: 7em; 
     object-fit: contain; 
     transform: translateY(10px);
 }
@@ -384,7 +473,7 @@ body {
     align-items: center;
     text-align: center;
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 1em;
     color: var(--white);
 }
 
@@ -396,7 +485,7 @@ body {
     justify-content: center;
     gap: 0.7em;
     font-weight: 300;
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: var(--white);
     padding-left: 0.9em;
 }
@@ -427,7 +516,7 @@ body {
 }
 
 .option img {
-    width: 18px;
+    width: 17px;
     object-fit: contain;
 }
 
@@ -477,12 +566,12 @@ body {
 
 .titles .title {
     font-weight: 500;
-    font-size: 3.3em;
+    font-size: 3em;
 }
 
 .titles .subtitle {
     font-weight: 400;
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 .action-buttons {
@@ -542,7 +631,7 @@ body {
 }
 
 .button p {
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-weight: 500;
 }
 
@@ -583,7 +672,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    font-size: 1.3em;
+    font-size: 1.25em;
     font-weight: 600;
     margin-bottom: 1.5em;
 }
@@ -901,13 +990,13 @@ body {
 /* Escritorios grandes (1920px) */
 @media(min-width: 1801px) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 680px !important; }
+    body.swal2-toast-shown .swal2-container { width: 740px !important; }
 
     .colored-toast p { font-size: 1.5em; }
 
     .colored-toast span { font-size: 1.4em; }
 
-    .agave-icon { height: 7.5em; }
+    .agave-icon { height: 8em; }
 
     /* OPTION BAR */
     .option-bar { padding: 7em 0; }
@@ -995,13 +1084,13 @@ body {
 /* Escritorios medianos (1440px + 1800px) */
 @media(min-width: 1470px) and (max-width: 1800px) and (max-resolution: 1.5dppx) {
     /* TOAST */ 
-    body.swal2-toast-shown .swal2-container { width: 530px !important; }
+    body.swal2-toast-shown .swal2-container { width: 590px !important; }
 
     .colored-toast p { font-size: 1.2em; }
 
     .colored-toast span { font-size: 1em; }
 
-    .agave-icon { height: 7em; }
+    .agave-icon { height: 7.5em; }
 
     /* OPTION BAR */
     .logo .name { font-size: 1.1em; }
@@ -1070,11 +1159,13 @@ body {
 
 @media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
     /* TOAST */
-    body.swal2-toast-shown .swal2-container { width: 470px !important; }
+    body.swal2-toast-shown .swal2-container { width: 490px !important; }
 
     .colored-toast span { font-size: 0.95em; }
 
     .colored-toast p { font-size: 1em; }
+
+    .agave-icon { height: 8em; }
 
     /* OPTION BAR */
     .logo .name { font-size: 1.1em; }
@@ -1149,11 +1240,13 @@ body {
 
 @media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
     /* TOAST */ 
-    body.swal2-toast-shown .swal2-container { width: 470px !important; }
+    body.swal2-toast-shown .swal2-container { width: 490px !important; }
 
     .colored-toast p { font-size: 1em; }
 
     .colored-toast span { font-size: 0.95em; }
+
+    .agave-icon { height: 8em; }
 
     /* OPTION BAR */
     .logo .name { font-size: 1em; }
@@ -1231,13 +1324,13 @@ body {
 /* Laptops pequeñas (1024px - 1250px) */
 @media(min-width: 1025px) and (max-width: 1280px) {
     /* TOAST */ 
-    body.swal2-toast-shown .swal2-container { width: 410px !important; }
+    body.swal2-toast-shown .swal2-container { width: 480px !important; }
 
     .colored-toast p { font-size: 1em; }
 
     .colored-toast span { font-size: 0.9em; }
 
-    .agave-icon { height: 6em; }
+    .agave-icon { height: 7.5em; }
 
     /* OPTION BAR */
     .option-bar { width: 23%; }

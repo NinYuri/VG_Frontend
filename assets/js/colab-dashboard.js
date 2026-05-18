@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+    menuUser();
     phoneMenu();
     initMobileScroll();
     optionsBar();
@@ -12,6 +13,16 @@ document.addEventListener("DOMContentLoaded", function() {
 /* ================================ VARIABLES ================================ */
 let trendChart = null;
 let cmpChart = null;
+
+const logoUser = Session.getUser();
+
+
+/* ============================== MENU NAME ============================== */
+function menuUser() {
+    const user = document.querySelector('.option-bar .name p');
+    user.innerHTML = '';
+    user.innerHTML = logoUser;
+}
 
 
 /* ============================== PHONE MENU ============================== */

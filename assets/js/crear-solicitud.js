@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+    menuUser();
     phoneMenu();
     initMobileScroll();
     optionsBar();
@@ -8,12 +9,38 @@ document.addEventListener("DOMContentLoaded", function() {
     sendButton();
     saveButton();
     cancelButton();
+
+    // Edit mode
+    const folio = getFolioFromUrl();
+    if(folio)
+        loadSolicitudData(folio);
 });
 
 
 /* ============================== VARIABLES ============================== */
 let globalStartDate = null;
 let globalEndDate = null;
+
+const token = Session.getToken();
+const logoUser = Session.getUser();
+
+
+/* ================================= LOADER ================================= */
+function showLoader() {
+    document.querySelector('.loader-overlay').style.display = 'flex';
+}
+
+function hideLoader() {
+    document.querySelector('.loader-overlay').style.display = 'none';
+}
+
+
+/* ============================== MENU NAME ============================== */
+function menuUser() {
+    const user = document.querySelector('.option-bar .name p');
+    user.innerHTML = '';
+    user.innerHTML = logoUser;
+}
 
 
 /* ============================== PHONE MENU ============================== */
@@ -142,7 +169,7 @@ function cancelButton() {
     });
 }
 
-// Send
+// CREATE REQUEST
 async function sendButton() {
     const sendButton = document.querySelector('.button.send');
     if(!sendButton) return;
@@ -156,7 +183,183 @@ async function sendButton() {
         const fin_viaje = formatDate(globalEndDate);
         const destinoRaw = document.getElementById('ans-destination')?.value.trim();
         const destino = destinoRaw 
-                        ? destinoRaw.charAt(0).toUpperCase() + destinoRaw.slice(1).toLowerCase()
+                        ? destinoRaw.charAt(0).toUpperCase() + destinoRaw.slice(1)
+                        : '';
+        const motivoRaw = document.querySelector('.answer.motive textarea')?.value.trim();
+        const motivo = motivoRaw 
+                        ? motivoRaw.charAt(0).toUpperCase() + motivoRaw.slice(1)
+                        : '';
+        const monto_solicitado = parseFloat(document.querySelector('.answer.money input')?.value.trim());
+        const monto_moneda = document.querySelector('.currency-selector .flags p')?.textContent.trim();
+        const forma_pago = document.querySelector('.payment-selector p')?.textContent.trim();
+        const fecha_recepcion = new Date().toLocaleDateString('sv-SE');
+
+        const data = {
+            inicio_viaje: inicio_viaje,
+            fin_viaje: fin_viaje,
+            destino: destino,
+            motivo: motivo,
+            monto_solicitado: monto_solicitado,
+            monto_moneda: monto_moneda,
+            forma_pago: forma_pago,
+            fecha_recepcion: fecha_recepcion
+        };
+
+        showLoader();        
+        try {
+            const response = await fetch('http://127.0.0.1:3000/api/solicitudes', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include',
+                body: JSON.stringify(data)
+            });
+
+            if(!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                throw new Error(err.message || err.mensaje || 'Error al enviar solicitud');
+            }
+
+            const result = await response.json();
+            hideLoader();
+            Toast('SOLICITUD ENVIADA', result.message || '¡Solicitud enviada correctamente!');
+            
+            setTimeout(() => {
+                window.location.href = 'colab-solicitudes.html';
+            }, 2500);
+        }catch(error) {
+            hideLoader();
+            Toast('ERROR AL ENVIAR SOLICITUD', error.message);
+        };
+    });
+}
+
+// EDIT REQUEST
+function getFolioFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('folio');
+}
+
+async function loadSolicitudData(folio) {
+    showLoader();
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/api/solicitudes/detalle?folio=${encodeURIComponent(folio)}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        });
+
+        if(!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.message || 'Error al cargar la solicitud');
+        }
+
+        const data = await response.json();
+        populateFormWithData(data);
+    } catch(error) {
+        Toast('ERROR', error.message);
+        setTimeout(() => window.location.href = 'colab-solicitudes.html', 2000);
+    } finally {
+        hideLoader();
+    }
+}
+
+function populateFormWithData(data) {
+    // Destino
+    const destinationInput = document.getElementById('ans-destination');
+    if(destinationInput) destinationInput.value = data.destino || '';
+
+    // Motivo
+    const motiveTextarea = document.querySelector('.answer.motive textarea');
+    if(motiveTextarea) motiveTextarea.value = data.motivo || '';
+
+    // Monto
+    const amountInput = document.querySelector('.answer.money input');
+    if(amountInput) amountInput.value = data.monto_solicitado || '';
+
+    // Moneda
+    const moneda = data.monto_moneda || 'MXN';
+    const currencies = [
+        { code: 'MXN', name: 'MXN', flag: './assets/images/MXN.webp', symbol: '$' },
+        { code: 'USD', name: 'USD', flag: './assets/images/USD.webp', symbol: '$' },
+        { code: 'EUR', name: 'EUR', flag: './assets/images/EUR.webp', symbol: '€' },
+        { code: 'JPY', name: 'JPY', flag: './assets/images/JPY.webp', symbol: '¥' }
+    ];
+    const selectedCurrency = currencies.find(c => c.code === moneda);
+    if(selectedCurrency && typeof updateSelectedCurrency === 'function')
+        updateSelectedCurrency(selectedCurrency);
+
+    // Forma de pago
+    const formaPago = data.forma_pago || 'Transferencia';
+    const payments = [
+        { name: 'Transferencia' },
+        { name: 'Efectivo' }
+    ];
+    const selectedPayment = payments.find(p => p.name === formaPago);
+    if (selectedPayment && typeof updateSelectedPayment === 'function')
+        updateSelectedPayment(selectedPayment);
+
+    // Fechas
+    if(data.inicio_viaje) {
+        const startDateObj = parseDateString(data.inicio_viaje);
+        if(startDateObj) {
+            globalStartDate = data.inicio_viaje;
+            if(typeof setCalendarRange === 'function')
+                setCalendarRange(globalStartDate, globalEndDate);
+        }
+    }
+    if(data.fin_viaje) {
+        const endDateObj = parseDateString(data.fin_viaje);
+        if(endDateObj) {
+            globalEndDate = data.fin_viaje;
+            if(typeof setCalendarRange === 'function')
+                setCalendarRange(globalStartDate, globalEndDate);
+        }
+    }
+
+    if(typeof window.calendarRender === 'function')
+        window.calendarRender();
+}
+
+// String YYYY-MM-DD to object { year, month, day }
+function parseDateString(dateStr) {
+    if(!dateStr) return null;
+    
+    const parts = dateStr.split('-');
+    if(parts.length !== 3) return null;
+
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1]) - 1;
+    const day = parseInt(parts[2]);
+
+    if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
+    return { year, month, day };
+}
+
+async function saveButton() {
+    const saveButton = document.querySelector('.button.save');
+    if(!saveButton) return;
+
+    saveButton.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const folio = getFolioFromUrl();
+        if(!folio) {
+            Toast('ERROR', 'No se ha identificado el folio de la solicitud a editar');
+            return;
+        }
+
+        if(!validateForm(true)) return;
+
+        const inicio_viaje = formatDate(globalStartDate);
+        const fin_viaje = formatDate(globalEndDate);
+        const destinoRaw = document.getElementById('ans-destination')?.value.trim();
+        const destino = destinoRaw 
+                        ? destinoRaw.charAt(0).toUpperCase() + destinoRaw.slice(1)
                         : '';
         const motivoRaw = document.querySelector('.answer.motive textarea')?.value.trim();
         const motivo = motivoRaw 
@@ -167,6 +370,7 @@ async function sendButton() {
         const forma_pago = document.querySelector('.payment-selector p')?.textContent.trim();
 
         const data = {
+            folio: folio,
             inicio_viaje: inicio_viaje,
             fin_viaje: fin_viaje,
             destino: destino,
@@ -174,57 +378,42 @@ async function sendButton() {
             monto_solicitado: monto_solicitado,
             monto_moneda: monto_moneda,
             forma_pago: forma_pago
-        };
-        const token = Session.getToken();
+        }; 
         
-        await fetch('http://127.0.0.1:3000/api/solicitudes', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            credentials: 'include',
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if(!response.ok)
-                return response.json().then(err => { throw new Error(err.message || err.mensaje || 'Error desconocido') });
-            return response.json();
-        })
-        .then(result => {
-            Toast('SOLICITUD ENVIADA', result.message);
-            setTimeout(() => {
-                setTimeout(() => {
-                    window.location.href = 'colab-solicitudes.html';
-                }, 600);
-            }, 4000);
-        })
-        .catch(error => {
-            Toast('ERROR AL ENVIAR SOLICITUD', error.message);
-        });
-    });
-}
+        showLoader();
+        try {
+            const response = await fetch('http://127.0.0.1:3000/api/solicitudes/editar', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include',
+                body: JSON.stringify(data)
+            });
 
-// Save
-function saveButton() {
-    const saveButton = document.querySelector('.button.save');
-    if(!saveButton) return;
+            if(!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                throw new Error(err.message || err.mensaje || 'Error al editar la solicitud');
+            }
 
-    saveButton.addEventListener('click', (e) => {
-        e.stopPropagation();
+            const result = await response.json();
+            
+            hideLoader();
+            Toast('SOLICITUD EDITADA', 'Tu solicitud ha sido editada correctamente y se encuentra en proceso de aprobación');
 
-        if(!validateForm(true)) return;
-
-        Toast('SOLICITUD EDITADA', 'Tu solicitud ha sido editada correctamente y se encuentra en proceso de aprobación');
-        setTimeout(() => {
             setTimeout(() => {
                 window.location.href = 'colab-solicitudes.html';
-            }, 600);
-        }, 4000);
+            }, 2500);
+        } catch(error) {
+            hideLoader();
+            Toast('ERROR AL EDITAR SOLICITUD', error.message);
+        }
     });
 }
 
-// Validation
+
+/* =============================== VALIDATIONS =============================== */
 function validateForm(isEdit = false) {
     const destination = document.getElementById('ans-destination')?.value.trim();
     const motive = document.querySelector('.answer.motive textarea')?.value.trim();
@@ -267,18 +456,29 @@ function onlyNumbers(number) {
     return /^\d+$/.test(number);
 }
 
-// Format Date
-function formatDate(dateStr) {
-    const date = new Date(dateStr);
-    
-    if(isNaN(date.getTime()))
-        return null;
+function formatDate(dateInput) {
+    if(!dateInput) return null;
 
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    // String en formato YYYY-MM-DD
+    if(typeof dateInput === 'string') {
+        const parts = dateInput.split('-').map(p => p.trim());
+        if(parts.length === 3) {
+            const year = parts[0];
+            const month = String(parts[1]).padStart(2, '0');
+            const day = String(parts[2]).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+    }
 
-    return `${year}-${month}-${day}`;
+    // Si es objeto
+    if(dateInput.year && dateInput.month !== undefined && dateInput.day) {
+        const year = dateInput.year;
+        const month = String(dateInput.month + 1).padStart(2, '0');
+        const day = String(dateInput.day).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    return null;
 }
 
 
@@ -347,6 +547,7 @@ function currencyOptions() {
 
     const defaultCurrency = currencies.find(c => c.code === 'MXN');
     updateSelectedCurrency(defaultCurrency);
+    window.updateSelectedCurrency = updateSelectedCurrency;
 }
 
 
@@ -401,6 +602,7 @@ function paymentOptions() {
 
     const defaultPayment = payments.find(n => n.name === 'Transferencia');
     updateSelectedPayment(defaultPayment);
+    window.updateSelectedPayment = updateSelectedPayment;
 }
 
 
@@ -676,6 +878,26 @@ function initCalendar() {
                     hideSelectors();
     });
 
+    window.setCalendarRange = (startDateStr, endDateStr) => {
+        if(startDateStr) {
+            const start = parseDateString(startDateStr);
+            if(start) {
+                startDate = start;
+                globalStartDate = startDateStr;
+                currentDate = new Date(start.year, start.month, 1);
+            }
+        }
+        if(endDateStr) {
+            const end = parseDateString(endDateStr);
+            if(end) {
+                endDate = end;
+                globalEndDate = endDateStr;
+            }
+        }
+        renderCalendar();
+    };
+
+    window.calendarRender = renderCalendar;
     renderCalendar();
 }
 
@@ -688,7 +910,7 @@ const ToastMixin = Swal.mixin({
     showConfirmButton: false,
     timer: 4000,
     timerProgressBar: true,
-    width: '540px',
+    width: '600px',
     customClass: {
         popup: 'colored-toast'
     },

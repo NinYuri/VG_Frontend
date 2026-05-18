@@ -20,6 +20,21 @@
 </head>
 
 <body>
+    <!-- ======================= LOADER ======================= -->
+    <div class="loader-overlay">
+        <div class="dot-spinner">
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+        </div>
+    </div>
+
+    <!-- ======================= CONTENT ======================= -->
     <div class="background">
         <!-- ======================= PHONE MENU ======================= -->
         <div class="mobile-nav">
@@ -36,9 +51,7 @@
         <div class="option-bar" id="optionBar">
             <div class="logo">
                 <img src="./assets/images/White_logo.webp" alt="Grupo | PSA">
-                <div class="name">
-                    <p>Yuriana Ibarra</p>
-                </div>
+                <div class="name"><p></p></div>
             </div>
 
             <div class="options">
@@ -129,6 +142,11 @@
                                 </div>
 
                                 <div class="dates"></div>
+
+                                <div class="datepicker-bottom">
+                                    <div class="date-button clear-date">LIMPIAR</div>
+                                    <div class="date-button search-date">BUSCAR</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -137,190 +155,9 @@
                         <div class="table-container">
                             <table>
                                 <thead class="table-head">
-                                    <tr>
-                                        <th>
-                                            <div class="order-div">
-                                                <div class="order">
-                                                    <i class="fa-solid fa-angle-up"></i>
-                                                    <i class="fa-solid fa-angle-down"></i>
-                                                </div>
-                                                Folio
-                                            </div>
-                                        </th>
-                                        <th>Fecha</th>
-                                        <th>Destino</th>
-                                        <th>
-                                            <div class="order-div">
-                                                <div class="order">
-                                                    <i class="fa-solid fa-angle-up"></i>
-                                                    <i class="fa-solid fa-angle-down"></i>
-                                                </div>
-                                                Monto
-                                            </div>
-                                        </th>
-                                        <th>Estado</th>
-                                        <th>Finanzas</th>
-                                    </tr>
                                 </thead>
 
                                 <tbody class="table-body">
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-001</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/EUR.webp" alt="EUR">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-002</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-approved">
-                                            Aprobada
-                                        </div></td>
-                                        <td><div class="status btn-received">
-                                            ¿Recibido?
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-005</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-rejected">
-                                            Rechazada
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-007</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-approved">
-                                            Aprobada
-                                        </div></td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-money-check-dollar"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-008</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-canceled">
-                                            Cancelada
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-010</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-015</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td class="monto-cell">
-                                            <div class="monto-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -976,28 +813,27 @@
                             <div class="info-top">
                                 <div class="request-generals">
                                     <div class="general-info">
-                                        <p class="info-folio">FOLIO DE SOLICITUD: <span>SOL-26-001</span></p>
-                                        <p class="info-date">FECHA DE SOLICITUD: <span>16 / ABR / 2026</span></p>
+                                        <p class="info-folio">FOLIO DE SOLICITUD: <span></span></p>
+                                        <p class="info-date">FECHA DE SOLICITUD: <span></span></p>
                                     </div>
 
                                     <div class="both-status">
-                                        <div class="status st-pending">Pendiente</div>
-                                        <div class="status st-pending second">Pendiente</div>
+                                        <div class="status first"></div>
                                     </div>
                                 </div>
 
                                 <div class="request-destination">
                                     <p class="info-subtitle">DESTINO</p>
-                                    <p>CIUDAD DE MÉXICO</p>
+                                    <p></p>
 
-                                    <div class="colab"><p class="info-subtitle">YURIANA MONTSERRAT IBARRA GRANADOS</p></div>
+                                    <div class="colab"><p class="info-subtitle"></p></div>
                                 </div>
 
                                 <div class="request-dates-wrapper">
                                     <div class="request-dates">
                                         <div class="departure-date">
                                             <p class="info-subtitle">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
+                                            <p></p>
                                         </div>
                                         
                                         <div class="travel-days">
@@ -1008,7 +844,7 @@
                                         
                                         <div class="return-date">
                                             <p class="info-subtitle">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
+                                            <p></p>
                                         </div>
                                     </div>
 
@@ -1020,26 +856,26 @@
                                 <div class="info-row">
                                     <div class="info-motive">
                                         <p class="info-subtitle">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
+                                        <p></p>
                                     </div>
 
                                     <div class="info-money">
                                         <p class="info-subtitle">MONTO</p>
-                                        <p class="info-amount"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="info-amount"><span class="symbol-money"></span></p>
                                         
                                         <div class="info-currency">
-                                            <img class="currency-flag" src="./assets/images/MXN.webp" alt="MXN">
-                                            <p>MXN</p>
+                                            <img class="currency-flag">
+                                            <p></p>
                                         </div>
                                         
                                         <p class="info-subtitle">FORMA DE PAGO</p>
-                                        <p class="info-payment">Transferencia</p>
+                                        <p class="info-payment"></p>
                                     </div>
                                 </div>
 
                                 <div class="general-date">
                                     <p class="payment-date">FECHA DE PAGO: <span>08 / ABR / 2026</span></p>
-                                    <p class="info-update">FECHA DE ACTUALIZACIÓN: <span>06 / ABR / 2026</span></p>
+                                    <p class="info-update">FECHA DE ACTUALIZACIÓN: <span></span></p>
                                 </div>
                             </div>
                         </div>

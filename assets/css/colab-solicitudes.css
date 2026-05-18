@@ -6,6 +6,8 @@
     --blue-white: #D9D9D9;
     --white: #FFFFFF;
     --gray: #535353;
+    --light-gray: #BDBBBB;
+    --hover-gray: #B0ACAC;
     --icons: #2A5156;
     --line-gray: #919A9B;
     --tab-selected: #ACBCC0;
@@ -231,6 +233,95 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
 ::-webkit-scrollbar { width: 5px; }
 
 ::-webkit-scrollbar-track { background-color: transparent; }
+
+
+/* ============================== LOADER ============================== */
+.loader-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center
+}
+
+.dot-spinner {
+    --uib-size: 5em;
+    --uib-speed: .9s;
+    --uib-color: var(--white);
+    height: var(--uib-size);
+    width: var(--uib-size);
+    position: relative;
+}
+
+.dot-spinner__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+}
+
+.dot-spinner__dot::before {
+  content: '';
+  height: 20%;
+  width: 20%;
+  border-radius: 50%;
+  background-color: var(--uib-color);
+  transform: scale(0);
+  opacity: 0.5;
+  animation: pulse0112 calc(var(--uib-speed) * 1.111) ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
+}
+
+.dot-spinner__dot:nth-child(2) { transform: rotate(45deg); }
+
+.dot-spinner__dot:nth-child(2)::before { animation-delay: calc(var(--uib-speed) * -0.875); }
+
+.dot-spinner__dot:nth-child(3) { transform: rotate(90deg); }
+
+.dot-spinner__dot:nth-child(3)::before { animation-delay: calc(var(--uib-speed) * -0.75); }
+
+.dot-spinner__dot:nth-child(4) { transform: rotate(135deg); }
+
+.dot-spinner__dot:nth-child(4)::before { animation-delay: calc(var(--uib-speed) * -0.625); }
+
+.dot-spinner__dot:nth-child(5) { transform: rotate(180deg); }
+
+.dot-spinner__dot:nth-child(5)::before { animation-delay: calc(var(--uib-speed) * -0.5); }
+
+.dot-spinner__dot:nth-child(6) { transform: rotate(225deg); }
+
+.dot-spinner__dot:nth-child(6)::before { animation-delay: calc(var(--uib-speed) * -0.375); }
+
+.dot-spinner__dot:nth-child(7) { transform: rotate(270deg); }
+
+.dot-spinner__dot:nth-child(7)::before { animation-delay: calc(var(--uib-speed) * -0.25); }
+
+.dot-spinner__dot:nth-child(8) { transform: rotate(315deg); }
+
+.dot-spinner__dot:nth-child(8)::before { animation-delay: calc(var(--uib-speed) * -0.125); }
+
+@keyframes pulse0112 {
+  0%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 
 /* ============================== TOAST ============================== */
@@ -463,7 +554,7 @@ body {
     align-items: center;
     text-align: center;
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 1em;
     color: var(--white);
 }
 
@@ -475,7 +566,7 @@ body {
     justify-content: center;
     gap: 0.7em;
     font-weight: 300;
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: var(--white);
     padding-left: 0.9em;
 }
@@ -506,7 +597,7 @@ body {
 }
 
 .option img {
-    width: 18px;
+    width: 17px;
     object-fit: contain;
 }
 
@@ -557,12 +648,12 @@ body {
 
 .titles .title{
     font-weight: 500;
-    font-size: 3.3em;
+    font-size: 3.1em;
 }
 
 .titles .subtitle {
     font-weight: 400;
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 .button-create {
@@ -570,13 +661,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 13em;
+    width: 12em;
     height: 3.5em;
     background-image: var(--button-hover);
     margin: 1em 2em 0 0;
     border-radius: 80px;
     color: var(--white);
-    font-size: 0.95em;
+    font-size: 0.93em;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     overflow: hidden;
@@ -604,11 +695,11 @@ body {
 }
 
 .button-create p {
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-weight: 500;
 }
 
-.button-create i { margin-right: 0.3em; }
+.button-create i { margin-right: 0.5em; }
 
 .content {
     display: flex;
@@ -681,12 +772,12 @@ body {
 .tab.rejected.selected { margin-right: 9px; }
 
 .tab p {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 500;
 }
 
 .tab.selected p {
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: 600;
 }
 
@@ -726,17 +817,15 @@ body {
     transition: color 0.2s ease, caret-color 0.2s ease;
 }
 
-.search-back i {
-    color: var(--gray);
-    cursor: pointer;
-}
+.search-back i { color: var(--gray); }
 
 .search-back i.fade-out { opacity: 0; }
 
-.search-back i:hover,
+.search-back i:not(:first-child):hover,
 .search-back .icon-active {
     color: var(--icons);
     font-weight: 700;
+    cursor: pointer;
 }
 
 .datepicker-wrapper { 
@@ -771,7 +860,7 @@ body {
     width: 100%;
     border-bottom: 1px solid var(--line-gray);
     font-weight: 500;
-    font-size: 1.1em;
+    font-size: 1em;
     padding-bottom: 0.3em;
     gap: 2em;
 }
@@ -801,7 +890,7 @@ body {
 }
 
 .days-header span { 
-    font-size: 0.9em;
+    font-size: 0.75em;
     font-weight: 600; 
     display: block;
 }
@@ -814,7 +903,7 @@ body {
     text-align: center;
     color: var(--black);
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 0.78em;
     gap: 0.3em;
 }
 
@@ -877,6 +966,36 @@ body {
     color: var(--white);
 }
 
+.datepicker-bottom {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    margin-top: 0.5em;
+    border-top: 1px solid var(--line-gray);
+    padding: 0.5em 0.5em 0.3em 0;
+}
+
+.date-button {
+    padding: 0.2em 0.7em;
+    font-size: 0.75em;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.date-button.clear-date { background-color: var(--light-gray); }
+
+.date-button.search-date {
+    background-color: var(--selected);
+    color: var(--white);
+}
+
+.date-button.clear-date:hover { background-color: var(--hover-gray); }
+
+.date-button.search-date:hover { background-color: var(--icons); }
+
 .table-background {
     display: flex;
     align-items: center;
@@ -904,7 +1023,7 @@ body {
 .table-head { box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2); }
 
 .table-head th {
-    font-size: 1.27em;
+    font-size: 1.23em;
     font-weight: 600;
     padding: 0.3em 0.7em;
     text-align: left;
@@ -936,13 +1055,13 @@ body {
 .table-body tr:last-child { border-bottom: none; }
 
 .table-body td {
-    font-size: 1em;
+    font-size: 0.95em;
     font-weight: 400;
     padding: 0 0.8em;
 }
 
 .table-body .folio {
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 600;
 }
 
@@ -956,8 +1075,8 @@ body {
 }
 
 .monto-content img {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
@@ -1022,6 +1141,13 @@ body {
 
 .fa-solid.fa-money-check-dollar { font-size: 1.2em; }
 
+.empty-row {
+    color: transparent;
+    cursor: default;
+    pointer-events: none;
+    visibility: hidden;
+}
+
 .tab-buttons {
     display: flex;
     justify-content: center;
@@ -1085,12 +1211,9 @@ body {
 .prev,
 .next { cursor: pointer; }
 
-.page { cursor: default; }
-
-.prev.disabled,
-.next.disabled {
+.page { 
     cursor: default;
-    color: var(--gray);
+    font-weight: 600; 
 }
 
 .prev .icon,
@@ -1164,7 +1287,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 29em;
-    height: 90%;
+    height: 93%;
     background-color: var(--transparent-blue);
     border-radius: 15px;
     padding: 0.8em;
@@ -1585,9 +1708,10 @@ body {
 
     .datepicker-header button { font-size: 0.8em; }
 
-    .days-header span { font-size: 1em; }
-
+    .days-header span,
     .dates { font-size: 1em; }
+
+    .date-button { font-size: 0.95em; }
 
     /* TABLE */
     .table-background { 
@@ -1760,10 +1884,11 @@ body {
 
     .datepicker-header { font-size: 1em; }
 
-    .datepicker-header button { font-size: 0.8em; }
-
+    .datepicker-header button,
     .days-header span,
     .dates { font-size: 0.8em; }
+
+    .date-button { font-size: 0.75em; }
 
     /* TABLE */
     .table-head { font-size: 0.9em; }
@@ -1938,6 +2063,8 @@ body {
 
     .dates { font-size: 0.8em; }
 
+    .date-button { font-size: 0.75em; }
+
     /* TABLE */
     .table-head th { font-size: 1.2em; }
 
@@ -2074,11 +2201,11 @@ body {
 
     .date-header { font-size: 0.9em; }
 
-    .datepicker-header button { font-size: 0.7em; }
-
-    .days-header span { font-size: 0.7em; }
-
+    .datepicker-header button,
+    .days-header span,
     .dates { font-size: 0.7em; }
+
+    .date-button { font-size: 0.65em; }
 
     /* TABLE */
     .table-head th { font-size: 1.1em; }
@@ -2248,6 +2375,8 @@ body {
     .days-header span,
     .dates { font-size: 0.8em; }
 
+    .date-button { font-size: 0.75em; }
+
     /* TABLE */
     .table-head th { font-size: 1em; }
 
@@ -2258,8 +2387,8 @@ body {
     .monto-content { gap: 7px; }
 
     .monto-content img {
-        width: 15px;
-        height: 15px;
+        width: 13px;
+        height: 13px;
     }
 
     .status { padding: 0.4em 0.7em; }
@@ -2430,6 +2559,8 @@ body {
     }
 
     .dates { font-size: 0.9em; }
+
+    .date-button { font-size: 0.85em; }
     
     .table-background { display: none; }
 

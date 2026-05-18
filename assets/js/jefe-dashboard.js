@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    menuUser();
     phoneMenu();
     optionsBar();
     cardLinks();
@@ -12,6 +13,26 @@ document.addEventListener('DOMContentLoaded', function() {
 /* ================================ VARIABLES ================================ */
 let trendChart = null;
 let expensesChart = null;
+
+const logoUser = Session.getUser();
+
+
+/* ================================= LOADER ================================= */
+function showLoader() {
+    document.querySelector('.loader-overlay').style.display = 'flex';
+}
+
+function hideLoader() {
+    document.querySelector('.loader-overlay').style.display = 'none';
+}
+
+
+/* ============================== MENU NAME ============================== */
+function menuUser() {
+    const user = document.querySelector('.option-bar .name p');
+    user.innerHTML = '';
+    user.innerHTML = logoUser;
+}
 
 
 /* ================================= PHONE MENU ================================= */
@@ -79,6 +100,21 @@ function initMobileScroll() {
 
 
 /* ============================== OPTIONS BAR ============================== */
+// Logout
+async function logoutReset() {
+    try {
+        await fetch('http://127.0.0.1:3000/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+    } catch(error) {
+        console.error('Error al cerrar sesión:', error);
+    } finally {
+        Session.clearToken();
+        window.location.href = 'index.html';
+    }
+}
+
 function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.request');
@@ -112,7 +148,7 @@ function optionsBar() {
 
     logout.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = 'index.html';
+        logoutReset();
     });
 }
 

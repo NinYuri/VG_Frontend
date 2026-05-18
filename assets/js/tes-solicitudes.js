@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+    menuUser();
     phoneMenu();
     initMobileScroll();
     optionsBar();
@@ -23,6 +24,17 @@ document.addEventListener("DOMContentLoaded", function() {
 let selectedFile = null;
 let isUploading = false;
 let uploadComplete = false;
+
+const token = Session.getToken();
+const logoUser = Session.getUser();
+
+
+/* ============================== MENU NAME ============================== */
+function menuUser() {
+    const user = document.querySelector('.option-bar .name p');
+    user.innerHTML = '';
+    user.innerHTML = logoUser;
+}
 
 
 /* ============================== PHONE MENU ============================== */

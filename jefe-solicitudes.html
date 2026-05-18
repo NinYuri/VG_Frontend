@@ -51,9 +51,7 @@
         <div class="option-bar" id="optionBar">
             <div class="logo">
                 <img src="./assets/images/White_logo.webp" alt="Grupo | PSA">
-                <div class="name">
-                    <p>Yuriana Ibarra</p>
-                </div>
+                <div class="name"><p></p></div>
             </div>
 
             <div class="options">
@@ -92,7 +90,7 @@
                         <div class="tabs">
                             <div class="tab pending selected">
                                 <p class="tab-selected">Pendientes</p>
-                                <div class="amount selected">6</div>
+                                <div class="amount selected"></div>
                             </div>
 
                             <div class="tab approved"><p>Aprobadas</p></div>
@@ -148,7 +146,7 @@
                                 <thead class="table-head">
                                     <tr>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="folio">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -160,7 +158,7 @@
                                         <th>Fecha</th>
                                         <th>Destino</th>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="monto">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -179,564 +177,12 @@
                     </div>
 
                     <div class="cards-mobile">
-                        <div class="card active">
-                            <div class="first-info">
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">FOLIO</p>
-                                    <p class="folio-mobile">SOL-26-001</p>
-                                </div>
-                                
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">COLABORADOR</p>
-                                    <p>Yuriana Montserrat Ibarra Granados</p>
-                                </div>
-
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">ESTADO</p>
-                                    <p class="status st-pending st-mobile">Pendiente</p>
-                                </div>
-                            </div>
-
-                            <div class="complete-info">
-                                <div class="first-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">DESTINO</p>
-                                        <p class="destiny">Ciudad de México</p>
-                                    </div>
-
-                                    <div class="info-mobile second">
-                                        <div class="info-mobile arrival">
-                                            <p class="subt-mobile">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
-                                        </div>
-
-                                        <div class="info-mobile return">
-                                            <p class="subt-mobile">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
-                                    </div>
-                                </div>
-
-                                <div class="second-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/EUR.webp" alt="EUR">EUR</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FORMA DE PAGO</p>
-                                       <p>Transferencia</p>
-                                    </div>
-
-                                    <div class="map-img">
-                                        <img src="./assets/images/Icon_map.webp" alt="Map">
-                                    </div>
-                                </div>
-
-                                <div class="third-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE SOLICITUD</p>
-                                        <p>16 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
-                                        <p>17 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="buttons-mobile">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="first-info">
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">FOLIO</p>
-                                    <p class="folio-mobile">SOL-26-002</p>
-                                </div>
-                                
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">COLABORADOR</p>
-                                    <p>Yuriana Montserrat Ibarra Granados</p>
-                                </div>
-
-                               <div class="info-mobile">
-                                    <p class="subt-mobile">ESTADO</p>
-                                    <p class="status st-pending st-mobile">Pendiente</p>
-                                </div>
-                            </div>
-
-                            <div class="complete-info">
-                                <div class="first-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">DESTINO</p>
-                                        <p class="destiny">Ciudad de México</p>
-                                    </div>
-
-                                    <div class="info-mobile second">
-                                        <div class="info-mobile arrival">
-                                            <p class="subt-mobile">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
-                                        </div>
-
-                                        <div class="info-mobile return">
-                                            <p class="subt-mobile">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
-                                    </div>
-                                </div>
-
-                                <div class="second-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FORMA DE PAGO</p>
-                                       <p>Transferencia</p>
-                                    </div>
-
-                                    <div class="map-img">
-                                        <img src="./assets/images/Icon_map.webp" alt="Map">
-                                    </div>
-                                </div>
-
-                                <div class="third-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE SOLICITUD</p>
-                                        <p>16 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
-                                        <p>17 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="buttons-mobile">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="first-info">
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">FOLIO</p>
-                                    <p class="folio-mobile">SOL-26-003</p>
-                                </div>
-                                
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">COLABORADOR</p>
-                                    <p>Yuriana Montserrat Ibarra Granados</p>
-                                </div>
-
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">ESTADO</p>
-                                    <p class="status st-pending st-mobile">Pendiente</p>
-                                </div>
-                            </div>
-
-                            <div class="complete-info">
-                                <div class="first-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">DESTINO</p>
-                                        <p class="destiny">Ciudad de México</p>
-                                    </div>
-
-                                    <div class="info-mobile second">
-                                        <div class="info-mobile arrival">
-                                            <p class="subt-mobile">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
-                                        </div>
-
-                                        <div class="info-mobile return">
-                                            <p class="subt-mobile">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
-                                    </div>
-                                </div>
-
-                                <div class="second-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FORMA DE PAGO</p>
-                                       <p>Transferencia</p>
-                                    </div>
-
-                                    <div class="map-img">
-                                        <img src="./assets/images/Icon_map.webp" alt="Map">
-                                    </div>
-                                </div>
-
-                                <div class="third-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE SOLICITUD</p>
-                                        <p>16 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
-                                        <p>17 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="buttons-mobile">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="first-info">
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">FOLIO</p>
-                                    <p class="folio-mobile">SOL-26-004</p>
-                                </div>
-                                
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">COLABORADOR</p>
-                                    <p>Yuriana Montserrat Ibarra Granados</p>
-                                </div>
-
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">ESTADO</p>
-                                    <p class="status st-pending st-mobile">Pendiente</p>
-                                </div>
-                            </div>
-
-                            <div class="complete-info">
-                                <div class="first-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">DESTINO</p>
-                                        <p class="destiny">Ciudad de México</p>
-                                    </div>
-
-                                    <div class="info-mobile second">
-                                        <div class="info-mobile arrival">
-                                            <p class="subt-mobile">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
-                                        </div>
-
-                                        <div class="info-mobile return">
-                                            <p class="subt-mobile">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
-                                    </div>
-                                </div>
-
-                                <div class="second-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FORMA DE PAGO</p>
-                                       <p>Transferencia</p>
-                                    </div>
-
-                                    <div class="map-img">
-                                        <img src="./assets/images/Icon_map.webp" alt="Map">
-                                    </div>
-                                </div>
-
-                                <div class="third-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE SOLICITUD</p>
-                                        <p>16 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
-                                        <p>17 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="buttons-mobile">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="first-info">
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">FOLIO</p>
-                                    <p class="folio-mobile">SOL-26-005</p>
-                                </div>
-                                
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">COLABORADOR</p>
-                                    <p>Yuriana Montserrat Ibarra Granados</p>
-                                </div>
-
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">ESTADO</p>
-                                    <p class="status st-pending st-mobile">Pendiente</p>
-                                </div>
-                            </div>
-
-                            <div class="complete-info">
-                                <div class="first-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">DESTINO</p>
-                                        <p class="destiny">Ciudad de México</p>
-                                    </div>
-
-                                    <div class="info-mobile second">
-                                        <div class="info-mobile arrival">
-                                            <p class="subt-mobile">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
-                                        </div>
-
-                                        <div class="info-mobile return">
-                                            <p class="subt-mobile">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
-                                    </div>
-                                </div>
-
-                                <div class="second-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FORMA DE PAGO</p>
-                                       <p>Transferencia</p>
-                                    </div>
-
-                                    <div class="map-img">
-                                        <img src="./assets/images/Icon_map.webp" alt="Map">
-                                    </div>
-                                </div>
-
-                                <div class="third-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE SOLICITUD</p>
-                                        <p>16 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
-                                        <p>17 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="buttons-mobile">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="first-info">
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">FOLIO</p>
-                                    <p class="folio-mobile">SOL-26-006</p>
-                                </div>
-                                
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">COLABORADOR</p>
-                                    <p>Yuriana Montserrat Ibarra Granados</p>
-                                </div>
-
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">ESTADO</p>
-                                    <p class="status st-pending st-mobile">Pendiente</p>
-                                </div>
-                            </div>
-
-                            <div class="complete-info">
-                                <div class="first-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">DESTINO</p>
-                                        <p class="destiny">Ciudad de México</p>
-                                    </div>
-
-                                    <div class="info-mobile second">
-                                        <div class="info-mobile arrival">
-                                            <p class="subt-mobile">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
-                                        </div>
-
-                                        <div class="info-mobile return">
-                                            <p class="subt-mobile">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
-                                    </div>
-                                </div>
-
-                                <div class="second-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FORMA DE PAGO</p>
-                                       <p>Transferencia</p>
-                                    </div>
-
-                                    <div class="map-img">
-                                        <img src="./assets/images/Icon_map.webp" alt="Map">
-                                    </div>
-                                </div>
-
-                                <div class="third-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE SOLICITUD</p>
-                                        <p>16 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
-                                        <p>17 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="buttons-mobile">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="first-info">
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">FOLIO</p>
-                                    <p class="folio-mobile">SOL-26-007</p>
-                                </div>
-                                
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">COLABORADOR</p>
-                                    <p>Yuriana Montserrat Ibarra Granados</p>
-                                </div>
-
-                                <div class="info-mobile">
-                                    <p class="subt-mobile">ESTADO</p>
-                                    <p class="status st-pending st-mobile">Pendiente</p>
-                                </div>
-                            </div>
-
-                            <div class="complete-info">
-                                <div class="first-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">DESTINO</p>
-                                        <p class="destiny">Ciudad de México</p>
-                                    </div>
-
-                                    <div class="info-mobile second">
-                                        <div class="info-mobile arrival">
-                                            <p class="subt-mobile">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
-                                        </div>
-
-                                        <div class="info-mobile return">
-                                            <p class="subt-mobile">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
-                                    </div>
-                                </div>
-
-                                <div class="second-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">MONTO</p>
-                                        <p class="amount-mobile"><span class="symbol-money"></span>10,000.00</p>
-                                        <p class="amount-mobile-currency"><img src="./assets/images/MXN.webp" alt="MXN">MXN</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FORMA DE PAGO</p>
-                                       <p>Transferencia</p>
-                                    </div>
-
-                                    <div class="map-img">
-                                        <img src="./assets/images/Icon_map.webp" alt="Map">
-                                    </div>
-                                </div>
-
-                                <div class="third-column">
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE SOLICITUD</p>
-                                        <p>16 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="info-mobile">
-                                        <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
-                                        <p>17 / ABR / 2026</p>
-                                    </div>
-
-                                    <div class="buttons-mobile">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- ==================== PAGES ==================== -->
                     <div class="tab-buttons">
                         <div class="back-buttons disabled">
-                            <div class="prev disabled">
+                            <div class="prev">
                                 <svg class="icon default-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="15 18 9 12 15 6"></polyline>
                                 </svg>
@@ -775,25 +221,25 @@
                             <div class="info-top">
                                 <div class="request-generals">
                                     <div class="general-info">
-                                        <p class="info-folio">FOLIO DE SOLICITUD: <span>SOL-26-001</span></p>
-                                        <p class="info-date">FECHA DE SOLICITUD: <span>16 / ABR / 2026</span></p>
+                                        <p class="info-folio">FOLIO DE SOLICITUD: <span></span></p>
+                                        <p class="info-date">FECHA DE SOLICITUD: <span></span></p>
                                     </div>
 
-                                    <div class="status st-pending">Pendiente</div>
+                                    <div class="status"></div>
                                 </div>
 
                                 <div class="request-destination">
                                     <p class="info-subtitle">DESTINO</p>
-                                    <p>CIUDAD DE MÉXICO</p>
+                                    <p></p>
 
-                                    <div class="colab"><p class="info-subtitle">YURIANA MONTSERRAT IBARRA GRANADOS</p></div>
+                                    <div class="colab"><p class="info-subtitle"></p></div>
                                 </div>
 
                                 <div class="request-dates-wrapper">
                                     <div class="request-dates">
                                         <div class="departure-date">
                                             <p class="info-subtitle">SALIDA</p>
-                                            <p>16 / ABR / 2026</p>
+                                            <p></p>
                                         </div>
                                         
                                         <div class="travel-days">
@@ -804,7 +250,7 @@
                                         
                                         <div class="return-date">
                                             <p class="info-subtitle">REGRESO</p>
-                                            <p>22 / ABR / 2026</p>
+                                            <p></p>
                                         </div>
                                     </div>
 
@@ -816,24 +262,24 @@
                                 <div class="info-row">
                                     <div class="info-motive">
                                         <p class="info-subtitle">MOTIVO</p>
-                                        <p>Viaje a torre panorama para mantenimiento y soporte de equipos de cómputo</p>
+                                        <p></p>
                                     </div>
 
                                     <div class="info-money">
                                         <p class="info-subtitle">MONTO</p>
-                                        <p class="info-amount"><span class="symbol-money"></span>10,000.00</p>
+                                        <p class="info-amount"><span class="symbol-money"></span></p>
                                         
                                         <div class="info-currency">
-                                            <img class="currency-flag" src="./assets/images/MXN.webp" alt="MXN">
-                                            <p>MXN</p>
+                                            <img class="currency-flag">
+                                            <p></p>
                                         </div>
                                         
                                         <p class="info-subtitle">FORMA DE PAGO</p>
-                                        <p class="info-payment">Transferencia</p>
+                                        <p class="info-payment"></p>
                                     </div>
                                 </div>
 
-                                <p class="info-update">FECHA DE ACTUALIZACIÓN: <span>06 / ABR / 2026</span></p>
+                                <p class="info-update">FECHA DE ACTUALIZACIÓN: <span></span></p>
                             </div>
                         </div>
 

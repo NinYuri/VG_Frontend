@@ -41,6 +41,7 @@ async function login() {
 
             const data = await response.json();
             Session.setToken(data.access_token);
+            Session.setUser(data.usuario.nombre);
 
             hideLoader();
 
@@ -54,7 +55,7 @@ async function login() {
                     window.location.href = 'tes-dashboard.html';
                     break;
                 case 'Colaborador':
-                    window.location.href = 'colab-solicitudes.html';
+                    window.location.href = 'colab-dashboard.html';
                     break;
                 default:
                     window.location.href = 'index.html';    // fallback

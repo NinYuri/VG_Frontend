@@ -1,17 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
+    setupPaginationEvents();
+    menuUser();
     phoneMenu();
     initMobileScroll();
     optionsBar();
     tableInformation({ estado: 'Pendiente' });
+    setupSorting();
     tabSelected();
     cardLinks();
     searchColab();
     initCalendar();
     setupCalendar();
     activeCards();
-    updateCurrency();
-    buttonRejected();
-    buttonApproved();
+    buttonsAction();
     buttonInfo();
 });
 
@@ -21,6 +22,29 @@ let motivoRechazo = null;
 let globalStartDate = null;
 let globalEndDate = null;
 let swapped = false;    // false = folio | true = colaborador
+let currentPage = 1;
+let paginacionGlobal = {
+    paginaActual: 1,
+    totalPaginas: 1
+};
+const limitPerPage = 7;
+let currentFolio = 'ASC';
+let currentMonto = null;
+
+const token = Session.getToken();
+const logoUser = Session.getUser();
+
+
+/* ================================= FUNCIONES ================================= */
+const meses = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+
+function formatDate(dateStr) {
+    const fechaISO = new Date(dateStr).toISOString().slice(0, 10);
+    const [year, monthNum, day] = fechaISO.split('-');
+    const dia = day;
+    const mes = meses[parseInt(monthNum, 10) - 1];
+    return `${dia} / ${mes} / ${year}`;
+}
 
 
 /* ================================= LOADER ================================= */
@@ -30,6 +54,14 @@ function showLoader() {
 
 function hideLoader() {
     document.querySelector('.loader-overlay').style.display = 'none';
+}
+
+
+/* ============================== MENU NAME ============================== */
+function menuUser() {
+    const user = document.querySelector('.option-bar .name p');
+    user.innerHTML = '';
+    user.innerHTML = logoUser;
 }
 
 
@@ -97,6 +129,21 @@ function initMobileScroll() {
 
 
 /* ============================== OPTIONS BAR ============================== */
+// Logout
+async function logoutReset() {
+    try {
+        await fetch('http://127.0.0.1:3000/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+    } catch(error) {
+        console.error('Error al cerrar sesión:', error);
+    } finally {
+        Session.clearToken();
+        window.location.href = 'index.html';
+    }
+}
+
 function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.request');
@@ -130,7 +177,7 @@ function optionsBar() {
 
     logout.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = 'index.html';
+        logoutReset();
     });
 }
 
@@ -142,6 +189,7 @@ function getActiveStatus() {
 
     if(!tabActiva) 
         return null;
+
     if(tabActiva.classList.contains('pending')) 
         return 'Pendiente';
     if(tabActiva.classList.contains('approved')) 
@@ -152,13 +200,38 @@ function getActiveStatus() {
     return null;
 }
 
-async function tableInformation(filtros = {}) {
-    const token = localStorage.getItem('token')
-    showLoader();
+// Filters
+function getCurrentFilters() {
+    const estado = getActiveStatus();
+    const input = document.querySelector('.search-back input');
+    const valor = input ? input.value.trim() : '';
+    const filtros = { estado };
+    
+    if(swapped) 
+        filtros.colaborador = valor;
+    else
+        filtros.folio = valor;
 
-    // Limpiar tabla en caso de estar vacío
+    if(globalStartDate) {
+        filtros.fechaIni = globalStartDate;
+        if(globalEndDate) 
+            filtros.fechaFin = globalEndDate;
+    }
+
+    filtros.orden = currentFolio;
+    if(currentMonto) filtros.ordenMonto = currentMonto;
+
+    return filtros;
+}
+
+// Backend query
+async function tableInformation(filtros = {}, page = 1) {
+    showLoader();
     renderTable([]);
-    //document.querySelector('.cards-mobile').innerHTML = '';
+    renderCards([]);
+
+    // Calcula el offset basado en la página
+    const offset = (page - 1) * limitPerPage;
 
     // Construir query string
     const params = new URLSearchParams();
@@ -167,10 +240,10 @@ async function tableInformation(filtros = {}) {
     if(filtros.colaborador) params.append('colaborador', filtros.colaborador);
     if(filtros.fechaIni) params.append('fechaIni', filtros.fechaIni);
     if(filtros.fechaFin) params.append('fechaFin', filtros.fechaFin);
-    if(filtros.limit) params.append('limit', filtros.limit);
-    if(filtros.offset) params.append('offset', filtros.offset);
-    if(filtros.orden) params.append('orden', filtros.orden);
-    if(filtros.ordenMonto) params.append('ordenMonto', filtros.ordenMonto);
+    params.append('limit', limitPerPage);
+    params.append('offset', offset);
+    params.append('orden', currentFolio);
+    params.append('ordenMonto', currentMonto);
 
     try {
         const response = await fetch(`http://127.0.0.1:3000/api/solicitudes/listar?${params.toString()}`, {
@@ -184,34 +257,34 @@ async function tableInformation(filtros = {}) {
 
         if(!response.ok) {
             renderTable([]);
-            // document.querySelector('.cards-mobile').innerHTML = '';
+            renderCards([]);
             throw new Error('Error al obtener solicitudes');
         }
 
         const data = await response.json();
 
-        // Verificar si la respuesta trae un mensaje de "no encontrado" desde el backend
         if(data.mensaje) {
             renderTable([]);
-            document.querySelector('.cards-mobile').innerHTML = '';
+            renderCards([]);
             Toast('ERROR AL MOSTRAR SOLICITUDES', data.mensaje);
             return;
         }
 
         renderTable(data.solicitudes);
-        //renderCards(data.solicitudes);
+        renderCards(data.solicitudes);
         updateCounters(data.pendientes, data.sinEntrega);
         updatePagination(data.paginacion);
+        currentPage = data.paginacion.paginaActual;
     } catch(error) {
-        console.log(error);
         renderTable([]);
-        // document.querySelector('.cards-mobile').innerHTML = '';
+        renderCards([]);
         Toast('ERROR AL MOSTRAR SOLICITUDES', 'No se pudieron cargar las solicitudes. Por favor, intenta de nuevo');
     } finally {
         hideLoader();
     }
 }
 
+// Table information
 function renderTable(solicitudes) {
     const tbody = document.querySelector('.table-body');
     tbody.innerHTML = '';
@@ -224,17 +297,8 @@ function renderTable(solicitudes) {
         'Rechazada': 'st-rejected'
     };
 
-    const meses = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
-
     solicitudes.forEach(sol => {
         const tr = document.createElement('tr');
-
-        // Formatear fecha
-        const fechaObj = new Date(sol.inicio_viaje);
-        const dia = fechaObj.getDate().toString().padStart(2, '0');
-        const mes = meses[fechaObj.getMonth()];
-        const year = fechaObj.getFullYear();
-        const fecha = `${dia} / ${mes} / ${year}`;
 
         const simbolo = obtenerSimboloMoneda(sol.moneda);
         const montoFormateado = new Intl.NumberFormat('es-MX', {
@@ -246,7 +310,7 @@ function renderTable(solicitudes) {
         tr.innerHTML = `
             <td class="folio"><p>${sol.folio}</p></td>
             <td><p>${sol.nombre || '—'}</p></td>
-            <td><p>${fecha}</p></td>
+            <td><p>${formatDate(sol.inicio_viaje)}</p></td>
             <td><p>${sol.destino || '—'}</p></td>
             <td class="monto-cell">
                 <div class="monto-content">
@@ -257,8 +321,11 @@ function renderTable(solicitudes) {
             <td><div class="status ${estadoClass}">${sol.estado || '—'}</div></td>
             <td>
                 <div class="actions">
-                    <i class="fa-solid fa-circle-xmark"></i>
-                    <i class="fa-solid fa-circle-check"></i>
+                    ${sol.estado === 'Pendiente' ? `
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <i class="fa-solid fa-circle-check"></i>
+                    ` : ''}
+                    
                     <i class="fa-solid fa-circle-info"></i>
                 </div>
             </td>
@@ -266,29 +333,108 @@ function renderTable(solicitudes) {
         tbody.appendChild(tr);
     });
 
-    buttonRejected();
-    buttonApproved();
+    const rowsActuales = solicitudes.length;
+    for(let i = rowsActuales; i < limitPerPage; i++) {
+        const emptyRow = document.createElement('tr');
+        emptyRow.innerHTML = `<td><p class="empty-row">Empty</p></td><td></td><td></td><td></td><td></td><td></td><td></td>`;
+        tbody.appendChild(emptyRow);
+    }
+
     buttonInfo();
 }
 
+// Card information
+function renderCards(solicitudes) {
+    const statusClass = {
+        'Pendiente': 'st-pending',
+        'Aprobada': 'st-approved',
+        'Rechazada': 'st-rejected'
+    };
+
+    const container = document.querySelector('.cards-mobile');
+    container.innerHTML = '';
+
+    solicitudes.forEach(sol => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.setAttribute('data-folio', sol.folio);
+        card.setAttribute('data-loaded', 'false');
+
+        const estadoClass = sol.estado ? `${statusClass[sol.estado]}` : '';
+
+        // Estructura básica (first-info)
+        card.innerHTML = `
+            <div class="first-info">
+                <div class="info-mobile">
+                    <p class="subt-mobile">FOLIO</p>
+                    <p class="folio-mobile">${sol.folio}</p>
+                </div>
+                <div class="info-mobile">
+                    <p class="subt-mobile">COLABORADOR</p>
+                    <p>${sol.nombre_completo || sol.nombre || '—'}</p>
+                </div>
+                <div class="info-mobile">
+                    <p class="subt-mobile">ESTADO</p>
+                    <p class="status ${estadoClass} st-mobile">${sol.estado || '—'}</p>
+                </div>
+            </div>
+            <div class="complete-info"></div>
+        `;
+
+        container.appendChild(card);
+    });
+
+    activeCards();
+    buttonsAction();
+}
+
+// Pending amount
 function updateCounters(pendientes, sinEntrega) {
     const pendingTab = document.querySelector('.tab.pending .amount');
     if(pendientes !== null && pendingTab) 
         pendingTab.textContent = pendientes;
 }
 
+// Pagination
 function updatePagination(paginacion) {
     const pageDiv = document.querySelector('.page');
     const prevBtn = document.querySelector('.prev');
     const nextBtn = document.querySelector('.next');
 
     if(pageDiv) pageDiv.textContent = paginacion.paginaActual;
+    paginacionGlobal = paginacion;
 
     // Habilitar / deshabilitar botones
     if(prevBtn) prevBtn.parentElement.classList.toggle('disabled', paginacion.paginaActual <= 1);
     if(nextBtn) nextBtn.parentElement.classList.toggle('disabled', paginacion.paginaActual >= paginacion.totalPaginas);
 }
 
+function setupPaginationEvents() {
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    if(!prevBtn || !nextBtn) return;
+
+    const prevParent = prevBtn.parentElement;
+    const nextParent = nextBtn.parentElement;
+
+    prevParent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (paginacionGlobal.paginaActual <= 1 || prevParent.classList.contains('disabled')) return;
+        currentPage--;
+        const filtros = getCurrentFilters();
+        tableInformation(filtros, currentPage);
+    });
+
+    nextParent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (paginacionGlobal.paginaActual >= paginacionGlobal.totalPaginas || nextParent.classList.contains('disabled')) return;
+        currentPage++;
+        const filtros = getCurrentFilters();
+        tableInformation(filtros, currentPage);
+    });
+}
+
+// Currency
 function obtenerSimboloMoneda(codigo) {
     const simbolos = { MXN: '$', USD: '$', EUR: '€', JPY: '¥' };
     return simbolos[codigo] || '$';
@@ -314,7 +460,10 @@ function tabSelected() {
             this.classList.add('selected');
             this.querySelector('.amount')?.classList.add('selected');
 
-            tableInformation({ estado });
+            currentPage = 1;
+            const filtros = getCurrentFilters();
+            filtros.estado = estado;
+            tableInformation(filtros);
         });
     });
 }
@@ -323,23 +472,33 @@ function tabSelected() {
 function cardLinks() {
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
-    
-    if(tabParam) {
-        // Remover selected
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.classList.remove('selected');
-            const amount = tab.querySelector('.amount');
-            if(amount) amount.classList.remove('selected');
-        });
+    if(!tabParam) return;
 
-        // Activar opción correspondiente
-        const activeTab = document.querySelector(`.tab.${tabParam}`);
-        if(activeTab) {
-            activeTab.classList.add('selected');
-            const amount = activeTab.querySelector('.amount');
-            if(amount) amount.classList.add('selected');
-        }
+    const estadoMap = {
+        'pending': 'Pendiente',
+        'approved': 'Aprobada',
+        'rejected': 'Rechazada'
+    };
+    const estado = estadoMap[tabParam];
+    if(!estado) return;
+    
+    // Remover selected
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('selected');
+        const amount = tab.querySelector('.amount');
+        if(amount) amount.classList.remove('selected');
+    });
+
+    // Activar opción correspondiente
+    const activeTab = document.querySelector(`.tab.${tabParam}`);
+    if(activeTab) {
+        activeTab.classList.add('selected');
+        const amount = activeTab.querySelector('.amount');
+        if(amount) amount.classList.add('selected');
     }
+
+    currentPage = 1;
+    tableInformation({ estado });
 }
 
 
@@ -391,23 +550,20 @@ function searchColab() {
 
     // Debounce para búsqueda al escribir
     let debounceTimer;
+
     function doSearch() {
         const valor = input.value.trim();
-        const estado = getActiveStatus();
-        const filtros = { estado };
-        if(swapped)
+        const filtros = getCurrentFilters();
+        if(swapped) {
             filtros.colaborador = valor;
-        else
+            delete filtros.folio;
+        }
+        else {
             filtros.folio = valor;
-
-        // Fechas 
-        if(globalStartDate) {
-            filtros.fechaIni = globalStartDate;
-            
-            if(globalEndDate) 
-                filtros.fechaFin = globalEndDate;
+            delete filtros.colaborador;
         }
 
+        currentPage = 1;
         tableInformation(filtros);
     }
 
@@ -415,6 +571,7 @@ function searchColab() {
     input.addEventListener('keypress', (e) => {
         if(e.key === 'Enter') {
             clearTimeout(debounceTimer);
+            currentPage = 1;
             doSearch();
         }
     });
@@ -422,7 +579,13 @@ function searchColab() {
     input.addEventListener('input', (e) => {
         if(input.value.trim() === '') {
             clearTimeout(debounceTimer);
-            tableInformation([]);
+            const filtros = getCurrentFilters();
+
+            delete filtros.folio;
+            delete filtros.colaborador;
+
+            currentPage = 1;
+            tableInformation(filtros);
         }
     });
 
@@ -732,7 +895,7 @@ function setupCalendar() {
         if(endCell) 
             endCell.classList.remove('end');
 
-        globalStarDate = null;
+        globalStartDate = null;
         globalEndDate = null;
         window.dispatchEvent(new CustomEvent('calendar-closed'));
     }
@@ -765,15 +928,11 @@ function setupCalendar() {
         e.stopPropagation();
         clearRangeSelect();
 
-        const estado = getActiveStatus();
-        const valor = document.querySelector('.search-back input').value.trim();
-        const filtros = { estado };
+        const filtros = getCurrentFilters();
+        delete filtros.fechaIni;
+        delete filtros.fechaFin;
         
-        if (swapped) 
-            filtros.colaborador = valor;
-        else 
-            filtros.folio = valor;
-        
+        currentPage = 1;
         tableInformation(filtros);
         calendarIcon.classList.remove('icon-active');
         datepicker.style.display = 'none';
@@ -786,22 +945,11 @@ function setupCalendar() {
             Toast('SELECCIÓN DE FECHA', 'Por favor, selecciona al menos una fecha para poder buscar');
             return;
         }
-        const estado = getActiveStatus();
-        const valor = document.querySelector('.search-back input').value.trim();
-        const filtros = { estado };
 
-        if(swapped) 
-            filtros.colaborador = valor;
-        else 
-            filtros.folio = valor;
-        
-        if(globalStartDate) {
-            filtros.fechaIni = globalStartDate;
-            if(globalEndDate) 
-                filtros.fechaFin = globalEndDate;
-        }
-        
+        const filtros = getCurrentFilters();
+        currentPage = 1;
         tableInformation(filtros);
+
         calendarIcon.classList.remove('icon-active');
         datepicker.style.display = 'none';
     });
@@ -809,83 +957,302 @@ function setupCalendar() {
 
 
 /* ============================== ACTIVE CARD ============================== */
+async function loadCardDetails(card) {
+    const folio = card.getAttribute('data-folio');
+    if(!folio) return;
+
+    try {
+        if(!token) {
+            Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+            return;
+        }
+
+        const response = await fetch(`http://127.0.0.1:3000/api/solicitudes/detalle?folio=${encodeURIComponent(folio)}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        });
+
+        if(!response.ok) {
+            const err = await response.json().catch(() => ({ message: 'Error al cargar los detalles' }));
+            throw new Error(err.message || 'Error al obtener detalles');
+        }
+
+        const data = await response.json();
+        llenarInfoCard(card, data);
+        card.setAttribute('data-loaded', 'true');
+    } catch (error) {
+        completeInfo.innerHTML = `<p class="error">${error.message}</p>`;
+    }
+}
+
 function activeCards() {
     const cards = document.querySelectorAll('.cards-mobile .card');
-    if(!cards.length) return;
+    if(cards.length === 0) return;
 
     cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            e.stopPropagation();
-
+        card.addEventListener('click', async (e) => {
             if(e.target.closest('.fa-circle-check, .fa-circle-xmark, .buttons-mobile')) return;
-            cards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active')
+
+            e.stopPropagation();
+            
+            const completeInfo = card.querySelector('.complete-info');
+            const wasActive = card.classList.contains('active');
+            
+            if(wasActive)
+                card.classList.remove('active');
+            else {
+                cards.forEach(c => {
+                    c.classList.remove('active');
+                });
+                card.classList.add('active');
+
+                // Cargar información
+                if(card.getAttribute('data-loaded') === 'false')
+                    await loadCardDetails(card);
+            }
+        });
+    });
+
+    const firstCard = cards[0];
+    
+    firstCard.classList.add('active');
+    if(firstCard.getAttribute('data-loaded') === 'false')
+        loadCardDetails(firstCard);
+}
+
+function llenarInfoCard(card, data) {
+    const completeInfo = card.querySelector('.complete-info');
+
+    const simbolo = obtenerSimboloMoneda(data.monto_moneda);
+    const montoFormateado = new Intl.NumberFormat('es-MX', { minimumFractionDigits: 2 }).format(data.monto_solicitado || 0);
+
+    completeInfo.innerHTML = `
+        <div class="first-column">
+            <div class="info-mobile">
+                <p class="subt-mobile">DESTINO</p>
+                <p class="destiny">${data.destino || '—'}</p>
+            </div>
+            <div class="info-mobile second">
+                <div class="info-mobile arrival">
+                    <p class="subt-mobile">SALIDA</p>
+                    <p>${formatDate(data.inicio_viaje)}</p>
+                </div>
+                <div class="info-mobile return">
+                    <p class="subt-mobile">REGRESO</p>
+                    <p>${formatDate(data.fin_viaje)}</p>
+                </div>
+            </div>
+            <div class="info-mobile">
+                <p class="subt-mobile">MOTIVO</p>
+                <p>${data.motivo || '—'}</p>
+            </div>
+        </div>
+        <div class="second-column">
+            <div class="info-mobile">
+                <p class="subt-mobile">MONTO</p>
+                <p class="amount-mobile"><span class="symbol-money">${simbolo}</span>${montoFormateado}</p>
+                <p class="amount-mobile-currency"><img src="./assets/images/${data.monto_moneda}.webp" alt="${data.monto_moneda}">${data.monto_moneda}</p>
+            </div>
+            <div class="info-mobile">
+                <p class="subt-mobile">FORMA DE PAGO</p>
+                <p>${data.forma_pago || '—'}</p>
+            </div>
+            <div class="map-img">
+                <img src="./assets/images/Icon_map.webp" alt="Map">
+            </div>
+        </div>
+        <div class="third-column">
+            <div class="info-mobile">
+                <p class="subt-mobile">FECHA DE SOLICITUD</p>
+                <p>${formatDate(data.fecha_recepcion)}</p>
+            </div>
+            <div class="info-mobile">
+                <p class="subt-mobile">FECHA DE ACTUALIZACIÓN</p>
+                <p>${formatDate(data.fecha_actualizacion)}</p>
+            </div>
+            <div class="buttons-mobile">
+                ${data.estado === 'Pendiente' ? `
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <i class="fa-solid fa-circle-check"></i>
+                ` : ''}
+            </div>
+        </div>
+    `;
+}
+
+
+/* ============================== CLASSIFICATION ============================== */
+function setupSorting() {
+    const orderDivs = document.querySelectorAll('.order-div[data-column]');
+    
+    orderDivs.forEach(div => {
+        const orderIcons = div.querySelector('.order');
+        if(!orderIcons) return;
+
+        orderIcons.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const column = div.dataset.column;
+
+            if(column === 'folio') {
+                currentFolio = currentFolio === 'ASC' ? 'DESC' : 'ASC';
+                currentMonto = null;
+            } else if(column === 'monto') {
+                if(currentMonto === 'DESC')
+                    currentMonto = null;
+                else
+                    currentMonto = currentMonto === 'ASC' ? 'DESC' : 'ASC';
+
+                // Cuando ordenamos por monto, mantenemos el folio en ASC
+                currentFolio = 'ASC';
+            }
+
+            currentPage = 1;
+            const filtros = getCurrentFilters();
+            tableInformation(filtros);
         });
     });
 }
 
 
-/* ============================== FLAG CURRENCY ============================== */
-function updateCurrency() {
-    const currencies = [
-        { code: 'MXN', flag: './assets/images/MXN.webp', symbol: '$' },
-        { code: 'USD', flag: './assets/images/USD.webp', symbol: '$' },
-        { code: 'EUR', flag: './assets/images/EUR.webp', symbol: '€' },
-        { code: 'JPY', flag: './assets/images/JPY.webp',  symbol: '¥' }
-    ];
+/* ============================== ACTION BUTTONS ============================== */
+// Reject && Aprove
+async function changeState(folio, accion, motivoRechazo = '') {
+    if(!token) {
+        Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+        return;
+    }
 
-    // TABLE
-    const tableRows = document.querySelectorAll('.table-body tr');
-    tableRows.forEach(row => {
-        const montoCell = row.querySelector('.monto-cell');
-        const img = montoCell.querySelector('img');
-        const symbolSpan = montoCell.querySelector('.symbol-money');
+    showLoader();
+    try {
+        const response = await fetch('http://127.0.0.1:3000/api/solicitudes/estado', {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ folio, accion, motivoRechazo }),
+        });
 
-        if(!montoCell || !img || !symbolSpan) return;
+        if(!response.ok) {
+            const errorData = await response.json().catch(() => ({ message: 'Error al procesar' }));
+            throw new Error(errorData.message || 'Error al procesar la acción');
+        }
+
+        const data = await response.json();
         
-        let currencyCode = img.getAttribute('alt')?.toUpperCase();
-        const currency = currencies.find(c => c.code === currencyCode);
-        if(!currency) return;
+        const filtros = getCurrentFilters();
+        tableInformation(filtros, currentPage);
 
-        symbolSpan.textContent = currency.symbol;
-    });
-
-
-    // CARDS
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        const amountMobile = card.querySelector('.amount-mobile');
-        const img = card.querySelector('img');
-        const symbolSpan = amountMobile.querySelector('.symbol-money');
-
-        if(!amountMobile || !img || !symbolSpan) return;
-
-        let currencyCode = img.getAttribute('alt')?.toUpperCase();
-        const currency = currencies.find(c => c.code === currencyCode);
-        if(!currency) return;
-
-        symbolSpan.textContent = currency.symbol;
-    }); 
-
-
-    // INFORMATION
-    const info = document.querySelector('.info-wrapper');
-    if(!info) return;
-
-    const img = info.querySelector('.currency-flag');
-    const symbolSpan = info.querySelector('.symbol-money');
-
-    if(!img || !symbolSpan) return;
-
-    let currencyCode = img.getAttribute('alt')?.toUpperCase();
-    const currency = currencies.find(c => c.code === currencyCode);
-    if(!currency) return;
-
-    symbolSpan.textContent = currency.symbol;
+        Toast(
+            `SOLICITUD ${accion === 'Aprobar' ? 'APROBADA' : 'RECHAZADA'}`,
+            `La solicitud con folio ${folio} fue ${accion === 'Aprobar' ? 'aprobada' : 'rechazada'} y notificada al colaborador correctamente`
+        );
+    } catch(error) {
+        Toast('ERROR', error.message || 'Error al procesar la acción');
+    } finally {
+        hideLoader();
+    }
 }
 
+function buttonsAction() {
+    document.removeEventListener('click', handleActionButtons);
 
-/* ============================== ACTION BUTTONS ============================== */
+    function handleActionButtons(e) {
+        const target = e.target;
+        // Aprobar
+        if(target.classList.contains('fa-circle-check')) {
+            e.stopPropagation();
+            const row = target.closest('tr') || target.closest('.card');
+            if(!row) return;
+
+            const folioElement = row.querySelector('.folio p') || row.querySelector('.folio-mobile');
+            const folio = folioElement?.textContent.trim();
+            
+            if(folio) changeState(folio, 'Aprobar');
+        }
+
+        // Rechazar
+        if(target.classList.contains('fa-circle-xmark')) {
+            e.stopPropagation();
+            const row = target.closest('tr') || target.closest('.card');
+            if(!row) return;
+
+            const folioElement = row.querySelector('.folio p') || row.querySelector('.folio-mobile');
+            const folio = folioElement?.textContent.trim();
+            
+            if(folio) ToastRejected(folio, changeState);
+        }
+    }
+
+    document.addEventListener('click', handleActionButtons);
+}
+
+// Information
+async function buttonInfo() {
+    document.addEventListener('click', async (e) => {
+        const target = e.target;
+        if(!target.classList.contains('fa-circle-info')) return;
+
+        e.stopPropagation();
+        const row = target.closest('tr') || target.closest('.card');
+        if(!row) return;
+
+        const folioElement = row.querySelector('.folio p') || row.querySelector('.folio-mobile');
+        const folio = folioElement?.textContent.trim();
+        if(!folio) return;
+
+        const container = document.querySelector('.container');
+        const infoCard = document.querySelector('.info-wrapper');
+        const buttonClose = document.querySelector('.arrow-back');
+        if(!infoCard || !container || !buttonClose) return;
+
+        showLoader();
+        infoCard.style.display = 'flex';
+        container.classList.add('modal-open');
+
+        try {
+            if(!token) {
+                Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+                return;
+            }
+
+            const response = await fetch(`http://127.0.0.1:3000/api/solicitudes/detalle?folio=${encodeURIComponent(folio)}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if(!response.ok) {
+                const err = await response.json().catch(() => ({ message: 'Error al cargar la información' }));
+                throw new Error(err.message || 'Error al obtener detalles');
+            }
+
+            const data = await response.json();
+            populateInfoPanel(data);
+        } catch(error) {
+            Toast('ERROR', error.message);
+            infoCard.style.display = 'none';
+            container.classList.remove('modal-open');
+        } finally {
+            hideLoader();
+        }
+
+        buttonClose.onclick = (e) => {
+            e.stopPropagation();
+            infoCard.style.display = 'none';
+            container.classList.remove('modal-open');
+        };
+    });
+}
+
 // Calculate travel days
 function calculateDays() {
     const infoWrapper = document.querySelector('.info-wrapper');
@@ -928,94 +1295,55 @@ function calculateDays() {
         days.textContent = '00';
 }
 
-// Reject
-function buttonRejected() {
-    const buttons = document.querySelectorAll('.fa-circle-xmark');
-    if(!buttons) return;
+function populateInfoPanel(data) {
+    // Folio y fecha de solicitud
+    document.querySelector('.info-folio span').textContent = data.folio || '—';
+    document.querySelector('.info-date span').textContent = formatDate(data.fecha_recepcion);
 
-    buttons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation(); 
+    // Estado
+    const statusDiv = document.querySelector('.request-generals .status');
+    statusDiv.textContent = data.estado || '—';
+    statusDiv.className = 'status';
+    if(data.estado) {
+        const estadoClass = data.estado === 'Pendiente' ? 'st-pending' :
+                            data.estado === 'Aprobada' ? 'st-approved' : 'st-rejected';
+        statusDiv.classList.add(estadoClass);
+    }
 
-            // Determinar si está en tabla o tarjeta
-            const row = button.closest('tr');
-            const card = button.closest('.card');
-            let folio = 'desconocido';
-            let elemento = null;
+    // Destino
+    document.querySelector('.request-destination p:not(.info-subtitle)').textContent = (data.destino || '—').toUpperCase();
 
-            if(row) {
-                const folioCell = row.querySelector('.folio');
-                if(folioCell) folio = folioCell.textContent.trim();
-                elemento = row;
-            } else if(card) {
-                const folioElem = card.querySelector('.folio-mobile');
-                if(folioElem) folio = folioElem.textContent.trim();
-                elemento = card;
-            } else return;
-            
-            ToastRejected(folio);
-        });
-    });
-}
+    // Colaborador
+    document.querySelector('.colab .info-subtitle').textContent = (data.colaborador || 'Sin nombre').toUpperCase();
 
-// Approve
-function buttonApproved() {
-    const buttons = document.querySelectorAll('.fa-circle-check');
-    if(!buttons) return;
+    // Fechas de salida y regreso
+    document.querySelector('.departure-date p:last-child').textContent = formatDate(data.inicio_viaje);
+    document.querySelector('.return-date p:last-child').textContent = formatDate(data.fin_viaje);
 
-    buttons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation(e);
+    // Calcular días de viaje
+    calculateDays();
 
-            // Determinar si está en tabla o tarjeta
-            const row = button.closest('tr');
-            const card = button.closest('.card');
-            let folio = 'desconocido';
-            let elemento = null;
+    // Motivo
+    document.querySelector('.info-motive p:last-child').textContent = data.motivo || '—';
 
-            if(row) {
-                const folioCell = row.querySelector('.folio');
-                if(folioCell) folio = folioCell.textContent.trim();
-                elemento = row
-            } else if(card) {
-                const folioElem = card.querySelector('.folio-mobile');
-                if(folioElem) folio = folioElem.textContent.trim();
-                elemento = card;
-            } else return;
+    // Monto
+    const montoFormateado = new Intl.NumberFormat('es-MX', { minimumFractionDigits: 2 }).format(data.monto_solicitado || 0);
+    document.querySelector('.info-amount .symbol-money').textContent = obtenerSimboloMoneda(data.monto_moneda);
+    document.querySelector('.info-amount').childNodes[1]?.nodeType === 3 && (document.querySelector('.info-amount').childNodes[1].textContent = ' ' + montoFormateado);
+    const amountP = document.querySelector('.info-amount');
+    amountP.innerHTML = `<span class="symbol-money">${obtenerSimboloMoneda(data.monto_moneda)}</span>${montoFormateado}`;
 
-            Toast('SOLICITUD APROBADA', `La solicitud con folio ${folio} fue aprobada y notificada al colaborador correctamente`);
-        });
-    });
-}
+    // Moneda (bandera y código)
+    const flagImg = document.querySelector('.info-currency img');
+    flagImg.src = `./assets/images/${data.monto_moneda}.webp`;
+    flagImg.alt = data.monto_moneda;
+    document.querySelector('.info-currency p').textContent = data.monto_moneda;
 
-// Information
-function buttonInfo() {
-    const buttons = document.querySelectorAll('.fa-circle-info');
-    const container = document.querySelector('.container');
-    if(!buttons) return;
+    // Forma de pago
+    document.querySelector('.info-payment').textContent = data.forma_pago || '—';
 
-    buttons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-
-            // Llamar al backend
-            
-            const infoCard = document.querySelector('.info-wrapper');
-            const buttonClose = document.querySelector('.arrow-back');
-
-            if(!infoCard || !buttonClose) return;
-
-            infoCard.style.display = 'flex';
-            container.classList.add('modal-open');
-            calculateDays();
-
-            buttonClose.addEventListener('click', (e) => {
-                e.stopPropagation();
-                infoCard.style.display = 'none';
-                container.classList.remove('modal-open');
-            });
-        });
-    });
+    // Fecha de actualización
+    document.querySelector('.info-update span').textContent = formatDate(data.fecha_actualizacion);
 }
 
 
@@ -1053,12 +1381,12 @@ function Toast(title, content, imageUrl = './assets/images/Icon_agave.webp') {
 }
 
 // Rejected
-function ToastRejected(folio, imageLeft = './assets/images/Icon_agave1.webp', imageRight = './assets/images/Icon_agave2.webp') {
+function ToastRejected(folio, callback) {
     Swal.fire({
         title: 'SOLICITUD RECHAZADA',
         html: `
-            <img src="${imageLeft}" alt="Agave" class="agave-half left">
-            <img src="${imageRight}" alt="Agave" class="agave-half right">
+            <img src="./assets/images/Icon_agave1.webp" alt="Agave" class="agave-half left">
+            <img src="./assets/images/Icon_agave2.webp" alt="Agave" class="agave-half right">
             <div>
                 <textarea id="motivo-rechazo" class="swal2-textarea" placeholder="Por favor, escribe el motivo de tu rechazo"></textarea>
             </div>
@@ -1091,8 +1419,8 @@ function ToastRejected(folio, imageLeft = './assets/images/Icon_agave1.webp', im
         }
     }).then((result) => {
         if(result.isConfirmed) {
-            motivoRechazo = result.value;
-            Toast('SOLICITUD RECHAZADA', `La solicitud con folio ${folio} fue rechazada y notificada al colaborador correctamente`);
+            const motivo = result.value;
+            if(callback) callback(folio, 'Rechazar', motivo);
         }
     });
 }
