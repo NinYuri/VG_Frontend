@@ -523,7 +523,8 @@ body {
 .option .fa-plane-departure { font-size: 0.7em; }
 
 .option .fa-clock-rotate-left,
-.option .fa-arrow-right-from-bracket { font-size: 0.85em; }
+.option .fa-arrow-right-from-bracket,
+.option .fa-hand-holding-dollar { font-size: 0.85em; }
 
 
 /* ============================== CONTAINER ============================== */
@@ -1167,15 +1168,20 @@ body {
     .agave-icon { height: 8em; }
 
     /* OPTION BAR */
-    .logo .name { font-size: 1.1em; }
+    .logo .name { font-size: 0.97em; }
 
     .options,
-    .logout { font-size: 1.2em; }
+    .logout { font-size: 1.05em; }
 
     .options img { 
-        width: 17px;
-        transform: translateY(5%); 
+        width: 15px;
+        transform: translateY(10%); 
     }
+
+    .option .fa-plane-departure { font-size: 0.75em; }
+
+    .option .fa-hand-holding-dollar,
+    .option .fa-arrow-right-from-bracket { font-size: 0.9em; }
 
     /* CONTAINER */
     .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }

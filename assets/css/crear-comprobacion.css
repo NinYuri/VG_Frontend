@@ -721,7 +721,7 @@ body {
 }
 
 .tab.selected p {
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: 600;
 }
 
@@ -756,7 +756,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    height: 14em;
+    height: 13em;
 }
 
 .first-column,
@@ -778,7 +778,7 @@ body {
     height: 100%;
     border: 2px dashed var(--line-gray);
     border-radius: 10px;
-    font-size: 0.85em;
+    font-size: 0.9em;
     color: var(--line-gray);
     gap: 0.8em;
     transition: all 0.3s ease-in-out;
@@ -838,7 +838,7 @@ body {
     border-radius: 70px;
     color: var(--white);
     padding: 0.3em 1.7em;
-    font-size: 0.85em;
+    font-size: 0.9em;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     overflow: hidden;
@@ -917,12 +917,11 @@ body {
 }
 
 .table-body td { 
-    max-width: 0;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     padding: 0.3em 0.7em;
-    font-size: 0.95em; 
+    font-size: 0.9em; 
 }
 
 /* Anchos específicos */
@@ -1070,11 +1069,16 @@ body {
 
     .action-buttons { gap: 1.2em; }
 
-    .button { font-size: 0.9em; }
+    .button,
+    .tab p { font-size: 0.9em; }
 
-    .tab p { font-size: 1em; }
+    .tab.selected p { font-size: 1.05em; }
 
-    .tab.selected p { font-size: 1.15em; }
+    .factura-content { height: 11.5em; }
+
+    .factura-upload { padding: 0 1.3em 1.2em 0; }
+
+    .table-container { max-height: 8em; }
 }
 
 @media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
@@ -1088,15 +1092,20 @@ body {
     .agave-icon { height: 8em; }
 
     /* OPTION BAR */
-    .logo .name { font-size: 1.1em; }
+    .logo .name { font-size: 0.97em; }
 
     .options,
-    .logout { font-size: 1.2em; }
+    .logout { font-size: 1.05em; }
 
     .options img { 
-        width: 17px;
-        transform: translateY(5%); 
+        width: 15px;
+        transform: translateY(10%); 
     }
+
+    .option .fa-plane-departure { font-size: 0.75em; }
+
+    .option .fa-hand-holding-dollar,
+    .option .fa-arrow-right-from-bracket { font-size: 0.9em; }
 
     /* CONTAINER */
     .content-container { padding: 1.3em 1.2em 1.3em 1.5em; }
@@ -1119,9 +1128,23 @@ body {
 
     .tab.selected { padding: 0.7em 0em 0.7em 1.5em; }
 
-    .tab p { font-size: 0.95em; }
+    .tab.selected p { font-size: 1em; }
 
-    .tab.selected p { font-size: 1.05em; }
+    .button { font-size: 0.85em; }
+
+    .table-head th { font-size: 0.95em }
+
+    .table-body td { font-size: 0.8em }
+
+    .factura-content { height: 10em; }
+
+    .receipt-container { font-size: 0.8em; }
+
+    .factura-upload { padding: 0 1.3em 1.1em 0; }
+
+    .button-receipt { font-size: 0.8em; }
+
+    .table-container { max-height: 7.5em; }
 }
 
 @media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
@@ -1168,11 +1191,21 @@ body {
 
     .tab.selected { padding: 0.7em 0em 0.7em 1.5em; }
 
-    .tab p { font-size: 0.95em; }
+    .tab p { font-size: 0.9em; }
 
-    .tab.selected p { font-size: 1.1em; }
+    .tab.selected p { font-size: 0.95em; }
 
-    .content-form { padding: 0.7em 0 1em 0; }
+    .content-form { padding: 1em; }
+
+    .factura-content { height: 11em; }
+
+    .button-receipt { font-size: 0.8em; }
+
+    .table-head th { font-size: 0.9em; }
+
+    .table-body td { font-size: 0.8em; }
+
+    .table-container { max-height: 7em; }
 }
 
 /* Laptops pequeñas (1024px - 1250px) */
@@ -1187,7 +1220,7 @@ body {
     .agave-icon { height: 7.5em; }
 
     /* OPTION BAR */
-    .option-bar { width: 23%; }
+    .option-bar { width: 20.3%; }
 
     .logo { width: 97%; }
 
@@ -1224,15 +1257,30 @@ body {
 
     .button:last-child { margin-right: 0; }
 
-    .tab { padding: 0.6em 0em 0.6em 1.5em; }
+    .tab { padding: 0.5em 0em 0.5em 1.5em; }
 
-    .tab.selected { padding: 0.8em 0 0.8em 1.5em; }
+    .tab.selected { padding: 0.6em 0 0.6em 1.5em; }
 
     .tab p { font-size: 0.8em; }
 
-    .tab.selected p { font-size: 0.97em; }
+    .tab.selected p { font-size: 0.95em; }
 
-    .content-form { padding: 1.1em 0; }
+    .content-form,
+    .first-column,
+    .second-column  { padding: 1em; }
+
+    .content-form { gap: 1em; }
+
+    .factura-content { height: 9em; }
+
+    .receipt-container,
+    .button-receipt { font-size: 0.75em; }
+
+    .table-head th { font-size: 0.8em; }
+
+    .table-body td { font-size: 0.7em; }
+
+    .table-container { max-height: 6em; }
 }
 
 /* Tabletas */
@@ -1291,6 +1339,8 @@ body {
     .background { flex-direction: column; }
 
     .content-container {
+        width: 90%;
+        flex: none;
         padding: 70px 5px 100px;
         height: 100vh; 
         margin-top: 1em;
@@ -1301,6 +1351,7 @@ body {
         border-radius: 22px;
         padding: 1.3em 1.1em 0.5em 1.1em;
         height: auto;
+        overflow: visible;
     }
 
     .content-header {
@@ -1360,6 +1411,40 @@ body {
 
     .content,
     .content:last-child { margin-bottom: 2.3em; }
+
+    .factura-content { 
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        flex-shrink: 1;
+        height: auto;
+        gap: 1.5em;
+        padding: 1.5em;
+    }
+
+    .first-column,
+    .second-column { 
+        height: 15em; 
+        padding: 0;
+    }
+
+    .factura-upload { 
+        margin: auto;
+        padding: 0 0 1.3em 0; 
+    }
+
+    .button-receipt { font-size: 0.9em; }
+    
+    .table-container {
+        height: auto;
+        max-height: none;
+    }
+
+    .table-body td {
+        overflow: visible;
+        text-overflow: clip;
+        padding: 0.5em 1em;
+    }
 
     .agave-mobile {
         display: flex;
@@ -1448,6 +1533,7 @@ body {
         height: 100vh;
         margin-top: 1em;
         overflow-y: auto;
+        flex: none;
     }
 
     .container {
@@ -1500,7 +1586,7 @@ body {
         display: flex;
         overflow-x: auto;
         overflow-y: hidden;
-        padding-top: 25px;
+        padding-top: 15px;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
@@ -1509,7 +1595,6 @@ body {
     .tabs::-webkit-scrollbar { display: none }
 
     .tab { 
-        padding: 0.5em 0.1em 0.5em 1.5em; 
         white-space: nowrap;
         flex-shrink: 0;
         transition: all 0.3s ease;
@@ -1524,10 +1609,54 @@ body {
 
     .tab.selected p { font-size: 1.2em; }
 
-    .content-form { flex-direction: column; }
+    .content-form { 
+        flex-direction: column;
+        padding: 1.3em; 
+    }
 
     .content,
     .content:last-child { margin-bottom: 2.1em; }
+
+    .factura-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+        padding: 1em;
+        height: auto;
+    }
+
+    .first-column,
+    .second-column { 
+        padding: 0em;
+        height: 10em;
+    }
+
+    .factura-upload {
+        margin: auto;
+        padding: 1em 0;
+    }
+
+    .table-container {
+        max-height: none;
+        height: auto;
+    }
+
+    .table-head { 
+        text-align: center;
+        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.3); 
+    }
+
+    .table-head th { 
+        font-size: 1.1em;
+        padding: 0.5em 0.7em; 
+    }
+
+    .table-body td {
+        overflow: visible;
+        text-overflow: clip;
+        white-space: pre-wrap; 
+        padding: 0.5em 1em; 
+    }
 
     .agave-mobile {
         display: flex;
