@@ -1313,6 +1313,10 @@ async function enviarComprobacion() {
         Toast('SIN FACTURAS', 'Agrega al menos una factura para continuar');
         return;
     }
+    if(pendingEditRow) {
+        Toast('DATOS INCOMPLETOS', 'Por favor, completa la información pendiente para continuar');
+        return;
+    }
 
     showLoader();
     try {
@@ -1351,9 +1355,9 @@ async function enviarComprobacion() {
             facturasEnviar.push({
                 folio_factura: factura.folio,
                 fecha_factura: factura.fecha,
-                proveedor: factura.proveedor,
+                proveedor: (factura.proveedor).toUpperCase(),
                 concepto: factura.concepto,
-                descripcion: factura.descripcion,
+                descripcion: (factura.descripcion).toUpperCase(),
                 importe: importeNum,
                 iva: ivaNum,
                 otros_montos: isNaN(otrosNum) ? 0 : otrosNum,
