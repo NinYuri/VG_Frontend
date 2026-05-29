@@ -542,6 +542,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding-left: 1.4em;
 }
 
@@ -1135,7 +1136,7 @@ body {
     align-items: center;
     gap: 0.7em;
     color: var(--icons);
-    font-size: 1.1em;
+    font-size: 1.05em;
 }
 
 .table-body .actions i { cursor: pointer; }
@@ -1868,7 +1869,7 @@ body {
     /* CONTAINER */
     .container { background-size: 33% auto; }
 
-    .titles .title { font-size: 2.9em; }
+    .titles .title { font-size: 3em; }
 
     .button-create { font-size: 0.9em; }
 
@@ -2025,7 +2026,7 @@ body {
 
     .content { margin-top: 0.7em; }
 
-    .titles .title { font-size: 3em; }
+    .titles .title { font-size: 2.9em; }
 
     .titles .subtitle { font-size: 1.05em; }
 
@@ -2048,8 +2049,7 @@ body {
 
     .date-header { font-size: 0.9em; }
 
-    .datepicker-header button { font-size: 0.7em; }
-
+    .datepicker-header button,
     .days-header span { font-size: 0.7em; }
 
     .dates { font-size: 0.8em; }
@@ -2150,10 +2150,15 @@ body {
     .agave-half { height: 12em; }
 
     /* OPTION BAR */
-    .logo .name { font-size: 1em; }
+    .logo img { width: 95%; }
+    
+    .logo .name { font-size: 0.95em; }
 
     .options,
-    .logout { font-size: 1.1em; }
+    .logout { font-size: 1.05em; }
+
+    .options .option,
+    .logout .option { width: 100%; }
 
     .options img { 
         width: 15px;
@@ -2214,6 +2219,8 @@ body {
     }
 
     .table-body td { font-size: 0.9em; }
+
+    .table-body .actions { font-size: 1em; }
 
     .tab-buttons { margin-top: 0.8em; }
 
@@ -2307,9 +2314,11 @@ body {
 
     .logo { width: 97%; }
 
+    .logo img { width: 95%; }
+
     .logo .name { font-size: 0.9em; }
 
-    .options .option { width: 100%; }
+    .options .option { width: 97%; }
 
     .options,
     .logout { 
@@ -2349,7 +2358,6 @@ body {
 
     .search { 
         width: 30%;
-        margin-bottom: 2em; 
         height: 2.3em;
     }
 
@@ -2358,10 +2366,7 @@ body {
     .search-back input { font-size: 0.9em; }
 
     /* CALENDAR */
-    .datepicker-wrapper { 
-        top: 63%;
-        width: 35%; 
-    }
+    .datepicker-wrapper { width: 35%; }
 
     .datepicker-header { font-size: 0.9em; }
 
@@ -2371,16 +2376,18 @@ body {
     }
 
     .days-header span,
-    .dates { font-size: 0.8em; }
+    .dates { font-size: 0.7em; }
 
-    .date-button { font-size: 0.75em; }
+    .date-cell { padding: 0.1em 0; }
+
+    .date-button { font-size: 0.7em; }
 
     /* TABLE */
     .table-head th { font-size: 1em; }
 
     .table-body td { font-size: 0.8em; }
 
-    .table-body .folio { font-size: 0.9em; }
+    .table-body .folio { font-size: 0.85em; }
 
     .monto-content { gap: 7px; }
 

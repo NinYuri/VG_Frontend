@@ -470,6 +470,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding-left: 1.4em;
 }
 
@@ -1076,7 +1077,7 @@ body {
     background-color: var(--tr-medium-blue);
     border-radius: 0.5em;
     border: 1px solid var(--line-gray);
-    padding: 0 0.5em;
+    padding: 0.3em 0.5em;
 }
 
 .table-container::-webkit-scrollbar { 
@@ -1203,6 +1204,8 @@ body {
 
     .table-body td { font-size: 1.2em; }
 
+    .table-body input { font-size: 1.1em; }
+
     .table-head th:nth-child(1),
     .table-head th:nth-child(10) { width: 120px; }
     .table-head th:nth-child(2) { width: 140px; }
@@ -1244,7 +1247,7 @@ body {
     /* CONTAINER */
     .container { background-size: 70% auto; }
 
-    .titles .title { font-size: 2.9em; }
+    .titles .title { font-size: 3em; }
 
     .action-buttons { gap: 1.2em; }
 
@@ -1305,7 +1308,7 @@ body {
     .content:last-child,
     .second-column .content:last-child { margin-bottom: 0; }
 
-    .titles .title { font-size: 3em; }
+    .titles .title { font-size: 2.9em; }
 
     .titles .subtitle { font-size: 1.2em; }
 
@@ -1325,6 +1328,8 @@ body {
     .table-head th { font-size: 0.95em }
 
     .table-body td { font-size: 0.8em }
+
+    .table-body input { font-size: 0.9em }
 
     .factura-content { height: 9.5em; }
 
@@ -1351,10 +1356,15 @@ body {
     .agave-half { height: 12em; }
 
     /* OPTION BAR */
-    .logo .name { font-size: 1em; }
+    .logo img { width: 95%; }
+    
+    .logo .name { font-size: 0.95em; }
 
     .options,
-    .logout { font-size: 1.1em; }
+    .logout { font-size: 1.05em; }
+
+    .options .option,
+    .logout .option { width: 100%; }
 
     .options img { 
         width: 15px;
@@ -1412,6 +1422,8 @@ body {
 
     .table-body td { font-size: 0.8em; }
 
+    .table-body input { font-size: 0.9em; }
+
     .table-container { 
         max-height: 6.5em;
         height: 6.5em;  
@@ -1434,9 +1446,11 @@ body {
 
     .logo { width: 97%; }
 
+    .logo img { width: 95%; }
+
     .logo .name { font-size: 0.9em; }
 
-    .options .option { width: 100%; }
+    .options .option { width: 97%; }
 
     .options,
     .logout { 
@@ -1457,13 +1471,13 @@ body {
         background-size: 75% auto; 
     }
 
-    .titles .title { font-size: 2.3em; }
+    .titles .title { font-size: 2.5em; }
 
-    .titles .subtitle { font-size: 1.1em; }
+    .titles .subtitle { font-size: 1em; }
 
     .action-buttons { gap: 0.5em; }
 
-    .button { font-size: 0.7em; }
+    .button { font-size: 0.75em; }
 
     .button:last-child { margin-right: 0; }
 
@@ -1913,6 +1927,8 @@ body {
         white-space: pre-wrap; 
         padding: 0.5em 1em; 
     }
+
+    .table-body input { padding: 0.5em; }
 
     .agave-mobile {
         display: flex;
