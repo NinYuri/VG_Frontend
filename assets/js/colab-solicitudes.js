@@ -318,7 +318,8 @@ async function tableInformation(filtros = {}, page = 1) {
         if(data.mensaje) {
             renderTable([]);
             renderCards([]);
-            Toast(`SIN SOLICITUDES ${toastStatus().toUpperCase()}`, `No tienes solicitudes ${toastStatus()} para mostrar en este momento`);
+            const tab = toastStatus();
+            Toast(`SIN SOLICITUDES ${tab === null ? '' : tab.toUpperCase()}`, `No tienes solicitudes ${tab === null ? '' : tab} para mostrar en este momento`);
             return;
         }
 
@@ -672,7 +673,7 @@ function tabSelected() {
             this.classList.add('selected');
             currentPage = 1;
             const filtros = getCurrentFilters();
-            tableInformation(filtros);
+            tableInformation(filtros, currentPage);
         });
     });
 }
@@ -693,7 +694,7 @@ function search() {
             filtros.folio = valor;
 
         currentPage = 1;
-        tableInformation(filtros);
+        tableInformation(filtros, currentPage);
     }
 
     // ENTER keypress
@@ -713,7 +714,7 @@ function search() {
             delete filtros.valor;
 
             currentPage = 1;
-            tableInformation(filtros);
+            tableInformation(filtros, currentPage);
         }
     });
 }
@@ -1052,7 +1053,7 @@ function setupCalendar() {
         delete filtros.fechaFin;
 
         currentPage = 1;
-        tableInformation(filtros);
+        tableInformation(filtros, currentPage);
         calendarIcon.classList.remove('icon-active');
         datepicker.style.display = 'none';
     });
@@ -1067,7 +1068,7 @@ function setupCalendar() {
 
         const filtros = getCurrentFilters();
         currentPage = 1;
-        tableInformation(filtros);
+        tableInformation(filtros, currentPage);
 
         calendarIcon.classList.remove('icon-active');
         datepicker.style.display = 'none';
@@ -1242,7 +1243,7 @@ function setupSorting() {
 
             currentPage = 1;
             const filtros = getCurrentFilters();
-            tableInformation(filtros);
+            tableInformation(filtros, currentPage);
         });
     });
 }

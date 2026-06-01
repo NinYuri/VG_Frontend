@@ -821,6 +821,8 @@ body {
 
 .search-back i.fade-out { opacity: 0; }
 
+.search-back i:nth-child(3) { margin-right: 0.7em; }
+
 .search-back i:not(:first-child):hover,
 .search-back .icon-active {
     color: var(--icons);

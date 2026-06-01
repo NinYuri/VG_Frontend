@@ -333,7 +333,8 @@ async function tableInformation(filtros = {}, page = 1) {
             renderTable([]);
             renderCards([]);
             updateCounters(0, 0);
-            Toast(`SIN ANTICIPOS ${toastStatus().toUpperCase()}`, `No tienes anticipos ${toastStatus()} para mostrar en este momento`);
+            const tab = toastStatus();
+            Toast(`SIN ANTICIPOS ${tab === null ? '' : tab.toUpperCase()}`, `No tienes anticipos ${tab === null ? '' : tab} para mostrar en este momento`);
             return;
         }
 
@@ -658,7 +659,7 @@ function tabSelected() {
 
             currentPage = 1;
             const filtros = getCurrentFilters();
-            tableInformation(filtros);
+            tableInformation(filtros, currentPage);
         });
     });
 }
@@ -690,7 +691,7 @@ function cardLinks() {
 
         currentPage = 1;
         const filtros = getCurrentFilters();
-        tableInformation(filtros);
+        tableInformation(filtros, currentPage);
     }
 }
 
@@ -755,7 +756,7 @@ function searchColab() {
         }
 
         currentPage = 1;
-        tableInformation(filtros);
+        tableInformation(filtros, currentPage);
     }
 
     // ENTER keypress
@@ -776,17 +777,31 @@ function searchColab() {
             delete filtros.colaborador;
 
             currentPage = 1;
-            tableInformation(filtros);
+            tableInformation(filtros, currentPage);
         }
     });
 
     glass.addEventListener('click', (e) => {
         e.stopPropagation();
+        const filtros = getCurrentFilters();
+
+        delete filtros.folio;
+        delete filtros.colaborador;
+
+        currentPage = 1;
+        tableInformation(filtros, currentPage);
         fadeAndSwap(swapped);
     });
 
     user.addEventListener('click', (e) => {
         e.stopPropagation();
+        const filtros = getCurrentFilters();
+
+        delete filtros.folio;
+        delete filtros.colaborador;
+
+        currentPage = 1;
+        tableInformation(filtros, currentPage);
         fadeAndSwap(!swapped);
     });
 }
@@ -1125,7 +1140,7 @@ function setupCalendar() {
         delete filtros.fechaFin;
 
         currentPage = 1;
-        tableInformation(filtros);
+        tableInformation(filtros, currentPage);
         calendarIcon.classList.remove('icon-active');
         datepicker.style.display = 'none';
     });
@@ -1140,7 +1155,7 @@ function setupCalendar() {
 
         const filtros = getCurrentFilters();
         currentPage = 1;
-        tableInformation(filtros);
+        tableInformation(filtros, currentPage);
 
         calendarIcon.classList.remove('icon-active');
         datepicker.style.display = 'none';
@@ -1428,7 +1443,7 @@ function setupSorting() {
 
             currentPage = 1;
             const filtros = getCurrentFilters();
-            tableInformation(filtros);
+            tableInformation(filtros, currentPage);
         });
     });
 }

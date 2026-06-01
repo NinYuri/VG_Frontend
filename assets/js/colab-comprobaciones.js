@@ -1,18 +1,35 @@
 document.addEventListener("DOMContentLoaded", function() {
+    setupPaginationEvents();
     menuUser();
     phoneMenu();
     initMobileScroll();
     optionsBar();
+    tableInformation({});
     tabSelected();
+    search();
     initCalendar();
     setupCalendar();
     activeCards();
+    setupSorting();
     buttonComp();
 });
 
 
 /* ============================== VARIABLES ============================== */
-// Backend
+let globalStartDate = null;
+let globalEndDate = null;
+let swapped = false;
+let currentPage = 1;
+let paginacionGlobal = {
+    paginaActual: 1,
+    totalPaginas: 1
+};
+const limitPerPage = 7;
+let currentFolio = 'ASC';
+let currentSol = null;
+let currentTotal = null;
+let currentSaldo = null;
+
 const token = Session.getToken();
 const logoUser = Session.getUser();
 
@@ -27,6 +44,19 @@ function formatDate(dateStr) {
     const mes = meses[parseInt(monthNum, 10) - 1];
     return `${dia} / ${mes} / ${year}`;
 }
+
+// Currency
+const CURRENCY_COUNTRY = {
+    EUR: 'eu', USD: 'us', GBP: 'gb', AUD: 'au', CAD: 'ca',
+    CHF: 'ch', CNY: 'cn', JPY: 'jp', MXN: 'mx', BRL: 'br',
+    INR: 'in', KRW: 'kr', SGD: 'sg', HKD: 'hk', NOK: 'no',
+    SEK: 'se', DKK: 'dk', NZD: 'nz', ZAR: 'za', RUB: 'ru',
+    ARS: 'ar', CLP: 'cl', COP: 'co', PEN: 'pe', VES: 've',
+    AED: 'ae', SAR: 'sa', QAR: 'qa', KWD: 'kw', EGP: 'eg',
+    TRY: 'tr', PLN: 'pl', CZK: 'cz', HUF: 'hu', RON: 'ro',
+    TWD: 'tw', THB: 'th', MYR: 'my', IDR: 'id', PHP: 'ph',
+    PKR: 'pk', BDT: 'bd', VND: 'vn', ILS: 'il', NGN: 'ng',
+};
 
 
 /* ================================= LOADER ================================= */
@@ -179,18 +209,398 @@ function optionsBar() {
 }
 
 
+/* =========================== TABLE INFORMATION =========================== */
+// Status tabs
+function getActiveStatus() {
+    const tabActive = document.querySelector('.tab.selected');
+
+    if(!tabActive)
+        return null;
+
+    if(tabActive.classList.contains('pending'))
+        return 'Pendiente';
+    if(tabActive.classList.contains('approved'))
+        return 'Aprobada';
+    if(tabActive.classList.contains('rejected'))
+        return 'Rechazada';
+
+    return null;
+}
+
+function getActiveTabId() {
+    const activeTab = document.querySelector('.tab.selected');
+    if(!activeTab) return 'all';
+
+    if(activeTab.classList.contains('pending')) return 'pending';
+    if(activeTab.classList.contains('approved')) return 'approved';
+    if(activeTab.classList.contains('rejected')) return 'rejected';
+
+    return 'all';
+}
+
+function toastStatus() {
+    const tabActive = document.querySelector('.tab.selected');
+
+    if(!tabActive)
+        return null;
+
+    if(tabActive.classList.contains('pending'))
+        return 'pendientes';
+    if(tabActive.classList.contains('approved'))
+        return 'aprobadas';
+    if(tabActive.classList.contains('rejected'))
+        return 'rechazadas';
+
+    return null;
+}
+
+// Filters
+function getCurrentFilters() {
+    const estado = getActiveStatus();
+    const input = document.querySelector('.search-back input');
+    const valor = input ? input.value.trim() : '';
+    const filtros = { estado };
+    
+    if(swapped)
+        filtros.solicitud = valor;
+    else
+        filtros.folio = valor;
+
+    if(globalStartDate) {
+        filtros.fechaIni = globalStartDate;
+        if(globalEndDate)
+            filtros.fechaFin = globalEndDate;
+    }
+
+    filtros.orden = currentFolio;
+    if (currentSol) filtros.ordenSols = currentSol;
+    if (currentTotal) filtros.ordenTotal = currentTotal;
+    if (currentSaldo) filtros.ordenSaldo = currentSaldo;
+
+    return filtros;
+}
+
+// Backend query
+async function tableInformation(filtros = {}, page = 1) {
+    showLoader();
+    renderTable([], getActiveTabId());
+    //renderCards([]);
+
+    const offset = (page - 1) * limitPerPage;
+
+    const params = new URLSearchParams();
+    if(filtros.estado) params.append('estado', filtros.estado);
+    if(filtros.folio) params.append('folio', filtros.folio);
+    if(filtros.solicitud) params.append('solicitud', filtros.solicitud); 
+    if(filtros.fechaIni) params.append('fechaIni', filtros.fechaIni);
+    if(filtros.fechaFin) params.append('fechaFin', filtros.fechaFin);
+    params.append('limit', limitPerPage);
+    params.append('offset', offset);
+    params.append('orden', currentFolio);
+    if(currentSol) params.append('ordenSols', currentSol);
+    if(currentTotal) params.append('ordenTotal', currentTotal);
+    if(currentSaldo) params.append('ordenSaldo', currentSaldo);
+
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/api/comprobaciones/listar?${params.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include'
+        });
+
+        if(!response.ok) {
+            renderTable([]);
+            //renderCards([]);
+            throw new Error('Error al obtener comprobaciones');
+            return;
+        }
+
+        const data = await response.json();
+        const tab = getActiveTabId();
+
+        if(data.mensaje) {
+            renderTable([]);
+            //renderCards([]);
+            const tab = toastStatus();
+            Toast(`SIN COMPROBACIONES ${tab === null ? '' : tab.toUpperCase()}`, `No tienes comprobaciones ${tab === null ? '' : tab} para mostrar en este momento`);
+            return;
+        }
+
+        renderTable(data.comprobaciones, tab);
+        //renderCards(data.comprobaciones);
+        updatePagination(data.paginacion);
+        currentPage = data.paginacion.paginaActual;
+    } catch(error) {
+        renderTable([]);
+        //renderCards([]);
+        Toast('ERROR AL MOSTRAR', 'No se pudieron cargar las comprobaciones. Por favor, intenta de nuevo');
+    } finally {
+        hideLoader();
+    }
+}
+
+// Table Information
+function getActionIcons(estado) {
+    if(estado === 'Pendiente' || estado === 'Rechazada')
+        return `
+            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        `;
+    else
+        return `<i class="fa-solid fa-circle-info"></i>`;
+}
+
+function renderTable(comprobaciones, tab = 'all') {
+    const tbody = document.querySelector('.table-body');
+    if(!tbody) return;
+
+    tbody.innerHTML = '';
+
+    if(comprobaciones.length === 0) return;
+
+    const statusClass = {
+        'Pendiente': 'st-pending',
+        'Aprobada': 'st-approved',
+        'Rechazada': 'st-rejected'
+    };
+
+    comprobaciones.forEach(cmp => {
+        const tr = document.createElement('tr');
+
+        const simboloSaldo = obtenerSimboloMoneda(cmp.saldo_moneda);
+        const simboloTotal = obtenerSimboloMoneda(cmp.total_moneda);
+
+        const saldoNum = cmp.saldo || 0;
+        const saldoAbs = Math.abs(saldoNum);
+        const saldoFormateado = new Intl.NumberFormat('es-MX', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(saldoAbs);
+        const signo = saldoNum < 0 ? '-' : '';
+        const saldoTexto = `${signo}${simboloSaldo}${saldoFormateado}`;
+
+        const totalFormateado = new Intl.NumberFormat('es-MX', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(cmp.total);
+
+        const estadoClass = statusClass[cmp.estado] || '';
+
+        let html = `
+            <td class="folio"><p>${cmp.folio}</p></td>
+            <td><p>${cmp.solicitud}</p></td>
+            <td><p>${formatDate(cmp.fecha_comprobacion)}</p></td>
+            <td class="monto-cell">
+                <div class="monto-content">
+                    <img src="${getFlagUrl(cmp.total_moneda)}" alt="${cmp.total_moneda}" onerror="this.style.display='none'">
+                    <p><span class="symbol-money">${simboloTotal}</span>${totalFormateado}</p>
+                </div>
+            </td>
+            <td class="monto-cell">
+                <div class="monto-content">
+                    <img src="${getFlagUrl(cmp.saldo_moneda)}" alt="${cmp.saldo_moneda}" onerror="this.style.display='none'">
+                    <p>${saldoTexto}</p>
+                </div>
+            </td>
+            <td><div class="status ${estadoClass}">${cmp.estado}</div></td>
+            <td><div class="actions">${getActionIcons(cmp.estado)}</div></td>
+        `;
+
+        tr.innerHTML = html;
+        tbody.appendChild(tr);
+    });
+
+    const rowsActuales = comprobaciones.length;
+    for(let i = rowsActuales; i < limitPerPage; i++) {
+        const emptyRow = document.createElement('tr');
+        emptyRow.innerHTML = `<td><p class="empty-row">Empty</p></td><td></td><td></td><td></td><td></td><td></td><td></td>`;
+        tbody.appendChild(emptyRow);
+    }
+}
+
+// Pagination
+function updatePagination(paginacion) {
+    const pageDiv = document.querySelector('.page');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+
+    if(pageDiv) pageDiv.textContent = paginacion.paginaActual;
+    paginacionGlobal = paginacion;
+
+    // Habilitar / deshabilitar botones
+    if(prevBtn) prevBtn.parentElement.classList.toggle('disabled', paginacion.paginaActual <= 1);
+    if(nextBtn) nextBtn.parentElement.classList.toggle('disabled', paginacion.paginaActual >= paginacion.totalPaginas);
+}
+
+function setupPaginationEvents() {
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    if(!prevBtn || !nextBtn) return;
+
+    const prevParent = prevBtn.parentElement;
+    const nextParent = nextBtn.parentElement;
+
+    prevParent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (paginacionGlobal.paginaActual <= 1 || prevParent.classList.contains('disabled')) return;
+        currentPage--;
+        const filtros = getCurrentFilters();
+        tableInformation(filtros, currentPage);
+    });
+
+    nextParent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (paginacionGlobal.paginaActual >= paginacionGlobal.totalPaginas || nextParent.classList.contains('disabled')) return;
+        currentPage++;
+        const filtros = getCurrentFilters();
+        tableInformation(filtros, currentPage);
+    });
+}
+
+// Currency
+function getFlagUrl(code) {
+    const country = CURRENCY_COUNTRY[code] || code.slice(0, 2).toLowerCase();
+    return `https://flagcdn.com/w40/${country}.png`;
+}
+
+function obtenerSimboloMoneda(code) {
+    try {
+        const parts = new Intl.NumberFormat('es-MX', {
+            style: 'currency',
+            currency: code,
+            currencyDisplay: 'narrowSymbol'
+        }).formatToParts(0);
+        return parts.find(p => p.type === 'currency')?.value || code;
+    } catch {
+        return code;
+    }
+}
+
+
 /* ============================== TABLE TABS ============================== */
 function tabSelected() {
     const tabs = document.querySelectorAll('.tab');
 
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
-            document.querySelectorAll('.tab').forEach(t => {
-                t.classList.remove('selected');
-            });
-
+            tabs.forEach(t => t.classList.remove('selected'));
             this.classList.add('selected');
+            currentPage = 1;
+            const filtros = getCurrentFilters();
+            tableInformation(filtros, currentPage);
         });
+    });
+}
+
+
+/* ============================== SEARCH ============================== */
+function search() {
+    const search = document.querySelector('.search-back');
+    const glass = search.querySelector('.fa-magnifying-glass');
+    const sol = search.querySelector('.fa-plane');
+    const calendar = search.querySelector('.fa-calendar');
+    const input = search.querySelector('input');
+    
+    if(!glass || !sol || !calendar || !input) return;
+
+    function swapIcons() {
+        const parent = search;
+
+        const glassRemoved = parent.removeChild(glass);
+        const solRemoved = parent.removeChild(sol);
+
+        if(!swapped) {
+            parent.insertBefore(solRemoved, input);
+            parent.insertBefore(glassRemoved, calendar.nextSibling);
+            input.placeholder = 'Solicitud. . .';
+            swapped = true;
+        } else {
+            parent.insertBefore(glassRemoved, input);
+            parent.insertBefore(solRemoved, calendar.nextSibling);
+            input.placeholder = "Folio. . .";
+            swapped = false;
+        }
+        input.value = '';
+    }
+
+    function fadeAndSwap(shouldSwap) {
+        if(shouldSwap) {
+            glass.classList.add('fade-out');
+            sol.classList.add('fade-out');
+        }
+
+        setTimeout(() => {
+            if(shouldSwap) {
+                swapIcons();
+                glass.classList.remove('fade-out');
+                sol.classList.remove('fade-out');
+            }
+        }, 200);
+    }
+
+    let debounceTimer;
+
+    function doSearch() {
+        const valor = input.value.trim();
+        const filtros = getCurrentFilters();
+        if(swapped) {
+            filtros.solicitud = valor;
+            delete filtros.folio;
+        } else {
+            filtros.folio = valor;
+            delete filtros.solicitud;
+        }
+
+        currentPage = 1;
+        tableInformation(filtros, currentPage);
+    }
+
+    // ENTER keypress
+    input.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') {
+            clearTimeout(debounceTimer);
+            doSearch();
+        }
+    });
+
+    input.addEventListener('input', (e) => {
+        if(input.value.trim() === '') {
+            clearTimeout(debounceTimer);
+            const filtros = getCurrentFilters();
+
+            delete filtros.folio;
+            delete filtros.solicitud;
+
+            currentPage = 1;
+            tableInformation(filtros, currentPage);
+        }
+    });
+
+    glass.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const filtros = getCurrentFilters();
+
+        delete filtros.folio;
+        delete filtros.solicitud;
+
+        currentPage = 1;
+        tableInformation(filtros, currentPage);
+        fadeAndSwap(swapped);
+    });
+
+    sol.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const filtros = getCurrentFilters();
+
+        delete filtros.folio;
+        delete filtros.solicitud;
+
+        currentPage = 1;
+        tableInformation(filtros, currentPage);
+        fadeAndSwap(!swapped);
     });
 }
 
@@ -308,7 +718,9 @@ function initCalendar() {
             if (startDate === null || (startDate && endDate !== null)) {
                 startDate = { year, month, day };
                 endDate = null;
-                console.log(`Rango reiniciado. Inicio: ${day}/${month+1}/${year}`);
+
+                globalStartDate = `${year}-${month+1}-${day}`;
+                globalEndDate = null;
             }
             // Si hay inicio pero no fin, se establece el fin (ordenando las fechas)
             else if (startDate && endDate === null) {
@@ -320,8 +732,17 @@ function initCalendar() {
                 } else
                     endDate = { year, month, day };
                 
-                console.log(`Rango seleccionado: ${startDate.day}/${startDate.month+1}/${startDate.year} - ${endDate.day}/${endDate.month+1}/${endDate.year}`);
+                globalStartDate = `${startDate.year}-${startDate.month+1}-${startDate.day}`;
+                globalEndDate = `${endDate.year}-${endDate.month+1}-${endDate.day}`;
             }
+
+            function parseGlobalDate(dateStr) {
+                if (!dateStr) return null;
+                const [year, month, day] = dateStr.split('-').map(Number);
+                return { year, month: month - 1, day };
+            }
+            startDate = parseGlobalDate(globalStartDate);
+            endDate = parseGlobalDate(globalEndDate);
 
             renderCalendar();
         });
@@ -462,23 +883,25 @@ function initCalendar() {
 function setupCalendar() {
     const calendarIcon = document.querySelector('.fa-calendar');
     const datepicker = document.querySelector('.datepicker-wrapper');
+    const clearDate = document.querySelector('.date-button.clear-date');
+    const searchDate = document.querySelector('.date-button.search-date');
 
-    if(!calendarIcon || !datepicker) return;
+    if(!calendarIcon || !datepicker || !clearDate || !searchDate) return;
 
     function clearRangeSelect() {
         const dates = document.querySelectorAll('.date-cell.in-range');
         const startDate = document.querySelector('.date-cell.start');
         const endDate = document.querySelector('.date-cell.end');
 
-        dates.forEach(date => {
-            if (date && date.classList) 
-                date.classList.remove('in-range');
-        });
-        if(startDate && startDate.classList) 
+        dates.forEach(date => date.classList.remove('in-range'));
+
+        if(startDate) 
             startDate.classList.remove('start');
-        if(endDate && endDate.classList) 
+        if(endDate) 
             endDate.classList.remove('end');
 
+        globalStartDate = null;
+        globalEndDate = null;
         window.dispatchEvent(new CustomEvent('calendar-closed'));
     }
 
@@ -487,7 +910,6 @@ function setupCalendar() {
 
         const isVisible = datepicker.style.display === 'block';
         if(isVisible) {
-            clearRangeSelect();
             calendarIcon.classList.remove('icon-active');
             datepicker.style.display = 'none';
         } else {
@@ -502,10 +924,39 @@ function setupCalendar() {
 
     document.addEventListener('click', (e) => {
         if(!datepicker.contains(e.target) && e.target !== calendarIcon) {
-            clearRangeSelect();
             calendarIcon.classList.remove('icon-active');
             datepicker.style.display = 'none';
         }
+    });
+
+    clearDate.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clearRangeSelect();
+
+        const filtros = getCurrentFilters();
+        delete filtros.fechaIni;
+        delete filtros.fechaFin;
+
+        currentPage = 1;
+        tableInformation(filtros, currentPage);
+        calendarIcon.classList.remove('icon-active');
+        datepicker.style.display = 'none';
+    });
+
+    searchDate.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        if(!globalStartDate && !globalEndDate) {
+            Toast('SELECCIÓN DE FECHA', 'Por favor, selecciona al menos una fecha para poder buscar');
+            return;
+        }
+
+        const filtros = getCurrentFilters();
+        currentPage = 1;
+        tableInformation(filtros, currentPage);
+
+        calendarIcon.classList.remove('icon-active');
+        datepicker.style.display = 'none';
     });
 }
 
@@ -527,6 +978,55 @@ function activeCards() {
 }
 
 
+/* ============================== CLASSIFICATION ============================== */
+function setupSorting() {
+    const orderDivs = document.querySelectorAll('.order-div[data-column]');
+
+    orderDivs.forEach(div => {
+        const orderIcons = div.querySelector('.order');
+        if(!orderIcons) return;
+
+        orderIcons.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const column = div.dataset.column;
+
+            switch(column) {
+                case 'folio':
+                    currentFolio = currentFolio === 'ASC' ? 'DESC' : 'ASC';
+                    currentSol = null;
+                    currentTotal = null;
+                    currentSaldo = null;
+                    break;
+                case 'solicitud':
+                    currentSol = currentSol === 'ASC' ? 'DESC' : 'ASC';
+                    currentFolio = null;
+                    currentTotal = null;
+                    currentSaldo = null;
+                    break;
+                case 'total':
+                    currentTotal = currentTotal === 'ASC' ? 'DESC' : 'ASC';
+                    currentFolio = null;
+                    currentSol = null;
+                    currentSaldo = null;
+                    break;
+                case 'saldo':
+                    currentSaldo = currentSaldo === 'ASC' ? 'DESC' : 'ASC';
+                    currentFolio = null;
+                    currentSol = null;
+                    currentTotal = null;
+                    break;
+                default:
+                    break;
+            }
+
+            currentPage = 1;
+            const filtros = getCurrentFilters();
+            tableInformation(filtros, currentPage);
+        });
+    });
+}
+
+
 /* ============================== ACTION BUTTONS ============================== */
 function buttonComp() {
     const button = document.querySelector('.button-create');
@@ -535,5 +1035,39 @@ function buttonComp() {
     button.addEventListener('click', (e) => {
         e.stopPropagation();
         window.location.href = 'crear-comprobacion.html';
+    });
+}
+
+
+/* =================================== TOAST =================================== */
+// Toast -> Simple
+const ToastMixin = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: true,
+    width: '540px',
+    customClass: {
+        popup: 'colored-toast'
+    },
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+});
+
+function Toast(title, content, imageUrl = './assets/images/Icon_agave.webp') {
+    ToastMixin.fire({
+        icon: undefined,
+        html: `
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <img src="${imageUrl}" alt="Agave" class="agave-icon">
+                <div class="text">
+                    <p>${title}</p>
+                    <span>${content}</span>
+                </div>
+            </div>
+        `
     });
 }

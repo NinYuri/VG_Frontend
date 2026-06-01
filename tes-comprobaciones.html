@@ -20,6 +20,21 @@
 </head>
 
 <body>
+    <!-- ======================= LOADER ======================= -->
+    <div class="loader-overlay">
+        <div class="dot-spinner">
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+        </div>
+    </div>
+
+    <!-- ======================= CONTENT ======================= -->
     <div class="background">
         <!-- ======================= PHONE MENU ======================= -->
         <div class="mobile-nav">
@@ -36,9 +51,7 @@
         <div class="option-bar" id="optionBar">
             <div class="logo">
                 <img src="./assets/images/White_logo.webp" alt="Grupo | PSA">
-                <div class="name">
-                    <p>Yuriana Ibarra</p>
-                </div>
+                <div class="name"><p></p></div>
             </div>
 
             <div class="options">
@@ -128,6 +141,11 @@
                                 </div>
 
                                 <div class="dates"></div>
+
+                                <div class="datepicker-bottom">
+                                    <div class="date-button clear-date">LIMPIAR</div>
+                                    <div class="date-button search-date">BUSCAR</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -138,7 +156,7 @@
                                 <thead class="table-head">
                                     <tr>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="folio">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -146,10 +164,18 @@
                                                 Folio
                                             </div>
                                         </th>
-                                        <th>Solicitud</th>
+                                        <th>
+                                            <div class="order-div" data-column="solicitud">
+                                                <div class="order">
+                                                    <i class="fa-solid fa-angle-up"></i>
+                                                    <i class="fa-solid fa-angle-down"></i>
+                                                </div>
+                                                Solicitud
+                                            </div>
+                                        </th>
                                         <th>Fecha</th>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="total">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -158,7 +184,7 @@
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="saldo">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -170,189 +196,7 @@
                                     </tr>
                                 </thead>
 
-                                <tbody class="table-body">
-                                    <tr>
-                                        <td class="folio"><p>CMP-26-001</p></td>
-                                        <td><p>SOL-26-010</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="total-cell">
-                                            <div class="total-content">
-                                                <img src="./assets/images/EUR.webp" alt="EUR">
-                                                <p><span class="symbol-money total"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="saldo-cell">
-                                            <div class="saldo-content">
-                                                <img src="./assets/images/EUR.webp" alt="EUR">
-                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>CMP-26-002</p></td>
-                                        <td><p>SOL-26-009</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="total-cell">
-                                            <div class="total-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money total"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="saldo-cell">
-                                            <div class="saldo-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>CMP-26-005</p></td>
-                                        <td><p>SOL-26-008</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="total-cell">
-                                            <div class="total-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money total"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="saldo-cell">
-                                            <div class="saldo-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info "></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>CMP-26-007</p></td>
-                                        <td><p>SOL-26-016</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="total-cell">
-                                            <div class="total-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money total"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="saldo-cell">
-                                            <div class="saldo-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>CMP-26-008</p></td>
-                                        <td><p>SOL-26-010</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="total-cell">
-                                            <div class="total-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money total"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="saldo-cell">
-                                            <div class="saldo-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>CMP-26-010</p></td>
-                                        <td><p>SOL-26-012</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="total-cell">
-                                            <div class="total-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money total"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="saldo-cell">
-                                            <div class="saldo-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>CMP-26-015</p></td>
-                                        <td><p>SOL-26-004</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td class="total-cell">
-                                            <div class="total-content">
-                                                <img src="./assets/images/MXN.webp" alt="MXN">
-                                                <p><span class="symbol-money total"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td class="saldo-cell">
-                                            <div class="saldo-content">
-                                                <img src="./assets/images/JPY.webp" alt="JPY">
-                                                <p><span class="symbol-money saldo"></span>10,000.00</p>
-                                            </div>
-                                        </td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody class="table-body"></tbody>
                             </table>
                         </div>
                     </div>
@@ -729,7 +573,7 @@
                         </div>
 
                         <div class="back-buttons">
-                            <div class="page"> 1 </div>
+                            <div class="page"></div>
                         </div>
 
                         <div class="back-buttons">
@@ -744,81 +588,6 @@
                         </div>
                     </div> 
                 </div>
-
-                <!-- ========================= TRANSFER RECEIPT ========================= -->
-                <div class="transfer-wrapper">
-                    <div class="transfer-back">
-                        <div class="top-decor">
-                            <p>SUBIR COMPROBANTE DE TRANSFERENCIA</p>
-                            <i class="fa-solid fa-xmark"></i>
-                        </div>
-
-                        <div class="bottom-info">
-                            <p>Adjunta el comprobante de la transferencia realizada para validar la entrega del anticipo.</p>
-                        
-                            <div class="receipt-container">
-                                <i class="fa-solid fa-cloud-arrow-up"></i>
-                                <p>Selecciona o arrastra tu comprobante (JPG o PNG)</p>
-                            </div>
-
-                            <div class="button-receipt">CARGAR</div>
-                        </div>
-
-                        <div class="top-decor bottom"></div>
-                    </div>
-                </div>
-
-                <div class="info-wrapper">
-                    <div class="info-back">
-                        <div class="top-decor">
-                            <p>ENTREGA DE ANTICIPO <span class="info-folio"></span></p>
-                            <i class="fa-solid fa-xmark"></i>
-                        </div>
-
-                        <div class="bottom-decor cash">
-                            <div class="info-agave left">
-                                <img src="./assets/images/Agave.webp" alt="Agave">
-                            </div>
-
-                            <div class="info-text">
-                                <p><span>FECHA DE ENTREGA: </span>16 / ABR / 2026</p>
-                                <p><span>FECHA DE CONFIRMACIÓN: </span>20 / ABR / 2026</p>
-                            </div>
-
-                            <div class="info-agave right">
-                                <img src="./assets/images/Agave.webp" alt="Agave">
-                            </div>
-                        </div>
-
-                        <div class="bottom-decor transfer">
-                            <div class="info-text transfer">
-                                <p><span>FECHA DE ENTREGA: </span>16 / ABR / 2026</p>
-                                <p><span>FECHA DE CONFIRMACIÓN: </span>20 / ABR / 2026</p>
-
-                                <div class="transfer-ver">
-                                    <img src="./assets/images/Transfer.jpg" alt="Transfer">
-                                </div>
-
-                                <div class="buttons-info">
-                                    <div class="button-verification">VER COMPROBANTE</div>
-                                    <div class="button-download">DESCARGAR</div>
-                                </div>
-                                
-                                <div class="info-icons">
-                                    <div class="info-agave left">
-                                        <img src="./assets/images/Agave.webp" alt="Agave">
-                                    </div>
-
-                                    <div class="info-agave right">
-                                        <img src="./assets/images/Agave.webp" alt="Agave">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="top-decor bottom"></div>
-                    </div>
-                </div>
             
                 <div class="agave-mobile">
                     <img src="./assets/images/Agave.webp" alt="Agave">
@@ -827,6 +596,7 @@
         </div>
     </div>
 
+    <script src="./assets/js/session.js"></script>
     <script src="./assets/js/tes-comprobaciones.js"></script>
 </body>
 </html>

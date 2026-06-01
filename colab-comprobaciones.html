@@ -113,6 +113,7 @@
                                 <i class="fa-solid fa-magnifying-glass"></i>
                                 <input type="text" placeholder="Folio. . .">
                                 <i class="fa-regular fa-calendar"></i>
+                                <i class="fa-solid fa-plane"></i>
                             </div>
                         </div>
 
@@ -156,7 +157,7 @@
                                 <thead class="table-head">
                                     <tr>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="folio">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -165,7 +166,7 @@
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="solicitud">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -175,7 +176,7 @@
                                         </th>
                                         <th>Fecha</th>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="total">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -184,7 +185,7 @@
                                             </div>
                                         </th>
                                         <th>
-                                            <div class="order-div">
+                                            <div class="order-div" data-column="saldo">
                                                 <div class="order">
                                                     <i class="fa-solid fa-angle-up"></i>
                                                     <i class="fa-solid fa-angle-down"></i>
@@ -196,131 +197,7 @@
                                     </tr>
                                 </thead>
 
-                                <tbody class="table-body">
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-001</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td><p>$10,000.00</p></td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-002</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td><p>$10,000.00</p></td>
-                                        <td><div class="status st-approved">
-                                            Aprobada
-                                        </div></td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-money-check-dollar"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-005</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td><p>$10,000.00</p></td>
-                                        <td><div class="status st-rejected">
-                                            Rechazada
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-007</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td><p>$10,000.00</p></td>
-                                        <td><div class="status st-approved">
-                                            Aprobada
-                                        </div></td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-money-check-dollar"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-008</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td><p>$10,000.00</p></td>
-                                        <td><div class="status st-canceled">
-                                            Cancelada
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-010</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td><p>$10,000.00</p></td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="folio"><p>SOL-26-015</p></td>
-                                        <td><p>16 / ABR / 2026</p></td>
-                                        <td><p>Guadalajara</p></td>
-                                        <td><p>$10,000.00</p></td>
-                                        <td><div class="status st-pending">
-                                            Pendiente
-                                        </div></td>
-                                        <td></td>
-                                        <td>
-                                            <div class="actions">
-                                                <i class="fa-solid fa-circle-xmark"></i>
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                <i class="fa-solid fa-circle-info"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody class="table-body"></tbody>
                             </table>
                         </div>
                     </div>
@@ -947,7 +824,7 @@
                         </div>
 
                         <div class="back-buttons">
-                            <div class="page"> 1 </div>
+                            <div class="page"></div>
                         </div>
 
                         <div class="back-buttons">
