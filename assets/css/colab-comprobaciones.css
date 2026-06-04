@@ -3093,7 +3093,7 @@ body {
         width: 35em;
         max-width: calc(100% - 2em);
         height: auto;
-        max-height: 85vh;
+        max-height: 90vh;
         background-color: var(--transparent-blue);
         border-radius: 15px;
         padding: 0.8em;
@@ -3107,7 +3107,7 @@ body {
         flex-direction: column;
         width: 100%;
         height: 100%;
-        max-height: calc(85vh - 1.6em);
+        max-height: calc(90vh - 1.6em);
         background-color: var(--tr-passport);
         border-radius: 10px;
         overflow: hidden;
@@ -3115,13 +3115,15 @@ body {
 
     .info-decor {
         font-size: 1em;
-        padding: 0.5em 1em;
+        padding: 0.8em 1em 0.5em 1em;
     }
 
     .request-generals {
         flex-direction: column;
         gap: 1em;
     }
+
+    .info-date { margin-bottom: 0.3em; }
 
     .request-generals .status {
         width: 40%;
@@ -3144,10 +3146,12 @@ body {
 
     .calc-totalSaldo { padding: 0; }
 
+    .calc-saldo { margin: 0.3em 0; }
+
     .calc-saldo .calc-subtitle { line-height: 1.5; }
 
     .info-currency p, 
-    .monto-currency p { transform: translateY(0%); }
+    .monto-currency p { transform: translateY(5%); }
 
     .cmp-container {
         flex: 1;
@@ -3164,9 +3168,16 @@ body {
         min-height: 0;
         width: 100%;
         overflow-y: auto;
+        scrollbar-width: auto;
+        scrollbar-color: var(--agave) var(--blue-white);
     }
 
-    .fact-complete-info { padding: 1em 0.7em; }
+    .content-fact {
+        overflow-y: unset;
+        scrollbar-width: none;
+    }
+
+    .fact-complete-info { padding: 1em 0.7em 0.7em 0.7em; }
 
     .fact-subtitle { margin-bottom: 0.5em; }
 
