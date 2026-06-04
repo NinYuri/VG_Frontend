@@ -1556,7 +1556,7 @@ body {
 }
 
 .monto-currency.cambio-mx p,
-.monto-currency.cambio-intern p { font-size: 0.85em; }
+.monto-currency.cambio-intern p { font-size: 0.9em; }
 
 .buttons-info {
     display: flex;
@@ -1564,7 +1564,7 @@ body {
     align-items: flex-end;
     margin-top: auto;
     color: var(--icons);
-    font-size: 1.25em;
+    font-size: 1.35em;
 }
 
 .buttons-info i { cursor: pointer; }
@@ -1779,12 +1779,11 @@ body {
 
     .calc-info.montos .calc-values p { font-size: 1.05em; }
 
-    .fact-montos .calc-saldo { font-size: 1.1em; }
+    .fact-montos .calc-saldo,
+    .monto-currency.cambio-mx p, 
+    .monto-currency.cambio-intern p { font-size: 1.1em; }
 
     .fact-montos .calc-saldo .calc-subtitle { font-size: 0.9em; }
-
-    .monto-currency.cambio-mx p, 
-    .monto-currency.cambio-intern p { font-size: 1.06em; }
 
     .buttons-info { font-size: 1.7em; }
 
@@ -1873,6 +1872,7 @@ body {
     .page { font-size: 1em; }
 
     /* INFORMATION */
+    .calc-values p { line-height: 1.7; }
 }
 
 @media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
@@ -3113,6 +3113,42 @@ body {
         overflow: hidden;
     }
 
+    .info-decor {
+        font-size: 1em;
+        padding: 0.5em 1em;
+    }
+
+    .request-generals {
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .request-generals .status {
+        width: 40%;
+        margin: auto;
+    }
+
+    .operations {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5em 2em;
+        gap: 1.5em;
+    }
+
+    .calc-values p { line-height: 1.65; }
+
+    .calc-total {
+        padding: 0;
+        border-right: none;
+    }
+
+    .calc-totalSaldo { padding: 0; }
+
+    .calc-saldo .calc-subtitle { line-height: 1.5; }
+
+    .info-currency p, 
+    .monto-currency p { transform: translateY(0%); }
+
     .cmp-container {
         flex: 1;
         min-height: 0;
@@ -3129,6 +3165,12 @@ body {
         width: 100%;
         overflow-y: auto;
     }
+
+    .fact-complete-info { padding: 1em 0.7em; }
+
+    .fact-subtitle { margin-bottom: 0.5em; }
+
+    .general-montos { padding: 1em 0; }
 
     .fact-montos { padding: 0 2em 0 0; }
 
