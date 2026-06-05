@@ -17,6 +17,11 @@ document.addEventListener("DOMContentLoaded", function() {
     initCalendar();
     setupCalendar();
     buttonsAction();
+
+    replicateCircles();
+    window.addEventListener('resize', () => replicateCircles());
+
+    buttonInfo();
 });
 
 
@@ -52,6 +57,15 @@ function formatDate(dateStr) {
     const dia = day;
     const mes = meses[parseInt(monthNum, 10) - 1];
     return `${dia} / ${mes} / ${year}`;
+}
+
+function formatCurrency(value, currencyCode = 'MXN') {
+    if(value === null || value === undefined) return '0.00';
+    const formatter = new Intl.NumberFormat('es-MX', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+    return formatter.format(value);
 }
 
 // Currency
@@ -1176,6 +1190,363 @@ function buttonsAction() {
     };
 
     document.addEventListener('click', handleActionButtons);
+}
+
+// Information
+function replicateCircles() {
+    const bottom = document.querySelector('.info-bottom');
+    if(!bottom) return;
+
+    const existingCircles = bottom.querySelectorAll('.info-circle');
+    existingCircles.forEach(circle => circle.remove());
+
+    const circleSize = 55;
+    const spacing = 7;
+    
+    // Obtener el padding del contenedor
+    const computedStyle = getComputedStyle(bottom);
+    const paddingLeft = parseFloat(computedStyle.paddingLeft);
+    const paddingRight = parseFloat(computedStyle.paddingRight);
+    const availableWidth = bottom.clientWidth - paddingLeft - paddingRight;
+
+    if(availableWidth <= 0) return;
+
+    // Calcular cuántos círculos caben
+    let circlesCount = Math.floor((availableWidth + spacing) / (circleSize + spacing));
+    if(circlesCount < 1) circlesCount = 1;
+
+    // Calcular espacio sobrante
+    const totalCirclesWidth = circlesCount * circleSize;
+    const totalGapSpace = availableWidth - totalCirclesWidth;
+    const gapBetween = totalGapSpace / (circlesCount + 1);
+
+    let leftPos = paddingLeft + gapBetween;
+
+    for(let i = 0; i < circlesCount; i++) {
+        const circle = document.createElement('div');
+        circle.className = 'info-circle';
+        circle.style.position = 'absolute';
+        circle.style.top = '45%';
+        circle.style.transform = 'rotate(-50deg)';
+        circle.style.width = `${circleSize}px`;
+        circle.style.height = `${circleSize}px`;
+        circle.style.borderRadius = '50%';
+        circle.style.backgroundColor = 'transparent';
+        circle.style.boxShadow = 'inset -5px 3px 8px rgba(0, 0, 0, 0.25)';
+        circle.style.left = `${leftPos}px`;
+        circle.style.pointerEvents = 'none';
+        bottom.appendChild(circle);
+        leftPos += circleSize + gapBetween;
+    }
+}
+
+async function loadDetails(folio) {
+    try {
+        if(!token) {
+            Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+            return;
+        }
+
+        const response = await fetch(`http://127.0.0.1:3000/api/comprobaciones/detalle?folio=${encodeURIComponent(folio)}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if(!response.ok) {
+            const err = await response.json().catch(() => ({ message: 'Error al cargar la información' }));
+            throw new Error(err.message || 'Error al obtener detalles');
+        }
+
+        const data = await response.json();
+        const { comprobacion, facturas } = data;
+
+        // =================== DATOS =================== //
+        // Encabezado
+        document.querySelector('.info-folio').textContent = comprobacion.folio || '—';
+
+        const fechaSpan = document.querySelector('.info-date span');
+        if(fechaSpan) fechaSpan.textContent = formatDate(comprobacion.fecha_comprobacion);
+        const actSpan = document.querySelector('.info-update span');
+        if(actSpan) actSpan.textContent = formatDate(comprobacion.fecha_actualizacion);
+
+        const statusDiv = document.querySelector('.request-generals .status');
+        if(statusDiv) {
+            statusDiv.textContent = comprobacion.estado || '—';
+            statusDiv.className = 'status';
+
+            if(comprobacion.estado === 'Pendiente') statusDiv.classList.add('st-pending');
+            else if(comprobacion.estado === 'Aprobada') statusDiv.classList.add('st-approved');
+            else if(comprobacion.estado === 'Rechazada') statusDiv.classList.add('st-rejected');
+        }
+
+        // Montos comprobación
+        const importeCmp = document.querySelector('.cmp-importe');
+        const ivaCmp = document.querySelector('.cmp-iva');
+        const otrosCmp = document.querySelector('.cmp-otros');
+        const anticipo = document.querySelector('.cmp-ant');
+        const totalCmp = document.querySelectorAll('.cmp-total');
+
+        const symbolImpCmp = document.querySelector('.cmp-importe span');
+        const symbolIvaCmp = document.querySelector('.cmp-iva span');
+        const symbolOtrCmp = document.querySelector('.cmp-otros span');
+        const symbolAnt = document.querySelector('.cmp-ant span');
+
+        function setNumberValue(container, value) {
+            if(!container) return;
+            
+            const textNodes = [...container.childNodes].filter(n => n.nodeType === Node.TEXT_NODE);
+            textNodes.forEach(n => n.remove());
+            container.appendChild(document.createTextNode(formatCurrency(value)));
+        }
+
+        setNumberValue(importeCmp, comprobacion.total_importe);
+        setNumberValue(ivaCmp, comprobacion.total_iva);
+        setNumberValue(otrosCmp, comprobacion.total_otros);
+        setNumberValue(anticipo, comprobacion.anticipo);
+        totalCmp.forEach(t => { setNumberValue(t, comprobacion.total); });
+        
+        if(comprobacion.total_moneda) {
+            const symbol = obtenerSimboloMoneda(comprobacion.total_moneda);
+            if(symbolImpCmp) symbolImpCmp.textContent = `${symbol} `;
+            if(symbolIvaCmp) symbolIvaCmp.textContent = `${symbol} `;
+            if(symbolOtrCmp) symbolOtrCmp.textContent = `${symbol} `;
+            if(symbolAnt) symbolAnt.textContent = `${symbol} `;
+            
+            const totalSpans = document.querySelectorAll('.cmp-total span');
+            totalSpans.forEach((span, index) => {
+                span.textContent = index === 0 ? symbol : `${symbol} `;
+            });
+        }
+
+        const cmpFlags = document.querySelectorAll('.info-currency img');
+        const cmpCurrencies = document.querySelectorAll('.info-currency p');
+
+        if(cmpFlags.length >= 1 && comprobacion.total_moneda) {
+            cmpFlags[0].src = getFlagUrl(comprobacion.total_moneda);
+            cmpFlags[0].alt = comprobacion.total_moneda;
+            cmpFlags[0].onerror = () => cmpFlags[0].style.display = 'none';
+            if(cmpCurrencies[0]) cmpCurrencies[0].textContent = comprobacion.total_moneda;
+        }
+        if (cmpFlags.length >= 2 && comprobacion.saldo_moneda) {
+            cmpFlags[1].src = getFlagUrl(comprobacion.saldo_moneda);
+            cmpFlags[1].alt = comprobacion.saldo_moneda;
+            cmpFlags[1].onerror = () => cmpFlags[1].style.display = 'none';
+            if(cmpCurrencies[1]) cmpCurrencies[1].textContent = comprobacion.saldo_moneda;
+        }
+
+        const simboloSaldo = obtenerSimboloMoneda(comprobacion.saldo_moneda);
+
+        const saldoNum = comprobacion.saldo || 0;
+        const saldoAbs = Math.abs(saldoNum);
+        const saldoFormateado = new Intl.NumberFormat('es-MX', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(saldoAbs);
+        const signo = saldoNum < 0 ? '-' : '';
+        const saldoTexto = `${signo}${simboloSaldo}${saldoFormateado}`;
+
+        const saldoParrafo = document.querySelector('.cmp-saldo');
+        if(saldoParrafo) saldoParrafo.textContent = saldoTexto;
+
+        // Facturas
+        const facturasContainer = document.querySelector('.content-fact');
+        if(!facturasContainer) return;
+        facturasContainer.innerHTML = '';
+
+        if(!facturas.length) {
+            facturasContainer.innerHTML = '<p class="no-data">No hay facturas asociadas</p>';
+            return;
+        }
+
+        facturas.forEach(fact => {
+            const card = document.createElement('div');
+            card.className = 'card-factura';
+
+            let html = '';
+            if(fact.concepto !== '-')
+                html = `<p class="fact-text"><span>CONCEPTO: </span>${fact.concepto}</p>`;
+
+            let buttonsHtml = '';
+            if(fact.ruta_pdf)
+                buttonsHtml += `<i class="fa-solid fa-file-pdf download-btn" data-url="${fact.ruta_pdf}" data-type="pdf"></i>`;
+            if(fact.ruta_xml)
+                buttonsHtml += `<i class="fa-solid fa-file-code download-btn" data-url="${fact.ruta_xml}" data-type="xml"></i>`;
+            if(!fact.ruta_pdf && !fact.ruta_xml && fact.ruta_jpg)
+                buttonsHtml += `<i class="fa-solid fa-file-image download-btn" data-url="${fact.ruta_jpg}" data-type="img"></i>`;
+
+            const tipoCambioObj = fact.tipo_cambio || {};
+            const monedaTC = tipoCambioObj.moneda || fact.tipo_moneda || 'MXN';
+            let tipoCambioVal = tipoCambioObj.tipo_cambio;
+            if(tipoCambioVal === null || tipoCambioVal === undefined) tipoCambioVal = 1;
+            const tipoCambioFormateado = parseFloat(tipoCambioVal).toFixed(4);
+
+            card.innerHTML = `
+                <div class="factura-pres">
+                    <div class="fact-first-info">
+                        <p class="fact-subtitle">FOLIO</p>
+                        <p class="fact-text folio">${fact.folio_factura || '—'}</p>
+                    </div>
+
+                    <div class="fact-first-info">
+                        <p class="fact-subtitle">FECHA</p>
+                        <p class="fact-text">${formatDate(fact.fecha_factura)}</p>
+                    </div>
+                </div>
+
+                <div class="fact-complete-info">
+                    <div class="general-information">
+                        <p class="fact-subtitle prin">DATOS GENERALES</p>
+                        <p class="fact-text"><span>PROVEEDOR: </span>${fact.proveedor || '—'}</p>
+                        ${html}
+                        <p class="fact-text"><span>DESCRIPCION: </span>${fact.descripcion || '—'}</p>
+                    </div>
+
+                    <div class="general-montos">
+                        <div class="fact-montos">
+                            <div class="fact-subtitle prin">MONTOS</div>
+
+                            <div class="calc-info montos">
+                                <div class="calc-titles">
+                                    <p>IMPORTE:</p>
+                                    <p>IVA:</p>
+                                    <p>OTROS:</p>
+                                </div>
+
+                                <div class="calc-values">
+                                    <p><span>${obtenerSimboloMoneda(fact.tipo_moneda)} </span>${formatCurrency(fact.importe)}</p>
+                                    <p><span>${obtenerSimboloMoneda(fact.tipo_moneda)} </span>${formatCurrency(fact.iva)}</p>
+                                    <p><span>${obtenerSimboloMoneda(fact.tipo_moneda)} </span>${formatCurrency(fact.otros_montos)}</p>
+                                </div>
+                            </div>
+
+                            <div class="calc-saldo">
+                                <p class="calc-subtitle">TOTAL:</p>
+                                <p><span>${obtenerSimboloMoneda(fact.tipo_moneda)}</span>${formatCurrency(fact.total_factura)}</p>
+                            </div>
+
+                            <div class="monto-currency">
+                                <img src="${getFlagUrl(fact.tipo_moneda)}" alt="${fact.tipo_moneda}" onerror="this.style.display='none'">
+                                <p>${fact.tipo_moneda}</p>
+                            </div>
+                        </div>
+
+                        <div class="fact-tipo-cambio">
+                            <p class="fact-subtitle prin">TIPO DE CAMBIO</p>
+
+                            <div class="moneda-cambio">
+                                <div class="monto-currency cambio-mx">
+                                    <img src="https://flagcdn.com/w40/mx.png" alt="MXN" onerror="this.style.display='none'">
+                                    <p><span>$</span>1.0000</p>
+                                </div>
+                                <p class="fact-text equal">=</p>
+                                <div class="monto-currency cambio-intern">
+                                    <img src="${getFlagUrl(monedaTC)}" alt="${monedaTC}" onerror="this.style.display='none'">
+                                    <p><span>${obtenerSimboloMoneda(monedaTC)}</span>${tipoCambioFormateado}</p>
+                                </div>
+                            </div>
+
+                            <div class="buttons-info">${buttonsHtml}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            facturasContainer.appendChild(card);
+        });
+
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const url = btn.dataset.url;
+                const type = btn.dataset.type;
+
+                const card = btn.closest('.card-factura');
+                const folioFactura = card?.querySelector('.fact-first-info .fact-text.folio')?.textContent || 'documento';
+                
+                let extension = '';
+                if(type === 'pdf') extension = 'pdf';
+                else if(type === 'xml') extension = 'xml';
+                else if(type === 'img') {
+                    const extensionMatch = url.match(/\.(jpe?g|png)$/i);
+                    extension = extensionMatch ? extensionMatch[1] : 'jpg';
+                }
+                
+                const filename = `Factura_${folioFactura}.${extension}`;
+                downloadFile(url, filename);
+            });
+        });
+    } catch(error) {
+        Toast('ERROR', 'No se pudieron cargar los detalles de la comprobación');
+    }
+}
+
+async function buttonInfo() {
+    document.addEventListener('click', async (e) => {
+        const target = e.target;
+        if(!target.classList.contains('fa-circle-info')) return;
+
+        e.stopPropagation();
+        const row = target.closest('tr') || target.closest('.card');
+        if(!row) return;
+
+        const folioElement = row.querySelector('.folio p') || row.querySelector('.folio-mobile');
+        const folio = folioElement?.textContent.trim();
+        if(!folio) return;
+
+        const container = document.querySelector('.container');
+        const infoCard = document.querySelector('.info-wrapper');
+        const buttonClose = document.querySelector('.fa-solid.fa-xmark.close');
+        if(!infoCard || !container || !buttonClose) return;
+
+        infoCard.style.display = 'flex';
+        container.classList.add('modal-open');
+        replicateCircles();
+
+        await loadDetails(folio);
+
+        buttonClose.onclick = (e) => {
+            e.stopPropagation();
+            infoCard.style.display = 'none';
+            container.classList.remove('modal-open');
+            document.querySelector('.content-fact').innerHTML = '';
+        };
+    });
+}
+
+// Download
+async function downloadFile(url, filename) {
+    try {
+        if(!token) {
+            Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+            return;
+        }
+
+        const response = await fetch(`http://127.0.0.1:3000/${url}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) {
+            const err = await response.json().catch(() => ({ message: 'Error al descargar la información' }));
+            throw new Error(err.message || 'Error al descargar la información');
+        }
+
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+    } catch(error) {
+        Toast('ERROR', 'Lo siento, no fue posible descargar el archivo');
+    }
 }
 
 

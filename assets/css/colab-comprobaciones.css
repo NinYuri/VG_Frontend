@@ -1269,7 +1269,7 @@ body {
 }
 
 .info-wrapper {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -1565,6 +1565,7 @@ body {
     margin-top: auto;
     color: var(--icons);
     font-size: 1.35em;
+    gap: 0.7em;
 }
 
 .buttons-info i { cursor: pointer; }
@@ -2557,26 +2558,13 @@ body {
         box-shadow: 0 3px 10px -9px rgba(0, 0, 0, 0.7);
     }
 
-    .both-status-mobile {
-        display: flex;
-        gap: 0.7em;
-    }
-
     .complete-info {
         display: none;
-        grid-template-columns: 50% 25% 25%;
+        grid-template-columns: 1fr 1fr 1fr;
         padding-top: 1em;
     }
 
     .card.active .complete-info { display: grid; }
-
-    .folio-mobile { font-weight: 600; }
-
-    .info-mobile.second { 
-        display: flex; 
-        align-items: center;
-        justify-content: space-between;
-    }
 
     .info-mobile .st-mobile { 
         font-size: 0.85em;
@@ -2588,6 +2576,8 @@ body {
     .third-column {
         display: flex;
         flex-direction: column;
+        justify-content: start;
+        align-items: center;
         padding: 1em 0;
     }
 
@@ -2597,7 +2587,7 @@ body {
         gap: 1.2em;
     }
 
-    .first-column { padding-right: 1em; }
+    .folio-mobile { font-weight: 600; }
 
     .info-mobile p { font-size: 1em; }
 
@@ -2607,19 +2597,11 @@ body {
         color: var(--passport-gray);
     }
 
-    .info-mobile .destiny,
-    .info-mobile .amount-mobile { font-size: 1.4em; }
-
-    .info-mobile.return { text-align: right; }
-
-    .second-column,
-    .third-column {
-        justify-content: start;
-        align-items: center;
-    }
+    .info-mobile .amount-mobile { font-size: 1.23em; }
 
     .third-column { gap: 1.6em; }
 
+    .first-column .info-mobile,
     .second-column .info-mobile,
     .third-column .info-mobile { text-align: center; }
 
@@ -2630,7 +2612,7 @@ body {
         height: 16px;
         border-radius: 50%;
         object-fit: cover;
-        transform: translateY(15%);
+        transform: translateY(20%);
         margin-right: 0.3em;
     }
 
@@ -2639,9 +2621,9 @@ body {
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 5em;
+        height: 4.3em;
         overflow: hidden;
-        padding-top: 0.5em;
+        padding-top: 0.8em;
     }
 
     .map-img img { 
@@ -2663,18 +2645,10 @@ body {
     .buttons-mobile i { cursor: pointer; }
 
     .tab-buttons { margin-top: 2em; }
-
-    .agave-mobile {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-top: 3em;
-    }
-
+    
     /* INFORMATION */
     .info-wrapper {
-        display: flex;
+        display: none;
         justify-content: center;
         align-items: center;
         position: fixed;
@@ -2722,6 +2696,14 @@ body {
     }
 
     .buttons-info { font-size: 1.5em; }
+
+    .agave-mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 3em;
+    }
 
     .agave-mobile img { width: 70px; }
 }
@@ -3073,17 +3055,9 @@ body {
     /* PAGE */
     .tab-buttons { margin-top: 2.5em; }
 
-    .agave-mobile {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin: 2em 0 0.6em;
-    }
-
     /* INFORMATION */
     .info-wrapper {
-        display: flex;
+        display: none;
         justify-content: center;
         align-items: center;
         position: fixed;
@@ -3194,6 +3168,14 @@ body {
     .moneda-cambio .equal { transform: translateX(400%); }
 
     .buttons-info { font-size: 1.5em; }
+
+    .agave-mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 2em 0 0.6em;
+    }
 
     .agave-mobile img { width: 50px; }
 }
