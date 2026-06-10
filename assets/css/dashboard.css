@@ -1171,6 +1171,8 @@ body {
     /* GRAPHS */
     .graph-back.comp .graph-wrapper.treasury { padding: 1em 0; }
 
+    .graphs.colab { padding-bottom: 10em; }
+
     .graph-back.status .graph-wrapper p,
     .graph-back.comp .graph-wrapper p,
     .graph-back.total .graph-wrapper p { font-size: 1em; }
@@ -1393,8 +1395,6 @@ body {
         padding: 1em 1.3em 0 1.3em;
         background-size: 31% auto; 
     }
-
-    .container.colab { padding: 1em 1.3em 1.2em 1.3em; }
 
     .titles .title { font-size: 2.5em; }
 
