@@ -600,6 +600,7 @@ body {
     font-size: 2.5em;
     font-weight: 500;
     line-height: 1em;
+    margin-top: 0.1em;
 }
 
 .card-text span i { 
@@ -625,8 +626,6 @@ body {
     width: 100%;
     height: 100%;
 }
-
-.graphs.colab { padding-bottom: 10em; }
 
 .graph-back {
     position: relative;
@@ -890,10 +889,7 @@ body {
     pointer-events: none;
 }
 
-.agave.treasury {
-    right: -7.5em;
-    bottom: -1em;
-}
+.agave.treasury { display: none; }
 
 .agave-mobile { display: none; }
 
@@ -1051,8 +1047,6 @@ body {
         height: 94%;
         right: 0.1em;
     }
-
-    .agave.treasury { right: -8.5em; }
 }
 
 /* Escritorios medianos (1440px + 1800px) */
@@ -1079,6 +1073,8 @@ body {
     /* GRAPHS */
     .card-text { padding: 0.3em 1.2em; }
 
+    .card-text p { font-size: 0.9em; }
+
     .card-text .rejected-number,
     .card-text .approved-number,
     .card-text .pending-number,
@@ -1086,7 +1082,7 @@ body {
     .card-text .expenses-number,
     .card-text .returns-number,
     .card-text .refund-number,
-    .card-text .return-number { font-size: 2.4em; }
+    .card-text .return-number { font-size: 2.2em; }
 
     .graph-back.comp .graph-wrapper.treasury { font-size: 1.05em; }
 
@@ -1167,7 +1163,10 @@ body {
     .card-text .expenses-number,
     .card-text .returns-number,
     .card-text .refund-number,
-    .card-text .return-number { font-size: 2.1em; }
+    .card-text .return-number { 
+        font-size: 2.1em; 
+        margin-top: 0.15em; 
+    }
 
     /* GRAPHS */
     .graph-back.comp .graph-wrapper.treasury { padding: 1em 0; }
@@ -1237,8 +1236,6 @@ body {
         height: 94%;
         right: -0.1em;
     }
-
-    .agave.treasury { right: -6em; }
 }
 
 @media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
@@ -1363,11 +1360,6 @@ body {
         height: 99%;
         right: 0.1em;
     }
-
-    .agave.treasury {
-        right: -6em;
-        bottom: 0em;
-    }
 }
 
 /* Laptops pequeñas (1024px - 1280px) */
@@ -1402,6 +1394,8 @@ body {
         background-size: 31% auto; 
     }
 
+    .container.colab { padding: 1em 1.3em 1.2em 1.3em; }
+
     .titles .title { font-size: 2.5em; }
 
     .titles .subtitle { font-size: 1em; }
@@ -1411,7 +1405,10 @@ body {
         margin: 1.3em 0 0 0;
     }
 
-    .graphs.colab { padding-bottom: 0em; }
+    .content.colab { 
+        gap: 1em;
+        margin: 1em 0 0 0; 
+    }
 
     .cards { gap: 2em; }
 
@@ -1511,8 +1508,6 @@ body {
         height: 95%;
         right: 0.2em;
     }
-
-    .agave.treasury { right: -5.5em; }
 }
 
 /* Tabletas */
@@ -1637,8 +1632,6 @@ body {
         margin-top: 2em;
         gap: 2.2em;
     }
-
-    .graphs.colab { padding-bottom: 0em; }
 
     .graph-back.status,
     .graph-back.comp,
@@ -1838,8 +1831,6 @@ body {
         margin-top: 2em;
         gap: 2.2em;
     }
-
-    .graphs.colab { padding-bottom: 0em; }
 
     .graph-back.status,
     .graph-back.comp,
