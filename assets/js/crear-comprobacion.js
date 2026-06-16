@@ -679,7 +679,7 @@ async function addPDFRow(row, tempData) {
 
     let tipoCambio = parseFloat(tipoCambioInput.value);
     if(isNaN(tipoCambio) && moneda !== 'MXN') {
-        Toast('TIPO DE CAMBIO REQUERIDO', 'Por favor, ingresa el tipo de cambio de la moneda de tu factura respecto al peso mexicano (MXN) según la fecha de emisión');
+        Toast('TIPO DE CAMBIO REQUERIDO', 'Ingresa el tipo de cambio de la fecha de emisión. Por ejemplo, si 1 EUR equivale a 21.43 MXN, captura 21.43');
         return false;
     }
 

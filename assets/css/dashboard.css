@@ -1,6 +1,7 @@
 :root {
     /* ============= PRINCIPAL COLORS ============= */
     --agave: #00758D;
+    --toast: #00333E;
     --black: #000000;
     --white: #FFFFFF;
     --red: #D65B5B;
@@ -292,6 +293,56 @@ h5 { font-family: 'CenturyGothic', sans-serif; }
 }
 
 
+/* ============================== TOAST ============================== */
+.swal2-toast { 
+    margin: 0.5em 0.5em 0 0 !important;
+    padding: 0;
+    transition: all 0.3s ease-out !important;
+}
+
+.swal2-toast.swal2-hide {
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
+}
+
+.swal2-toast div:where(.swal2-html-container) { 
+    margin: 0 !important;
+    font-size: 1em; 
+}
+
+.swal2-popup.swal2-toast.colored-toast.swal2-show { padding: 0; }
+
+.colored-toast {
+    background-color: var(--toast) !important;
+    font-family: 'CenturyGothic', sans-serif;
+    border-radius: 30px !important;
+    overflow: hidden;
+}
+
+.colored-toast .text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--white);
+    padding: 12px 30px 15px 0 !important;
+    text-align: center;
+}
+
+.colored-toast p {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0.7em;
+}
+
+.colored-toast span { font-size: 1rem; }
+
+.agave-icon {
+    height: 7em; 
+    object-fit: contain; 
+    transform: translateY(10px);
+}
+
+
 /* ============================== BODY ============================== */
 body {
     display: flex;
@@ -535,6 +586,8 @@ body {
     height: 18%;
     gap: 2.2em;
 }
+
+.cards.twice .card-wrapper { cursor: default; }
 
 .card-wrapper {
     position: relative;
@@ -828,7 +881,7 @@ body {
     gap: 1em;
 }
 
-.graph-back.total .graph-desc { margin-top: 0.4em; }
+.graph-back.total .graph-desc { margin: 0.4em 0; }
 
 .graph-back.total .graph-desc p {
     display: flex;
@@ -846,13 +899,11 @@ body {
 
 .graph-back.total {
     width: 26%;
-    height: 40%;
+    height: 53%;
     z-index: 2;
 }
 
-.graph-back.total.treasury { height: 62%; }
-
-.graph-back.total .graph-wrapper p { font-size: 1.2em; }
+.graph-back.total .graph-wrapper p { font-size: 1.1em; }
 
 .graph-back.total .graph-wrapper .graph-desc .total-month { font-size: 0.8em; }
 
@@ -866,16 +917,21 @@ body {
 .next.total-button i { font-size: 0.6em; }
 
 .graph-back.total .graph-wrapper .total-money {
-    font-size: 2.3em;
-    font-weight: 400;
+    font-size: 1.6em;
+    font-weight: 500;
     margin-top: 0.1em;
+}
+
+.graph-back.total .graph-wrapper .currency-str {
+    font-size: 60%;
+    font-weight: 600;
 }
 
 .graph-back.total .graph-wrapper .expense-subtitle { 
     font-size: 0.85em; 
     color: var(--dark-gray);
     font-weight: 600;
-    margin-top: 1.5em;
+    margin-top: 1em;
 }
 
 .graph-back.total .graph-wrapper .total-money.treasury { margin-top: -0.2em; }
@@ -896,6 +952,15 @@ body {
 
 /* ======================== RESPONSIVE DESKTOP FIRST ======================== */
 @media(min-width: 1801px) {
+    /* TOAST */
+    body.swal2-toast-shown .swal2-container { width: 740px !important; }
+
+    .colored-toast p { font-size: 1.5em; }
+
+    .colored-toast span { font-size: 1.4em; }
+
+    .agave-icon { height: 8em; }
+
     /* OPTION BAR */
     .option-bar { padding: 7em 0; }
 
@@ -1034,23 +1099,25 @@ body {
         transform: translateY(5%);
     }
 
-    .graph-back.total.treasury { height: 68%; }
-
     .graph-back.total .graph-desc { margin-top: 0.7em; }
 
     .graph-back.total .graph-wrapper .total-money {
-        font-size: 3em;
+        font-size: 2.3em;
         margin-top: 0.3em;
-    }
-
-    .agave {
-        height: 94%;
-        right: 0.1em;
     }
 }
 
 /* Escritorios medianos (1440px + 1800px) */
 @media(min-width: 1470px) and (max-width: 1800px) and (max-resolution: 1.5dppx) {
+    /* TOAST */ 
+    body.swal2-toast-shown .swal2-container { width: 590px !important; }
+
+    .colored-toast p { font-size: 1.2em; }
+
+    .colored-toast span { font-size: 1em; }
+
+    .agave-icon { height: 7.5em; }
+
     /* OPTION BAR */
     .logo .name { font-size: 1.1em; }
 
@@ -1100,23 +1167,31 @@ body {
     .prev.request-button i,
     .next.request-button i,
     .prev.expense-button i,
-    .next.expense-button i,
+    .next.expense-button i { transform: translateY(10%); }
+
     .prev.total-button i,
-    .next.total-button i { transform: translateY(10%); }
+    .next.total-button i { transform: translate(-10%, 1%); }
 
     .legend-item { font-size: 0.9em; }
 
     .graph-back.requests .graph-wrapper p,
     .graph-back.expenses .graph-wrapper p { font-size: 0.9em; }
 
-    .graph-back.total.treasury { height: 69%; }
+    .graph-back.total { width: 55%; }
 
     .graph-back.total .graph-wrapper .graph-desc .total-month { font-size: 0.75em; }
-
-    .graph-back.total .graph-wrapper .total-money { font-size: 2.4em; }
 }
 
 @media(min-width: 1366px) and (max-width:1469px) and (max-resolution: 1.5dppx) {
+    /* TOAST */
+    body.swal2-toast-shown .swal2-container { width: 520px !important; }
+
+    .colored-toast span { font-size: 0.9em; }
+
+    .colored-toast p { font-size: 1em; }
+
+    .agave-icon { height: 8em; }
+
     /* OPTION BAR */
     .logo .name { font-size: 0.97em; }
 
@@ -1174,8 +1249,9 @@ body {
     .graphs.colab { padding-bottom: 10em; }
 
     .graph-back.status .graph-wrapper p,
-    .graph-back.comp .graph-wrapper p,
-    .graph-back.total .graph-wrapper p { font-size: 1em; }
+    .graph-back.comp .graph-wrapper p { font-size: 1em; }
+
+    .graph-back.total .graph-wrapper p { font-size: 0.95em; }
 
     .chartst-container { 
         height: 11em;
@@ -1225,22 +1301,27 @@ body {
     .prev.total-button i,
     .next.total-button i { 
         font-size: 0.55em; 
-        transform: translateY(15%);
+        transform: translateY(-5%);
     }
 
-    .graph-back.total.treasury { height: 70%; }
+    .prev.expense-button i,
+    .next.expense-button i { transform: translateX(10%); }
 
     .graph-back.total .graph-wrapper .expense-subtitle { font-size: 0.7em; }
 
-    .graph-back.total .graph-wrapper .total-money { font-size: 2em; }
-
-    .agave {
-        height: 94%;
-        right: -0.1em;
-    }
+    .graph-back.total .graph-wrapper .total-money { font-size: 1.3em; }
 }
 
 @media(min-width: 1281px) and (max-width: 1365px) and (max-resolution: 1.5dppx) {
+    /* TOAST */ 
+    body.swal2-toast-shown .swal2-container { width: 520px !important; }
+
+    .colored-toast p { font-size: 1em; }
+
+    .colored-toast span { font-size: 0.9em; }
+
+    .agave-icon { height: 8em; }
+
     /* OPTION BAR */
     .logo img { width: 95%; }
 
@@ -1295,8 +1376,9 @@ body {
     .graph-back.comp .graph-wrapper.treasury p { font-size: 0.95em; }
 
     .graph-back.status .graph-wrapper p,
-    .graph-back.comp .graph-wrapper p,
-    .graph-back.total .graph-wrapper p { font-size: 1em; }
+    .graph-back.comp .graph-wrapper p { font-size: 1em; }
+
+    .graph-back.total .graph-wrapper p { font-size: 0.95em; }
 
     .chartst-container { 
         height: 11em;
@@ -1345,27 +1427,29 @@ body {
 
     .prev.total-button,
     .next.total-button {
-        width: 0.9em;
-        height: 0.9em;
+        width: 0.95em;
+        height: 0.95em;
     }
 
     .prev.total-button i,
     .next.total-button i { font-size: 0.5em; }
 
-    .graph-back.total.treasury { height: 70%; }
-
-    .graph-back.total .graph-wrapper .total-money { font-size: 2em; }
+    .graph-back.total .graph-wrapper .total-money { font-size: 1.3em; }
 
     .graph-back.total .graph-wrapper .expense-subtitle { font-size: 0.75em; }
-
-    .agave {
-        height: 99%;
-        right: 0.1em;
-    }
 }
 
 /* Laptops pequeñas (1024px - 1280px) */
 @media(min-width: 1025px) and (max-width: 1280px) {
+    /* TOAST */ 
+    body.swal2-toast-shown .swal2-container { width: 510px !important; }
+
+    .colored-toast p { font-size: 1em; }
+
+    .colored-toast span { font-size: 0.9em; }
+
+    .agave-icon { height: 7.5em; }
+
     /* OPTION BAR */
     .option-bar { width: 23%; }
 
@@ -1442,8 +1526,9 @@ body {
     .graph-back.comp .graph-wrapper.treasury p { font-size: 0.9em; }
 
     .graph-back.status .graph-wrapper p,
-    .graph-back.comp .graph-wrapper p,
-    .graph-back.total .graph-wrapper p { font-size: 1em; }
+    .graph-back.comp .graph-wrapper p { font-size: 1em; }
+
+    .graph-back.total .graph-wrapper p { font-size: 0.91em; }
 
     .chartst-container { height: 6em; }
 
@@ -1498,16 +1583,9 @@ body {
         font-size: 0.85em; 
     }
 
-    .graph-back.total .graph-wrapper .total-money { font-size: 1.9em; }
-
-    .graph-back.total.treasury { height: 70%; }
+    .graph-back.total .graph-wrapper .total-money { font-size: 1.2em; }
 
     .graph-back.total .graph-wrapper .expense-subtitle { font-size: 0.7em; }
-
-    .agave {
-        height: 95%;
-        right: 0.2em;
-    }
 }
 
 /* Tabletas */
@@ -1710,6 +1788,17 @@ body {
 
 /* Móviles */
 @media (max-width: 765px) {
+    /* TOAST */
+    .swal2-toast { margin: 0 !important; }
+
+    .colored-toast .text { padding: 12px 15px 15px 0 !important; }
+
+    .colored-toast p { font-size: 1em; }
+
+    .colored-toast span { font-size: 0.9em; }
+
+    .agave-icon { width: 5em; }
+
     /* BODY */
     html { background-color: var(--html-back); }
 

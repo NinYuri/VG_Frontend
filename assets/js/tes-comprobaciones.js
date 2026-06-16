@@ -6,13 +6,18 @@ document.addEventListener("DOMContentLoaded", function() {
     optionsBar();
 
     const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
     const tabParam = urlParams.get('tab');
-    if(!tabParam)
+
+    if(searchParam)
+        initSearchFromUrl();
+    else if(tabParam)
+        cardLinks();
+    else
         tableInformation(getCurrentFilters());
 
     setupSorting();
     tabSelected();
-    cardLinks();
     searchFolio();
     initCalendar();
     setupCalendar();
@@ -22,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener('resize', () => replicateCircles());
 
     buttonInfo();
+    buttonLiquidacion();
 });
 
 
@@ -336,7 +342,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(!response.ok) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0);
+            updateCounters(0, false);
             throw new Error('Error al obtener comprobaciones');
             return;
         }
@@ -346,7 +352,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(data.mensaje) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0);
+            updateCounters(0, true);
             const tab = toastStatus();
             Toast(`SIN COMPROBACIONES ${tab === null ? '' : tab.toUpperCase()}`, `No tienes comprobaciones ${tab === null ? '' : tab} para mostrar en este momento`);
             return;
@@ -354,13 +360,13 @@ async function tableInformation(filtros = {}, page = 1) {
 
         renderTable(data.comprobaciones);
         renderCards(data.comprobaciones);
-        updateCounters(data.pendientes ?? 0);
+        updateCounters(data.pendientes ?? 0, true);
         updatePagination(data.paginacion);
         currentPage = data.paginacion.paginaActual;
     } catch(error) {
         renderTable([]);
         renderCards([]);
-        updateCounters(0);
+        updateCounters(0, false);
         Toast('ERROR AL MOSTRAR', 'No se pudieron cargar las comprobaciones. Por favor, intenta de nuevo');
     } finally {
         hideLoader();
@@ -405,7 +411,7 @@ function renderTable(comprobaciones) {
 
         tr.innerHTML = `
             <td class="folio"><p>${cmp.folio}</p></td>
-            <td><p>${cmp.solicitud}</p></td>
+            <td class="sol"><p>${cmp.solicitud}</p></td>
             <td><p>${formatDate(cmp.fecha_comprobacion)}</p></td>
             <td class="monto-cell">
                 <div class="monto-content">
@@ -425,7 +431,9 @@ function renderTable(comprobaciones) {
                     ${cmp.estado === 'Pendiente' ? `
                         <i class="fa-solid fa-circle-xmark"></i>
                         <i class="fa-solid fa-circle-check"></i>
-                    ` : ''}
+                    ` : cmp.estado === 'Aprobada' ? `
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    `: ''}
 
                     <i class="fa-solid fa-circle-info"></i>
                 </div>
@@ -476,7 +484,7 @@ function renderCards(comprobaciones) {
                                 
                 <div class="info-mobile">
                     <p class="subt-mobile">SOLICITUD</p>
-                    <p>${cmp.solicitud}</p>
+                    <p class="sol-mobile">${cmp.solicitud}</p>
                 </div>
 
                 <div class="info-mobile">
@@ -495,7 +503,7 @@ function renderCards(comprobaciones) {
 }
 
 // Pending amount
-function updateCounters(pendientes) {
+function updateCounters(pendientes, esRespuestaValida = true) {
     const pendingTab = document.querySelector('.tab.pending .amount');
     if(!pendingTab) return;
 
@@ -506,11 +514,11 @@ function updateCounters(pendientes) {
         pendingTab.textContent = valor;
         pendingTab.classList.add('has-number');
         lastKnownCount = valor;
-    } else if(lastKnownCount > 0) {
+    } else if(!esRespuestaValida && lastKnownCount > 0) {
         // Hubo error o no hay datos -> última cantidad conocida
         pendingTab.textContent = lastKnownCount;
         pendingTab.classList.add('has-number');
-    } else
+    } else 
         pendingTab.classList.remove('has-number');
 }
 
@@ -741,6 +749,47 @@ function searchFolio() {
         tableInformation(filtros, currentPage);
         fadeAndSwap(!swapped);
     });
+}
+
+
+/* =============================== URL PARAMS =============================== */
+function initSearchFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchValue = urlParams.get('search');
+    const tipo = urlParams.get('tipo');
+    const tabParam = urlParams.get('tab');
+
+    if(!searchValue || tipo !== 'solicitud' || !tabParam) return;
+
+    document.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('selected');
+        t.querySelector('.amount')?.classList.remove('selected');
+    });
+    const activeTab = document.querySelector(`.tab.${tabParam}`);
+    activeTab.classList.add('selected');
+
+    swapped = true;
+    const search = document.querySelector('.search-back');
+    const glass = search.querySelector('.fa-magnifying-glass');
+    const request = search.querySelector('.fa-plane');
+    const calendar = search.querySelector('.fa-calendar');
+    const input = search.querySelector('input');
+        
+    // Cambiar orden de iconos
+    const parent = search;
+    const glassRemoved = parent.removeChild(glass);
+    const requestRemoved = parent.removeChild(request);
+    parent.insertBefore(requestRemoved, input);
+    parent.insertBefore(glassRemoved, calendar.nextSibling);
+    input.placeholder = "Solicitud. . .";
+        
+    // Establecer valor y realizar búsqueda
+    input.value = searchValue;
+    currentPage = 1;
+    const filtros = getCurrentFilters();
+    filtros.solicitud = searchValue;
+    delete filtros.folio;
+    tableInformation(filtros, currentPage);
 }
 
 
@@ -1219,7 +1268,11 @@ function llenarInfoCard(card, data) {
                 ${comprobacion.estado === 'Pendiente' ? `
                     <i class="fa-solid fa-circle-xmark"></i>
                     <i class="fa-solid fa-circle-check"></i>
-                ` : `<i class="fa-solid fa-circle-info"></i>`}
+                ` : comprobacion.estado === 'Aprobada' ? `
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                `: ''}
+
+                <i class="fa-solid fa-circle-info"></i>
             </div>
         </div>
     `;
@@ -1323,7 +1376,7 @@ async function changeState(folio, accion, motivoRechazo = '') {
 
             if(!tempData.comprobaciones || tempData.comprobaciones.length === 0) {
                 lastKnownCount = 0;
-                updateCounters(0, 0);
+                updateCounters(0, true);
             }
         }
 
@@ -1496,8 +1549,8 @@ async function loadDetails(folio) {
             if(symbolAnt) symbolAnt.textContent = `${symbol} `;
             
             const totalSpans = document.querySelectorAll('.cmp-total span');
-            totalSpans.forEach((span, index) => {
-                span.textContent = index === 0 ? symbol : `${symbol} `;
+            totalSpans.forEach(span => {
+                span.textContent = `${symbol}`;
             });
         }
 
@@ -1526,7 +1579,7 @@ async function loadDetails(folio) {
             maximumFractionDigits: 2
         }).format(saldoAbs);
         const signo = saldoNum < 0 ? '-' : '';
-        const saldoTexto = `${signo} ${simboloSaldo}${saldoFormateado}`;
+        const saldoTexto = `${signo}${simboloSaldo}${saldoFormateado}`;
 
         const saldoParrafo = document.querySelector('.cmp-saldo');
         if(saldoParrafo) saldoParrafo.textContent = saldoTexto;
@@ -1540,6 +1593,8 @@ async function loadDetails(folio) {
             facturasContainer.innerHTML = '<p class="no-data">No hay facturas asociadas</p>';
             return;
         }
+
+        let totalMXN = 0; 
 
         facturas.forEach(fact => {
             const card = document.createElement('div');
@@ -1559,9 +1614,12 @@ async function loadDetails(folio) {
 
             const tipoCambioObj = fact.tipo_cambio || {};
             const monedaTC = tipoCambioObj.moneda || fact.tipo_moneda || 'MXN';
-            let tipoCambioVal = tipoCambioObj.tipo_cambio;
+            let tipoCambioVal = tipoCambioObj.tipo_cambio || 1;
             if(tipoCambioVal === null || tipoCambioVal === undefined) tipoCambioVal = 1;
             const tipoCambioFormateado = parseFloat(tipoCambioVal).toFixed(4);
+
+            // TC Ponderado
+            totalMXN += fact.total_factura * tipoCambioVal;
 
             card.innerHTML = `
                 <div class="factura-pres">
@@ -1617,14 +1675,14 @@ async function loadDetails(folio) {
                             <p class="fact-subtitle prin">TIPO DE CAMBIO</p>
 
                             <div class="moneda-cambio">
-                                <div class="monto-currency cambio-mx">
-                                    <img src="https://flagcdn.com/w40/mx.png" alt="MXN" onerror="this.style.display='none'">
-                                    <p><span>$</span>1.0000</p>
-                                </div>
-                                <p class="fact-text equal">=</p>
                                 <div class="monto-currency cambio-intern">
                                     <img src="${getFlagUrl(monedaTC)}" alt="${monedaTC}" onerror="this.style.display='none'">
-                                    <p><span>${obtenerSimboloMoneda(monedaTC)}</span>${tipoCambioFormateado}</p>
+                                    <p><span>${obtenerSimboloMoneda(monedaTC)}</span>1.0000</p>
+                                </div>
+                                <p class="fact-text equal">=</p>
+                                <div class="monto-currency cambio-mx">
+                                    <img src="https://flagcdn.com/w40/mx.png" alt="MXN" onerror="this.style.display='none'">
+                                    <p><span>$</span>${tipoCambioFormateado}</p>
                                 </div>
                             </div>
 
@@ -1636,6 +1694,18 @@ async function loadDetails(folio) {
 
             facturasContainer.appendChild(card);
         });
+
+        // TC Ponderado
+        const cmpTCDiv = document.querySelector('.calc-info.tipo-cambio');
+        if(cmpTCDiv) {
+            if(comprobacion.saldo_moneda !== 'MXN') {
+                cmpTCDiv.style.display = 'flex';
+                const tcAmount = cmpTCDiv.querySelector('.monto-currency.cambio-intern p');
+            
+                tcAmount.textContent = '$' + (totalMXN / comprobacion.total).toFixed(4);
+            } else 
+                cmpTCDiv.style.display = 'none';
+        }
 
         document.querySelectorAll('.download-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -1726,6 +1796,70 @@ async function downloadFile(url, filename) {
     } catch(error) {
         Toast('ERROR', 'Lo siento, no fue posible descargar el archivo');
     }
+}
+
+// Settlement
+async function settlementTab(solicitud) {
+    try {
+        if(!token) {
+            Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+            return;
+        }
+
+        const response = await fetch(`http://127.0.0.1:3000/api/liquidaciones/detalle?solicitud=${encodeURIComponent(solicitud)}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        });
+
+        if(!response.ok) {
+            const err = await response.json().catch(() => ({ message: 'Error al redirigir' }));
+            throw new Error(err.message || 'Error al redirigir');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        Toast('ERROR', error.message);
+    }
+}
+
+function buttonLiquidacion() {
+    document.body.addEventListener('click', async (e) => {
+        const target = e.target;
+        if(!target.classList.contains('fa-hand-holding-dollar')) return;
+        e.stopPropagation();
+
+        const row = target.closest('tr');
+        const card = target.closest('.card');
+        let solicitud = null;
+        
+        if(row)
+            solicitud = row.querySelector('.sol')?.textContent.trim();
+        else if(card) 
+            solicitud = card.querySelector('.sol-mobile')?.textContent.trim();
+
+        if(solicitud) {
+            const data = await settlementTab(solicitud);
+            if(!data) return;
+
+            let tab = '';
+            
+            if(data.estado === 'Pendiente') 
+                tab = 'pending';
+            else if(data.estado === 'Pagado')
+                tab = 'paid';
+            else if(data.estado === 'Devuelto')
+                tab = 'returned';
+            else if(data.estado === 'Saldado')
+                tab = 'settled';
+
+            window.location.href = `tes-liquidaciones.html?search=${encodeURIComponent(solicitud)}&tab=${tab}`;
+        }
+    });
 }
 
 

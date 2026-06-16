@@ -440,6 +440,9 @@ function validateForm(isEdit = false) {
     if(!destination) {
         Toast(errorTitle, 'Por favor, ingresa la ciudad de destino de tu viaje');
         return false;
+    } else if(!onlyLetters(destination)) {
+        Toast(errorTitle, 'La ciudad de destino no debe contener números ni caracteres especiales');
+        return false;
     }
 
     if(!globalStartDate || !globalEndDate) {
@@ -464,6 +467,10 @@ function validateForm(isEdit = false) {
     }
 
     return true;
+}
+
+function onlyLetters(text) {
+    return /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/.test(text);
 }
 
 function onlyNumbers(number) { 

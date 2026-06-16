@@ -1,10 +1,16 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     setupPaginationEvents();
     menuUser();
     phoneMenu();
     initMobileScroll();
     optionsBar();
-    tableInformation({});
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('search'))
+        initSearchFromUrl();
+    else
+        tableInformation(getCurrentFilters());
+
     tabSelected();
     search();
     setupSorting();
@@ -34,6 +40,11 @@ let currentSol = 'ASC';
 let currentAnticipo = null;
 let currentComp = null;
 let currentSaldo = null;
+let currentAjuste = null;
+
+// Adjustment
+let availableAdj = [];
+let currentAdjIndex = -1;
 
 // Backend
 const token = Session.getToken();
@@ -284,6 +295,7 @@ function getCurrentFilters() {
     if(currentAnticipo) filtros.ordenAnt = currentAnticipo;
     if(currentComp) filtros.ordenCmp = currentComp;
     if(currentSaldo) filtros.ordenSaldo = currentSaldo;
+    if(currentAjuste) filtros.ordenAjuste = currentAjuste;
 
     return filtros;
 }
@@ -305,6 +317,7 @@ async function tableInformation(filtros = {}, page = 1) {
     params.append('ordenAnt', currentAnticipo);
     params.append('ordenCmp', currentComp);
     params.append('ordenSaldo', currentSaldo);
+    params.append('ordenAjuste', currentAjuste);
 
     try {
         const response = await fetch(`http://127.0.0.1:3000/api/liquidaciones/listar?${params.toString()}`, {
@@ -635,6 +648,24 @@ function search() {
 }
 
 
+/* =============================== URL PARAMS =============================== */
+function initSearchFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchValue = urlParams.get('search');
+
+    if(!searchValue) return;
+
+    const search = document.querySelector('.search-back');
+    const input = search.querySelector('input');
+
+    input.value = searchValue;
+    currentPage = 1;
+    const filtros = getCurrentFilters();
+    filtros.solicitud = searchValue;
+    tableInformation(filtros, currentPage);
+}
+
+
 /* ============================= ACTIVE CARD ============================= */
 async function loadCardDetails(card) {
     const solicitud = card.getAttribute('data-solicitud');
@@ -830,7 +861,7 @@ function llenarInfoCard(card, data) {
                     <p class="message">${fechaRecibido}</p>
                 </div>
 
-                ${data.estado === 'Devuelto' ? 
+                ${data.estado === 'Pagado' ? 
                     `<div class="buttons-mobile"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>` :
                 ''}
             </div>
@@ -866,6 +897,28 @@ function llenarInfoCard(card, data) {
 
 
 /* ============================== CLASSIFICATION ============================== */
+// Adjustment
+async function fetchAjustes() {
+    try {
+        if(!token) {
+            Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+            return false;
+        }
+
+        const response = await fetch(`http://127.0.0.1:3000/api/liquidaciones/ajustes`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) throw new Error('Error al obtener tipos de ajuste');
+        const data = await response.json();
+        availableAdj = data;
+    } catch (error) {
+        Toast('ERROR', 'No se pudieron cargar los tipos de ajuste');
+        availableAdj = [];
+    }
+}
+
 function setupSorting() {
     const orderDivs = document.querySelectorAll('.order-div[data-column]');
 
@@ -873,34 +926,56 @@ function setupSorting() {
         const orderIcons = div.querySelector('.order');
         if(!orderIcons) return;
 
-        orderIcons.addEventListener('click', (e) => {
+        orderIcons.addEventListener('click', async (e) => {
             e.stopPropagation();
             const column = div.dataset.column;
 
             switch(column) {
                 case 'solicitud':
                     currentSol = currentSol === 'ASC' ? 'DESC' : 'ASC';
+
                     currentAnticipo = null;
                     currentComp = null;
                     currentSaldo = null;
+                    currentAjuste = null;
                     break;
                 case 'anticipo':
-                    currentSol = null;
                     currentAnticipo = currentAnticipo === 'ASC' ? 'DESC' : 'ASC';
+
+                    currentSol = null;
                     currentComp = null;
                     currentSaldo = null;
+                    currentAjuste = null;
                     break;
                 case 'comprobado':
-                    currentSol = null;
-                    currentAnticipo = null;
                     currentComp = currentComp === 'ASC' ? 'DESC' : 'ASC';
+
+                    currentSol = null;
+                    currentAnticipo = null;                    
                     currentSaldo = null;
+                    currentAjuste = null;
                     break;
                 case 'saldo':
+                    currentSaldo = currentSaldo === 'ASC' ? 'DESC' : 'ASC';
+
+                    currentSol = null;
+                    currentAnticipo = null;
+                    currentComp = null;                    
+                    currentAjuste = null;
+                    break;
+                case 'ajuste':
+                    if(availableAdj.length === 0) {
+                        await fetchAjustes();
+                        if(availableAdj.length === 0) return;
+                    }
+                    
+                    currentAdjIndex = (currentAdjIndex + 1) % availableAdj.length;
+                    currentAjuste = availableAdj[currentAdjIndex];
+                    
                     currentSol = null;
                     currentAnticipo = null;
                     currentComp = null;
-                    currentSaldo = currentSaldo === 'ASC' ? 'DESC' : 'ASC';
+                    currentSaldo = null;
                     break;
                 default:
                     break;

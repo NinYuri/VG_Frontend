@@ -2658,7 +2658,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
         justify-content: center;
         flex-direction: column-reverse;
         gap: 0.8em;
-        padding: 0.5em 0 0.7em 0;
+        padding: 0.5em 0.3em 0.7em 0.3em;
         font-size: 1.1em;
     }
 

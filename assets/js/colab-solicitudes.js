@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     buttonEdit();
     buttonInfo();
     buttonComprobacion();
+    buttonLiquidacion();
 });
 
 
@@ -29,7 +30,13 @@ let paginacionGlobal = {
 const limitPerPage = 7;
 let currentFolio = 'ASC';
 let currentMonto = null;
+let currentFinanza = null;
 
+// Finanzas
+let availableFin = [];
+let currentFinIndex = -1;
+
+// Backend
 const token = Session.getToken();
 const logoUser = Session.getUser();
 
@@ -277,6 +284,7 @@ function getCurrentFilters() {
 
     filtros.orden = currentFolio;
     if(currentMonto) filtros.ordenMonto = currentMonto;
+    if(currentFinanza) filtros.ordenFinanza = currentFinanza;
 
     return filtros;
 }
@@ -297,7 +305,8 @@ async function tableInformation(filtros = {}, page = 1) {
     params.append('limit', limitPerPage);
     params.append('offset', offset);
     params.append('orden', currentFolio);
-    params.append('ordenMonto', currentMonto);
+    if(currentMonto) params.append('ordenMonto', currentMonto);
+    if(filtros.ordenFinanza) params.append('ordenFinanza', filtros.ordenFinanza);
 
     try {
         const response = await fetch(`http://127.0.0.1:3000/api/solicitudes/listar?${params.toString()}`, {
@@ -354,8 +363,10 @@ function buildThead(tab) {
         { title: 'Estado' }
     ];
 
-    if(tab === 'all' || tab === 'approved')
+    if(tab === 'all')
         columnas.push({ title: 'Finanzas' });
+    else if(tab === 'approved')
+        columnas.push({ title: 'Finanzas', hasOrder: true });
 
     const headerRow = document.createElement('tr');
     columnas.forEach(col => {
@@ -1217,6 +1228,28 @@ function llenarInfoCard(card, data) {
 
 
 /* ============================== CLASSIFICATION ============================== */
+async function fetchFinanzas() {
+    try {
+        if(!token) {
+            Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+            return false;
+        }
+
+        const response = await fetch(`http://127.0.0.1:3000/api/solicitudes/estado-financiero`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) throw new Error('Error al obtener estados financieros');
+        
+        const data = await response.json();
+        availableFin = data;
+    } catch (error) {
+        Toast('ERROR', 'No se pudieron cargar los estados financieros');
+        availableFin = [];
+    }
+}
+
 function setupSorting() {
     const orderDivs = document.querySelectorAll('.order-div[data-column]');
 
@@ -1224,20 +1257,31 @@ function setupSorting() {
         const orderIcons = div.querySelector('.order');
         if(!orderIcons) return;
 
-        orderIcons.addEventListener('click', (e) => {
+        orderIcons.addEventListener('click', async (e) => {
             e.stopPropagation();
             const column = div.dataset.column;
             
             if(column === 'folio') {
                 currentFolio = currentFolio === 'ASC' ? 'DESC' : 'ASC';
                 currentMonto = null;
+                currentFinanza = null;
+                currentFinanzaIndex = -1;
             } else if(column === 'monto') {
-                if(currentMonto === 'DESC')
-                    currentMonto = null;
-                else
-                    currentMonto = currentMonto === 'ASC' ? 'DESC' : 'ASC';
-                
-                currentFolio = 'ASC';
+                currentMonto = currentMonto === 'ASC' ? 'DESC' : 'ASC';
+                currentFolio = null;
+                currentFinanza = null;
+                currentFinanzaIndex = -1;
+            } else if(column === 'finanzas') {
+                if(availableFin.length === 0) {
+                    await fetchFinanzas();
+                    if(availableFin.length === 0) return;
+                }
+
+                currentFinIndex = (currentFinIndex + 1) % availableFin.length;
+                currentFinanza = availableFin[currentFinIndex];
+
+                currentFolio = null;
+                currentMonto = null;
             }
 
             currentPage = 1;
@@ -1660,6 +1704,27 @@ async function buttonComprobacion() {
         } finally {
             hideLoader();
         }
+    });
+}
+
+// Settlement
+function buttonLiquidacion() {
+    document.body.addEventListener('click', (e) => {
+        const target = e.target;
+        if(!target.classList.contains('fa-hand-holding-dollar')) return;
+        e.stopPropagation();
+
+        const row = target.closest('tr');
+        const card = target.closest('.card');
+        let folio = null;
+
+        if(row)
+            folio = row.querySelector('.folio')?.textContent.trim();
+        else if(card) 
+            folio = card.querySelector('.folio-mobile')?.textContent.trim();
+
+        if(folio)
+            window.location.href = `colab-liquidaciones.html?search=${encodeURIComponent(folio)}`;
     });
 }
 

@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
     buttonInfoDelivered();
     buttonPreview();
     buttonDownload();
+    buttonComprobacion();
+    buttonLiquidacion();
 });
 
 
@@ -324,7 +326,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(!response.ok) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0, 0);
+            updateCounters(0, 0, false);
             throw new Error('Error al obtener solicitudes');
             return;
         }
@@ -334,7 +336,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(data.mensaje) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0, 0);
+            updateCounters(0, 0, true);
             const tab = toastStatus();
             Toast(`SIN ANTICIPOS ${tab === null ? '' : tab.toUpperCase()}`, `No tienes anticipos ${tab === null ? '' : tab} para mostrar en este momento`);
             return;
@@ -342,16 +344,18 @@ async function tableInformation(filtros = {}, page = 1) {
 
         renderTable(data.solicitudes, getActiveTabId());
         renderCards(data.solicitudes, getActiveTabId());
+        syncCompButtons();
         updateCounters(
             data.pendientes ?? 0, 
-            data.sinEntrega ?? 0
+            data.sinEntrega ?? 0,
+            true
         );
         updatePagination(data.paginacion);
         currentPage = data.paginacion.paginaActual;
     } catch(error) {
         renderTable([]);
         renderCards([]);
-        updateCounters(0, 0);
+        updateCounters(0, 0, false);
         Toast('ERROR AL MOSTRAR', 'No se pudieron cargar las solicitudes. Por favor, intenta de nuevo');
     } finally {
         hideLoader();
@@ -406,10 +410,14 @@ function buildThead(tab) {
 
 function getActionIcons(estado, fechaEntrega) {
     if(estado === 'Pendiente')
-        return `<i class="fa-solid fa-circle-info"></i>`;
+        return `
+            <i class="fa-solid fa-money-check-dollar"></i>
+            <i class="fa-solid fa-circle-info"></i>
+        `;
     else if(estado === 'Liquidada') {
         return `
             <i class="fa-solid fa-hand-holding-dollar"></i>
+            <i class="fa-solid fa-money-check-dollar visible" tab="approved"></i>
             <i class="fa-solid fa-circle-info"></i>
         `;
     }
@@ -566,7 +574,7 @@ function renderCards(solicitudes, tab = null) {
 }
 
 // Pending amount
-function updateCounters(pendientes, sinEntrega) {
+function updateCounters(pendientes, sinEntrega, esRespuestaValida = true) {
     const pendingTab = document.querySelector('.tab.pending .amount');
     if(!pendingTab) return;
 
@@ -577,7 +585,7 @@ function updateCounters(pendientes, sinEntrega) {
         pendingTab.textContent = valor;
         pendingTab.classList.add('has-number');
         lastKnownCount = valor;
-    } else if(lastKnownCount > 0) {
+    } else if(!esRespuestaValida && lastKnownCount > 0) {
         // Hubo error o no hay datos -> última cantidad conocida
         pendingTab.textContent = lastKnownCount;
         pendingTab.classList.add('has-number');
@@ -1334,6 +1342,10 @@ function llenarInfoCard(card, data) {
                     <p class="subt-mobile">FECHA DE CONFIRMACIÓN</p>
                     <p>${fechaConfirmacion}</p>
                 </div>
+
+                <div class="buttons-mobile">
+                    <i class="fa-solid fa-money-check-dollar"></i>
+                </div>
             </div>
         `;
 
@@ -1382,6 +1394,7 @@ function llenarInfoCard(card, data) {
                 </div>
                 <div class="buttons-mobile">
                     <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <i class="fa-solid fa-money-check-dollar visible" tab="approved"></i>
                 </div>
             </div>
         `;
@@ -1390,6 +1403,7 @@ function llenarInfoCard(card, data) {
     }
 
     completeInfo.innerHTML = html;
+    syncCompButtons();
 
     // Image
     if(comprobante) {
@@ -1918,6 +1932,101 @@ function buttonDownload() {
             downloadReceipt(img.src, `Comprobante de Solicitud ${folio}.jpg`);
         } else
             Toast('DESCARGAR COMPROBANTE', 'Lo siento, no existe un comprobante para descargar');
+    });
+}
+
+// Expense verification
+async function syncCompButtons() {
+    if(getActiveTabId() !== 'delivered') return;
+
+    // Obtener filas (excluyendo las vacías)
+    const rows = Array.from(document.querySelectorAll('.table-body tr')).filter(row => 
+        row.querySelector('.folio') && !row.querySelector('.empty-row')
+    );
+    const cards = document.querySelectorAll('.cards-mobile .card');
+
+    const elements = [];
+
+    rows.forEach(row => {
+        const folio = row.querySelector('.folio')?.textContent.trim();
+        const btn = row.querySelector('.fa-money-check-dollar');
+        if(folio && btn) elements.push({ folio, btn, type: 'row' });
+    });
+
+    cards.forEach(card => {
+        const folio = card.querySelector('.folio-mobile')?.textContent.trim();
+        const btn = card.querySelector('.fa-money-check-dollar');
+        if(folio && btn) elements.push({ folio, btn, type: 'card' });
+    });
+
+    if(!elements.length) return;
+
+    // Consultar existencia de comprobación para cada folio
+    await Promise.all(elements.map(async ({ folio, btn }) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:3000/api/comprobaciones/listar?solicitud=${encodeURIComponent(folio)}&limit=1`, {
+                headers: { 'Authorization': `Bearer ${token}` },
+                credentials: 'include'
+            });
+
+            if(!response.ok) throw new Error('Error en la petición de comprobaciones');
+
+            const data = await response.json();
+            const existe = data.comprobaciones && data.comprobaciones.length > 0;
+
+            if(existe) {
+                setTimeout(() => btn.classList.add('visible'), 50);
+
+                let tab = data.comprobaciones[0].estado === 'Aprobada' ? 'approved' : 'rejected';
+                btn.setAttribute('tab', tab);
+            }
+            else
+                btn.classList.remove('visible');
+        } catch (error) {
+            console.error(`Error al verificar folio ${folio}:`, error);
+            btn.classList.remove('visible');
+        }
+    }));
+}
+
+function buttonComprobacion() {
+    document.body.addEventListener('click', (e) => {
+        const target = e.target;
+        if(!target.classList.contains('fa-money-check-dollar')) return;
+        e.stopPropagation();
+
+        const row = target.closest('tr');
+        const card = target.closest('.card');
+        let folio = null;
+
+        if(row)
+            folio = row.querySelector('.folio')?.textContent.trim();
+        else if(card) 
+            folio = card.querySelector('.folio-mobile')?.textContent.trim();
+
+        if(folio)
+            window.location.href = `tes-comprobaciones.html?search=${encodeURIComponent(folio)}&tipo=solicitud&tab=${target.getAttribute('tab')}`;
+    });
+}
+
+// Settlement
+function buttonLiquidacion() {
+    document.body.addEventListener('click', (e) => {
+        const target = e.target;
+        if(!target.classList.contains('fa-hand-holding-dollar')) return;
+        e.stopPropagation();
+
+        const row = target.closest('tr');
+        const card = target.closest('.card');
+        let folio = null;
+        
+        if(row)
+            folio = row.querySelector('.folio')?.textContent.trim();
+        else if(card) 
+            folio = card.querySelector('.folio-mobile')?.textContent.trim();
+
+        if(folio)
+            window.location.href = `tes-liquidaciones.html?search=${encodeURIComponent(folio)}&tab=settled`;
     });
 }
 

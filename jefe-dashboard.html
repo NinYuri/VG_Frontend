@@ -17,6 +17,9 @@
 
     <!-- ========================== CHART.JS ========================== -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- ======================= SWEET ALERT ======================= -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -93,7 +96,7 @@
                             <div class="card pending-card"></div>
                             <div class="card-text">
                                 <p>SOLICITUDES PENDIENTES</p>
-                                <p class="pending-number"><span><i class="fa-regular fa-clock"></i></span>18</p>
+                                <p class="pending-number"><span><i class="fa-regular fa-clock"></i></span></p>
                             </div>
                         </div>
 
@@ -103,7 +106,7 @@
                             <div class="card approved-card"></div>
                             <div class="card-text">
                                 <p>SOLICITUDES APROBADAS</p>
-                                <p class="approved-number"><span><i class="fa-regular fa-circle-check"></i></span>23</p>
+                                <p class="approved-number"><span><i class="fa-regular fa-circle-check"></i></span></p>
                             </div>
                         </div>
 
@@ -113,7 +116,7 @@
                             <div class="card rejected-card"></div>
                             <div class="card-text">
                                 <p>SOLICITUDES RECHAZADAS</p>
-                                <p class="rejected-number"><span><i class="fa-regular fa-circle-xmark"></i></span>05</p>
+                                <p class="rejected-number"><span><i class="fa-regular fa-circle-xmark"></i></span></p>
                             </div>
                         </div>
                     </div>
@@ -126,11 +129,11 @@
                                 <div class="chartst-container">
                                     <div class="prev status-button"><i class="fa-solid fa-caret-left"></i></div>
                                     <canvas id="status-chart"></canvas>
-                                    <div class="next disabled status-button"><i class="fa-solid fa-caret-right"></i></div>
+                                    <div class="next status-button"><i class="fa-solid fa-caret-right"></i></div>
 
                                     <div class="center-text">
-                                        <span class="year">2026</span>
-                                        <span class="month">SEPTIEMBRE</span>
+                                        <span class="year"></span>
+                                        <span class="month"></span>
                                     </div>
                                 </div>
 
@@ -139,21 +142,21 @@
                                         <span class="color-dot pending"></span>
                                         <span class="label">Pendientes</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">39%</span>
+                                        <span class="percentage"></span>
                                     </div>
 
                                     <div class="legend-item">
                                         <span class="color-dot approved"></span>
                                         <span class="label">Aprobadas</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">20%</span>
+                                        <span class="percentage"></span>
                                     </div>
 
                                     <div class="legend-item">
                                         <span class="color-dot rejected"></span>
                                         <span class="label">Rechazadas</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">10%</span>
+                                        <span class="percentage"></span>
                                     </div>
                                 </div>
                             </div>
@@ -164,10 +167,8 @@
                                 <div class="graph-wrapper">
                                     <div class="graph-desc">
                                         <div class="prev request-button"><i class="fa-solid fa-caret-left"></i></div>
-                                        
-                                        <p>TENDENCIA DE SOLICITUDES MENSUAL <span class="request-year">2026</span></p>
-                                        
-                                        <div class="next disabled request-button"><i class="fa-solid fa-caret-right"></i></div>
+                                        <p>TENDENCIA DE SOLICITUDES MENSUAL <span class="request-year"></span></p>
+                                        <div class="next request-button"><i class="fa-solid fa-caret-right"></i></div>
                                     </div>
 
                                     <div class="chart-container">
@@ -180,10 +181,8 @@
                                 <div class="graph-wrapper">
                                     <div class="graph-desc">
                                         <div class="prev expense-button"><i class="fa-solid fa-caret-left"></i></div>
-
-                                        <p>GASTO MENSUAL <span class="expense-year">2026</span></p>
-
-                                        <div class="next disabled expense-button"><i class="fa-solid fa-caret-right"></i></div>
+                                        <p>GASTO MENSUAL <span class="expense-year"></span></p>
+                                        <div class="next expense-button"><i class="fa-solid fa-caret-right"></i></div>
                                     </div>
 
                                     <div class="chart-container">
@@ -195,22 +194,18 @@
 
                         <div class="graph-back total">
                             <div class="graph-wrapper">
-                                <p>GASTO TOTAL <span class="total-year">2026</span></p>
+                                <p>GASTO TOTAL <span class="total-year"></span></p>
 
                                 <div class="graph-desc">
                                     <div class="prev total-button"><i class="fa-solid fa-caret-left"></i></div>
-
-                                    <p><span class="total-month">DICIEMBRE</span></p>
-
-                                    <div class="next disabled total-button"><i class="fa-solid fa-caret-right"></i></div>
+                                    <p><span class="total-month"></span></p>
+                                    <div class="next total-button"><i class="fa-solid fa-caret-right"></i></div>
                                 </div>
 
-                                <p class="total-money">$<span class="total-amount">900,000</span></p>
+                                <p class="total-money"><span class="total-amount"></span></p>
                             </div>
                         </div>
                     </div>
-
-                    <img src="./assets/images/Agave_back.webp" alt="Agave" class="agave">
                 </div>
 
                 <div class="agave-mobile">

@@ -4,10 +4,15 @@ document.addEventListener("DOMContentLoaded", function() {
     phoneMenu();
     initMobileScroll();
     optionsBar();
-    tableInformation({});
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('search'))
+        initSearchFromUrl();
+    else
+        tableInformation(getCurrentFilters());
+
     tabSelected();
     search();
-    initSearchFromUrl();
     initCalendar();
     setupCalendar();
     activeCards();
@@ -1440,6 +1445,8 @@ async function loadDetails(folio) {
             return;
         }
 
+        let totalMXN = 0; 
+
         facturas.forEach(fact => {
             const card = document.createElement('div');
             card.className = 'card-factura';
@@ -1458,9 +1465,12 @@ async function loadDetails(folio) {
 
             const tipoCambioObj = fact.tipo_cambio || {};
             const monedaTC = tipoCambioObj.moneda || fact.tipo_moneda || 'MXN';
-            let tipoCambioVal = tipoCambioObj.tipo_cambio;
+            let tipoCambioVal = tipoCambioObj.tipo_cambio || 1;
             if(tipoCambioVal === null || tipoCambioVal === undefined) tipoCambioVal = 1;
             const tipoCambioFormateado = parseFloat(tipoCambioVal).toFixed(4);
+
+            // TC Ponderado
+            totalMXN += fact.total_factura * tipoCambioVal;
 
             card.innerHTML = `
                 <div class="factura-pres">
@@ -1516,14 +1526,14 @@ async function loadDetails(folio) {
                             <p class="fact-subtitle prin">TIPO DE CAMBIO</p>
 
                             <div class="moneda-cambio">
-                                <div class="monto-currency cambio-mx">
-                                    <img src="https://flagcdn.com/w40/mx.png" alt="MXN" onerror="this.style.display='none'">
-                                    <p><span>$</span>1.0000</p>
-                                </div>
-                                <p class="fact-text equal">=</p>
                                 <div class="monto-currency cambio-intern">
                                     <img src="${getFlagUrl(monedaTC)}" alt="${monedaTC}" onerror="this.style.display='none'">
-                                    <p><span>${obtenerSimboloMoneda(monedaTC)}</span>${tipoCambioFormateado}</p>
+                                    <p><span>${obtenerSimboloMoneda(monedaTC)}</span>1.0000</p>
+                                </div>
+                                <p class="fact-text equal">=</p>
+                                <div class="monto-currency cambio-mx">
+                                    <img src="https://flagcdn.com/w40/mx.png" alt="MXN" onerror="this.style.display='none'">
+                                    <p><span>$</span>${tipoCambioFormateado}</p>
                                 </div>
                             </div>
 
@@ -1535,6 +1545,18 @@ async function loadDetails(folio) {
 
             facturasContainer.appendChild(card);
         });
+
+        // TC Ponderado
+        const cmpTCDiv = document.querySelector('.calc-info.tipo-cambio');
+        if(cmpTCDiv) {
+            if(comprobacion.saldo_moneda !== 'MXN') {
+                cmpTCDiv.style.display = 'flex';
+                const tcAmount = cmpTCDiv.querySelector('.monto-currency.cambio-intern p');
+            
+                tcAmount.textContent = '$' + (totalMXN / comprobacion.total).toFixed(4);
+            } else 
+                cmpTCDiv.style.display = 'none';
+        }
 
         document.querySelectorAll('.download-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -1646,12 +1668,12 @@ const ToastMixin = Swal.mixin({
     },
 });
 
-function Toast(title, content, imageUrl = './assets/images/Icon_agave.webp') {
+function Toast(title, content) {
     ToastMixin.fire({
         icon: undefined,
         html: `
             <div style="display: flex; align-items: center; gap: 20px;">
-                <img src="${imageUrl}" alt="Agave" class="agave-icon">
+                <img src="./assets/images/Icon_agave.webp" alt="Agave" class="agave-icon">
                 <div class="text">
                     <p>${title}</p>
                     <span>${content}</span>

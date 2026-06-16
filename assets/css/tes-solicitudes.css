@@ -926,7 +926,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
     text-align: center;
     color: var(--black);
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 0.78em;
     gap: 0.3em;
 }
 
@@ -1149,6 +1149,17 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 }
 
 .table-body .actions i { cursor: pointer; }
+
+.fa-money-check-dollar {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.fa-money-check-dollar.visible {
+    opacity: 1;
+    visibility: visible;
+}
 
 .empty-row {
     color: transparent;
@@ -1874,8 +1885,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
 
     .date-header { font-size: 0.9em; }
 
-    .datepicker-header button { font-size: 0.7em; }
-
+    .datepicker-header button,
     .days-header span { font-size: 0.7em; }
 
     .dates { font-size: 0.8em; }
@@ -2836,7 +2846,14 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
         margin-right: 0.3em;
     }
 
-    .info-mobile.tranfer-rec { display: none; }
+    .info-mobile i {
+        color: var(--icons);
+        font-size: 1.4em;
+        cursor: pointer;
+        margin-top: 0.5em;
+    }
+
+    .info-mobile .fa-image { margin-right: 0.7em; }
 
     .buttons-mobile {
         display: flex;
@@ -2868,7 +2885,7 @@ div:where(.swal2-container) img:where(.swal2-image) { margin: 0 auto !important;
         justify-content: center;
         flex-direction: column-reverse;
         gap: 0.8em;
-        padding: 0.5em 0 0.7em 0;
+        padding: 0.5em 0.3em 0.7em 0.3em;
         font-size: 1.1em;
     }
 

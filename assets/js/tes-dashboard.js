@@ -1,16 +1,48 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
+    menuUser();
     phoneMenu();
     initMobileScroll();
     optionsBar();
     cardLinks();
-    expensesChart();
+    await updateCardCounts();
+    await loadAllComprobacionesMonths();
+    setupCompChartNav();
     trendsChart();
     advanceChart();
 });
 
 /* ================================ VARIABLES ================================ */
+// Graphs
 let trendChart = null;
 let advancesChart = null;
+
+// Estados mensuales (comprobaciones)
+let currentCompYear = null;
+let currentCompMonth = null;
+let currentCompChart = null;
+let allCompData = [];
+
+// Backend
+const token = Session.getToken();
+const logoUser = Session.getUser();
+
+
+/* ================================= LOADER ================================= */
+function showLoader() {
+    document.querySelector('.loader-overlay').style.display = 'flex';
+}
+
+function hideLoader() {
+    document.querySelector('.loader-overlay').style.display = 'none';
+}
+
+
+/* ============================== MENU NAME ============================== */
+function menuUser() {
+    const user = document.querySelector('.option-bar .name p');
+    user.innerHTML = '';
+    user.innerHTML = logoUser;
+}
 
 
 /* ================================= PHONE MENU ================================= */
@@ -78,6 +110,20 @@ function initMobileScroll() {
 
 
 /* ============================== OPTIONS BAR ============================== */
+async function logoutReset() {
+    try {
+        await fetch('http://127.0.0.1:3000/auth/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+    } catch(error) {
+        console.error('Error al cerrar sesión:', error);
+    } finally {
+        Session.clearAll();
+        window.location.href = 'index.html';
+    }
+}
+
 function optionsBar() {
     const dashboard = document.querySelector('.option.dashboard');
     const request = document.querySelector('.option.request');
@@ -127,7 +173,7 @@ function optionsBar() {
 
     logout.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = 'index.html';
+        logoutReset();
     });
 }
 
@@ -139,7 +185,6 @@ function cardLinks() {
     cards.forEach(card => {
         card.addEventListener('click', function() {
             const tabToActivate = this.getAttribute('data-tab');
-            console.log('Card clicked, activating tab:', tabToActivate);
 
             if(tabToActivate === 'pending')
                 window.location.href = 'tes-solicitudes.html?tab=pending';
@@ -149,6 +194,63 @@ function cardLinks() {
                 window.location.href = 'tes-liquidaciones.html?tab=pending';
         });
     });
+}
+
+
+/* ============================== CARDS COUNTS ============================== */
+async function fetchCardCounts() {
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/api/solicitudes/dashboard/cantidad-tes`, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) throw new Error('Error al obtener cantidades');
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        Toast('ERROR', 'No se pudieron cargar las cantidades de las tarjetas');
+        return [];
+    }
+}
+
+async function updateCardCounts() {
+    const counts = await fetchCardCounts();
+    
+    let anticipos = '00';
+    let comprobaciones = '00';
+    let liquidaciones = '00';
+    
+    if(counts && counts.length) {
+        const row = counts[0];
+        anticipos = row.anticipos.toString().padStart(2, '0');
+        comprobaciones = row.comprobaciones.toString().padStart(2, '0');
+        liquidaciones = row.liquidaciones.toString().padStart(2, '0');
+    }
+    
+    const advancesEl = document.querySelector('.advances-number');
+    const expensesEl = document.querySelector('.expenses-number');
+    const returnsEl = document.querySelector('.returns-number');
+    
+    if(advancesEl) {
+        const span = advancesEl.querySelector('span');
+        advancesEl.innerHTML = '';
+        if(span) advancesEl.appendChild(span);
+        advancesEl.appendChild(document.createTextNode(anticipos));
+    }
+    if(expensesEl) {
+        const span = expensesEl.querySelector('span');
+        expensesEl.innerHTML = '';
+        if(span) expensesEl.appendChild(span);
+        expensesEl.appendChild(document.createTextNode(comprobaciones));
+    }
+    if(returnsEl) {
+        const span = returnsEl.querySelector('span');
+        returnsEl.innerHTML = '';
+        if(span) returnsEl.appendChild(span);
+        returnsEl.appendChild(document.createTextNode(liquidaciones));
+    }
 }
 
 
@@ -170,24 +272,112 @@ const shadowPlugin = {
     }
 };
 
-// Comprobaciones graph
-function expensesChart() {
-    const ctx = document.getElementById('comp-chart').getContext('2d');
 
-    new Chart(ctx, {
+// ======= Expenses graph =======
+// Backend
+async function fetchCompChart(year, month) {
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/api/comprobaciones/dashboard/estados`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) throw new Error('Error al obtener datos de comprobaciones');
+        const data = await response.json();
+
+        let found = null;
+        if(year && month) found = data.find(item => item.anio === year && item.mes === month);
+        if(!found && data.length) found = data[0];
+
+        return found;
+    } catch (error) {
+        Toast('ERROR', 'No se pudieron cargar los datos de la gráfica de comprobaciones');
+        return null;
+    }
+}
+
+// Leyenda
+function updateCompLegend(pendientes, aprobadas, rechazadas) {
+    const legendItems = document.querySelectorAll('.graph-back.comp .legend-item');
+
+    if(legendItems.length >= 3) {
+        legendItems[0].style.display = pendientes > 0 ? 'flex' : 'none';
+        legendItems[1].style.display = aprobadas > 0 ? 'flex' : 'none';
+        legendItems[2].style.display = rechazadas > 0 ? 'flex' : 'none';
+    }
+}
+
+function compPercentage(pendientes, aprobadas, rechazadas) {
+    const total = pendientes + aprobadas + rechazadas;
+    if(total === 0) return { pctPend: 0, pctAprob: 0, pctRech: 0 };
+
+    let pctPend  = Math.round((pendientes / total) * 100);
+    let pctAprob = Math.round((aprobadas / total) * 100);
+    let pctRech  = Math.round((rechazadas / total) * 100);
+
+    const suma = pctPend + pctAprob + pctRech;
+    
+    if(suma !== 100) {
+        const diferencia = 100 - suma;
+        let maxPct = Math.max(pctPend, pctAprob, pctRech);
+        
+        if(maxPct === pctPend) pctPend += diferencia;
+        else if(maxPct === pctAprob) pctAprob += diferencia;
+        else pctRech += diferencia;
+    }
+
+    return { pctPend, pctAprob, pctRech };
+}
+
+// Gráfica
+async function updateCompChart(year, month) {
+    const dataRow = await fetchCompChart(year, month);
+    if(!dataRow) return;
+
+    // Actualizar año y mes
+    document.querySelector('.graph-back.comp .center-text .year').textContent = dataRow.anio;
+    const monthNames = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
+    document.querySelector('.graph-back.comp .center-text .month').textContent = monthNames[dataRow.mes - 1];
+
+    currentCompYear = dataRow.anio;
+    currentCompMonth = dataRow.mes;
+
+    // Leyenda de gráfica
+    const pendientes = dataRow.pendientes || 0;
+    const aprobadas = dataRow.aprobadas || 0;
+    const rechazadas = dataRow.rechazadas || 0;
+
+    const porcentajes = compPercentage(pendientes, aprobadas, rechazadas);
+    const pctPend  = porcentajes.pctPend;
+    const pctAprob = porcentajes.pctAprob;
+    const pctRech  = porcentajes.pctRech;
+
+    const legendItems = document.querySelectorAll('.graph-back.comp .legend-item');
+    if(legendItems.length >= 3) {
+        legendItems[0].querySelector('.percentage').textContent = `${pctPend}%`;
+        legendItems[1].querySelector('.percentage').textContent = `${pctAprob}%`;
+        legendItems[2].querySelector('.percentage').textContent = `${pctRech}%`;
+    }
+    updateCompLegend(pendientes, aprobadas, rechazadas);
+
+    // Actualizar gráfica
+    if(currentCompChart) currentCompChart.destroy();
+
+    const ctx = document.getElementById('comp-chart').getContext('2d');
+    currentCompChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: ['Pendientes', 'Aprobadas', 'Rechazadas'],
             datasets: [{
-                data: [18, 23, 5],
+                data: [pendientes, aprobadas, rechazadas],
                 backgroundColor: [
                     '#C9C867',     
                     '#97BD13',
                     '#D65B5B'
                 ],
                 borderWidth: 0,
-                hoverOffset: 0,     // hover de separación
-                spacing: 0          // espacio entre segmentos
+                hoverOffset: 0,
+                spacing: 0
             }]
         },
         options: {
@@ -200,8 +390,77 @@ function expensesChart() {
             }
         },
         plugins: [shadowPlugin]
-    });
+    });   
 }
+
+async function loadAllComprobacionesMonths() {
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/api/comprobaciones/dashboard/estados`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) throw new Error('Error al cargar meses de comprobaciones');
+        allCompData = await response.json();
+        allCompData.sort((a, b) => (a.anio - b.anio) || (a.mes - b.mes));
+        if(allCompData.length) {
+            const last = allCompData[allCompData.length - 1];
+            await updateCompChart(last.anio, last.mes);
+        }
+    } catch (error) {
+        Toast('ERROR', 'No se pudieron cargar los datos de la gráfica de comprobaciones');
+    }
+}
+
+function setupCompChartNav() {
+    const prevBtn = document.querySelector('.graph-back.comp .chartst-container .prev.comp-button');
+    const nextBtn = document.querySelector('.graph-back.comp .chartst-container .next.comp-button');
+    if(!prevBtn || !nextBtn) return;
+
+    // Remover cualquier evento anterior
+    const newPrev = prevBtn.cloneNode(true);
+    const newNext = nextBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+    nextBtn.parentNode.replaceChild(newNext, nextBtn);
+
+    function getCurrentIndex() {
+        return allCompData.findIndex(item => item.anio === currentCompYear && item.mes === currentCompMonth);
+    }
+
+    function updateButtonsState(idx) {
+        if(idx <= 0) newPrev.classList.add('disabled');
+        else newPrev.classList.remove('disabled');
+
+        if(idx >= allCompData.length - 1) newNext.classList.add('disabled');
+        else newNext.classList.remove('disabled');
+    }
+
+    newPrev.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const idx = getCurrentIndex();
+
+        if(idx > 0 && !newPrev.classList.contains('disabled')) {
+            const prevData = allCompData[idx - 1];
+            await updateCompChart(prevData.anio, prevData.mes);
+            updateButtonsState(idx - 1);
+        }
+    });
+
+    newNext.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const idx = getCurrentIndex();
+
+        if(idx < allCompData.length - 1 && !newNext.classList.contains('disabled')) {
+            const nextData = allCompData[idx + 1];
+            await updateCompChart(nextData.anio, nextData.mes);
+            updateButtonsState(idx + 1);
+        }
+    });
+
+    const initialIdx = getCurrentIndex();
+    if(initialIdx !== -1) updateButtonsState(initialIdx);
+}
+
 
 // Gasto mensual graph
 function trendsChart() {
