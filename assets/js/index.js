@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function() {
     login();
 });
 
+/* ================================ VARIABLES ================================ */
+const API_BASE = 'https://abc123.ngrok-free.app';
+
 
 /* =================================== LOADER =================================== */
 function showLoader() {
@@ -27,7 +30,7 @@ async function login() {
         try {
             showLoader();
 
-            const response = await fetch('http://127.0.0.1:3000/auth/login', {
+            const response = await fetch(`${API_BASE}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',

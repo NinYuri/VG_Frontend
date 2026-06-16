@@ -1447,6 +1447,33 @@ body {
     min-height: 0;
 }
 
+.facturas-titles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-right: 1em;
+}
+
+.calc-info.tipo-cambio { 
+    border-bottom: none; 
+    display: none;
+    margin-top: 0.5em;
+}
+
+.calc-info.tipo-cambio .calc-values {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 0.5em;
+}
+
+.calc-info.tipo-cambio .calc-values img {
+    width: 24%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .fact-title {
     text-align: left;
     font-size: 0.9em;

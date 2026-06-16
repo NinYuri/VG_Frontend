@@ -299,7 +299,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(!response.ok) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0, 0);
+            updateCounters(0, 0, false);
             throw new Error('Error al obtener solicitudes');
         }
 
@@ -308,7 +308,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(data.mensaje) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0, 0);
+            updateCounters(0, 0, true);
             Toast(`SIN SOLICITUDES ${toastStatus().toUpperCase()}`, `No tienes solicitudes ${toastStatus()} para mostrar en este momento`);
             return;
         }
@@ -317,14 +317,15 @@ async function tableInformation(filtros = {}, page = 1) {
         renderCards(data.solicitudes);
         updateCounters(
             data.pendientes ?? 0, 
-            data.sinEntrega ?? 0
+            data.sinEntrega ?? 0,
+            true
         );
         updatePagination(data.paginacion);
         currentPage = data.paginacion.paginaActual;
     } catch(error) {
         renderTable([]);
         renderCards([]);
-        updateCounters(0, 0);
+        updateCounters(0, 0, false);
         Toast('ERROR AL MOSTRAR', 'No se pudieron cargar las solicitudes. Por favor, intenta de nuevo');
     } finally {
         hideLoader();
@@ -435,7 +436,7 @@ function renderCards(solicitudes) {
 }
 
 // Pending amount
-function updateCounters(pendientes, sinEntrega) {
+function updateCounters(pendientes, sinEntrega, esRespuestaValida = true) {
     const pendingTab = document.querySelector('.tab.pending .amount');
     if(!pendingTab) return;
 
@@ -446,7 +447,7 @@ function updateCounters(pendientes, sinEntrega) {
         pendingTab.textContent = valor;
         pendingTab.classList.add('has-number');
         lastKnownCount = valor;
-    } else if(lastKnownCount > 0) {
+    } else if(!esRespuestaValida && lastKnownCount > 0) {
         // Hubo error o no hay datos -> última cantidad conocida
         pendingTab.textContent = lastKnownCount;
         pendingTab.classList.add('has-number');
@@ -1254,7 +1255,7 @@ async function changeState(folio, accion, motivoRechazo = '') {
 
             if(!tempData.solicitudes || tempData.solicitudes.length === 0) {
                 lastKnownCount = 0;
-                updateCounters(0, 0);
+                updateCounters(0, 0, true);
             }
         }
 

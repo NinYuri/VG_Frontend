@@ -2561,6 +2561,15 @@ body {
         object-fit: cover;
     }
 
+    .info-mobile i {
+        color: var(--icons);
+        font-size: 1.5em;
+        cursor: pointer;
+        margin-top: 0.5em;
+    }
+
+    .info-mobile .fa-image { margin-right: 0.7em; }
+
     .info-mobile .amount-mobile-currency { font-size: 0.75em; }
 
     .info-mobile .amount-mobile-currency img {

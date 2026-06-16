@@ -17,6 +17,9 @@
 
     <!-- ========================== CHART.JS ========================== -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- ======================= SWEET ALERT ======================= -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -101,8 +104,8 @@
                             <div class="card-background"></div>
                             <div class="card pending-card"></div>
                             <div class="card-text">
-                                <p>REEMBOLSOS PENDIENTES</p>
-                                <p class="refund-number"><span><i class="fa-regular fa-clock"></i></span>$40,000</p>
+                                <p>REEMBOLSOS PENDIENTES MXN</p>
+                                <p class="refund-number"><span><i class="fa-regular fa-clock"></i></span></p>
                             </div>
                         </div>
 
@@ -110,8 +113,8 @@
                             <div class="card-background"></div>
                             <div class="card pending-card"></div>
                             <div class="card-text">
-                                <p>DEVOLUCIONES PENDIENTES</p>
-                                <p class="return-number"><span><i class="fa-regular fa-clock"></i></span>$40,000</p>
+                                <p>DEVOLUCIONES PENDIENTES MXN</p>
+                                <p class="return-number"><span><i class="fa-regular fa-clock"></i></span></p>
                             </div>
                         </div>
                     </div>
@@ -124,11 +127,11 @@
                                 <div class="chartst-container">
                                     <div class="prev status-button"><i class="fa-solid fa-caret-left"></i></div>
                                     <canvas id="status-chart"></canvas>
-                                    <div class="next disabled status-button"><i class="fa-solid fa-caret-right"></i></div>
+                                    <div class="next status-button"><i class="fa-solid fa-caret-right"></i></div>
 
                                     <div class="center-text">
-                                        <span class="year">2026</span>
-                                        <span class="month">SEPTIEMBRE</span>
+                                        <span class="year"></span>
+                                        <span class="month"></span>
                                     </div>
                                 </div>
 
@@ -137,28 +140,28 @@
                                         <span class="color-dot pending"></span>
                                         <span class="label">Pendientes</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">39%</span>
+                                        <span class="percentage"></span>
                                     </div>
 
                                     <div class="legend-item">
                                         <span class="color-dot approved"></span>
                                         <span class="label">Aprobadas</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">20%</span>
+                                        <span class="percentage"></span>
                                     </div>
 
                                     <div class="legend-item">
                                         <span class="color-dot rejected"></span>
                                         <span class="label">Rechazadas</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">10%</span>
+                                        <span class="percentage"></span>
                                     </div>
 
                                     <div class="legend-item">
                                         <span class="color-dot canceled"></span>
                                         <span class="label">Canceladas</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">31%</span>
+                                        <span class="percentage"></span>
                                     </div>
                                 </div>
                             </div>
@@ -169,9 +172,7 @@
                                 <div class="graph-wrapper">
                                     <div class="graph-desc">
                                         <div class="prev request-button"><i class="fa-solid fa-caret-left"></i></div>
-                                        
-                                        <p>TOTAL DE ANTICIPOS APROBADOS <span class="request-year">2026</span></p>
-                                        
+                                        <p>TOTAL DE ANTICIPOS APROBADOS <span class="request-year"></span></p>                                        
                                         <div class="next disabled request-button"><i class="fa-solid fa-caret-right"></i></div>
                                     </div>
 
@@ -185,10 +186,8 @@
                                 <div class="graph-wrapper">
                                     <div class="graph-desc">
                                         <div class="prev expense-button"><i class="fa-solid fa-caret-left"></i></div>
-
-                                        <p>TOTAL COMPROBADO <span class="expense-year">2026</span></p>
-
-                                        <div class="next disabled expense-button"><i class="fa-solid fa-caret-right"></i></div>
+                                        <p>TOTAL COMPROBADO EN MXN <span class="expense-year"></span></p>
+                                        <div class="next expense-button"><i class="fa-solid fa-caret-right"></i></div>
                                     </div>
 
                                     <div class="chart-container">
@@ -205,11 +204,11 @@
                                 <div class="chartst-container">
                                     <div class="prev comp-button"><i class="fa-solid fa-caret-left"></i></div>
                                     <canvas id="comp-chart"></canvas>
-                                    <div class="next disabled comp-button"><i class="fa-solid fa-caret-right"></i></div>
+                                    <div class="next comp-button"><i class="fa-solid fa-caret-right"></i></div>
 
                                     <div class="center-text">
-                                        <span class="year">2026</span>
-                                        <span class="month">SEPTIEMBRE</span>
+                                        <span class="year"></span>
+                                        <span class="month"></span>
                                     </div>
                                 </div>
 
@@ -218,21 +217,21 @@
                                         <span class="color-dot pending"></span>
                                         <span class="label">Pendientes</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">39%</span>
+                                        <span class="percentage"></span>
                                     </div>
 
                                     <div class="legend-item">
                                         <span class="color-dot approved"></span>
                                         <span class="label">Aprobadas</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">20%</span>
+                                        <span class="percentage"></span>
                                     </div>
 
                                     <div class="legend-item">
                                         <span class="color-dot rejected"></span>
                                         <span class="label">Rechazadas</span>
                                         <span class="dots"></span>
-                                        <span class="percentage">10%</span>
+                                        <span class="percentage"></span>
                                     </div>
                                 </div>
                             </div>

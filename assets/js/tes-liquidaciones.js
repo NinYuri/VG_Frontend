@@ -6,12 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
     optionsBar();
 
     const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
     const tabParam = urlParams.get('tab');
-    if(!tabParam)
+
+    if(searchParam)
+        initSearchFromUrl();
+    else if(tabParam)
+        cardLinks();
+    else
         tableInformation(getCurrentFilters());
 
     tabSelected();
-    cardLinks();
     search();
     setupSorting();
     buttonTransfer();
@@ -40,9 +45,14 @@ let currentSol = 'ASC';
 let currentAnticipo = null;
 let currentComp = null;
 let currentSaldo = null;
+let currentAjuste = null;
 
 // Pending amount
 let lastKnownCount = 0;
+
+// Adjustment
+let availableAdj = [];
+let currentAdjIndex = -1;
 
 // Backend
 const token = Session.getToken();
@@ -293,6 +303,7 @@ function getCurrentFilters() {
     if(currentAnticipo) filtros.ordenAnt = currentAnticipo;
     if(currentComp) filtros.ordenCmp = currentComp;
     if(currentSaldo) filtros.ordenSaldo = currentSaldo;
+    if(currentAjuste) filtros.ordenAjuste = currentAjuste;
 
     return filtros;
 }
@@ -314,6 +325,7 @@ async function tableInformation(filtros = {}, page = 1) {
     params.append('ordenAnt', currentAnticipo);
     params.append('ordenCmp', currentComp);
     params.append('ordenSaldo', currentSaldo);
+    params.append('ordenAjuste', currentAjuste);
 
     try {
         const response = await fetch(`http://127.0.0.1:3000/api/liquidaciones/listar?${params.toString()}`, {
@@ -328,7 +340,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(!response.ok) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0);
+            updateCounters(0, false);
             throw new Error('Error al obtener solicitudes');
             return;
         }
@@ -339,7 +351,7 @@ async function tableInformation(filtros = {}, page = 1) {
         if(data.mensaje) {
             renderTable([]);
             renderCards([]);
-            updateCounters(0);
+            updateCounters(0, true);
             const tab = toastStatus();
             Toast(`SIN LIQUIDACIONES ${tab === null ? '' : tab.toUpperCase()}`, `No tienes liquidaciones ${tab === null ? '' : tab} para mostrar en este momento`);
             return;
@@ -347,13 +359,13 @@ async function tableInformation(filtros = {}, page = 1) {
 
         renderTable(data.liquidaciones);
         renderCards(data.liquidaciones);
-        updateCounters(data.pendientes ?? 0);
+        updateCounters(data.pendientes ?? 0, true);
         updatePagination(data.paginacion);
         currentPage = data.paginacion.paginaActual;
     } catch(error) {
         renderTable([]);
         renderCards([]);
-        updateCounters(0);
+        updateCounters(0, false);
         Toast('ERROR AL MOSTRAR', 'No se pudieron cargar las liquidaciones. Por favor, intenta de nuevo');
     } finally {
         hideLoader();
@@ -533,21 +545,21 @@ function renderCards(liquidaciones) {
 }
 
 // Pending amount
-function updateCounters(pendientes) {
+function updateCounters(pendientes, esRespuestaValida = true) {
     const pendingTab = document.querySelector('.tab.pending .amount');
-    if (!pendingTab) return;
+    if(!pendingTab) return;
 
-    const valor = pendientes ?? 0;
-
-    if(valor > 0) {
+    const valor = pendientes ?? null;
+    
+    if(valor !== null && valor > 0) {
         pendingTab.textContent = valor;
         pendingTab.classList.add('has-number');
         lastKnownCount = valor;
-    } else {
-        pendingTab.textContent = '0';
+    } else if(!esRespuestaValida && lastKnownCount > 0) {
+        pendingTab.textContent = lastKnownCount;
+        pendingTab.classList.add('has-number');
+    } else
         pendingTab.classList.remove('has-number');
-        lastKnownCount = 0;
-    }
 }
 
 // Pagination
@@ -704,6 +716,32 @@ function search() {
             tableInformation(filtros, currentPage);
         }
     });
+}
+
+
+/* =============================== URL PARAMS =============================== */
+function initSearchFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchValue = urlParams.get('search');
+    const tabParam = urlParams.get('tab');
+
+    if(!searchValue || !tabParam) return;
+
+    document.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('selected');
+        t.querySelector('.amount')?.classList.remove('selected');
+    });
+    const activeTab = document.querySelector(`.tab.${tabParam}`);
+    activeTab.classList.add('selected');
+    
+    const search = document.querySelector('.search-back');
+    const input = search.querySelector('input');
+
+    input.value = searchValue;
+    currentPage = 1;
+    const filtros = getCurrentFilters();
+    filtros.solicitud = searchValue;
+    tableInformation(filtros, currentPage);
 }
 
 
@@ -938,6 +976,29 @@ function llenarInfoCard(card, data) {
 
 
 /* ============================== CLASSIFICATION ============================== */
+// Adjustment
+async function fetchAjustes() {
+    try {
+        if(!token) {
+            Toast('SESIÓN EXPIRADA', 'Por favor, inicia sesión nuevamente');
+            return false;
+        }
+
+        const response = await fetch(`http://127.0.0.1:3000/api/liquidaciones/ajustes`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) throw new Error('Error al obtener tipos de ajuste');
+        
+        const data = await response.json();
+        availableAdj = data;
+    } catch (error) {
+        Toast('ERROR', 'No se pudieron cargar los tipos de ajuste');
+        availableAdj = [];
+    }
+}
+
 function setupSorting() {
     const orderDivs = document.querySelectorAll('.order-div[data-column]');
 
@@ -945,34 +1006,56 @@ function setupSorting() {
         const orderIcons = div.querySelector('.order');
         if(!orderIcons) return;
 
-        orderIcons.addEventListener('click', (e) => {
+        orderIcons.addEventListener('click', async (e) => {
             e.stopPropagation();
             const column = div.dataset.column;
 
             switch(column) {
                 case 'solicitud':
                     currentSol = currentSol === 'ASC' ? 'DESC' : 'ASC';
+
                     currentAnticipo = null;
                     currentComp = null;
                     currentSaldo = null;
+                    currentAjuste = null;
                     break;
                 case 'anticipo':
-                    currentSol = null;
                     currentAnticipo = currentAnticipo === 'ASC' ? 'DESC' : 'ASC';
+
+                    currentSol = null;
                     currentComp = null;
                     currentSaldo = null;
+                    currentAjuste = null;
                     break;
                 case 'comprobado':
+                    currentComp = currentComp === 'ASC' ? 'DESC' : 'ASC';
+
                     currentSol = null;
                     currentAnticipo = null;
-                    currentComp = currentComp === 'ASC' ? 'DESC' : 'ASC';
                     currentSaldo = null;
+                    currentAjuste = null;
                     break;
                 case 'saldo':
+                    currentSaldo = currentSaldo === 'ASC' ? 'DESC' : 'ASC';
+
                     currentSol = null;
                     currentAnticipo = null;
                     currentComp = null;
-                    currentSaldo = currentSaldo === 'ASC' ? 'DESC' : 'ASC';
+                    currentAjuste = null;
+                    break;
+                case 'ajuste':
+                    if(availableAdj.length === 0) {
+                        await fetchAjustes();
+                        if(availableAdj.length === 0) return;
+                    }
+                    
+                    currentAdjIndex = (currentAdjIndex + 1) % availableAdj.length;
+                    currentAjuste = availableAdj[currentAdjIndex];
+                    
+                    currentSol = null;
+                    currentAnticipo = null;
+                    currentComp = null;
+                    currentSaldo = null;
                     break;
                 default:
                     break;
