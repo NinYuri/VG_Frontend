@@ -755,6 +755,8 @@ body {
     cursor: pointer;
 }
 
+.request-selector.edit { cursor: default; }
+
 .request-back {
     display: flex;
     align-items: center;

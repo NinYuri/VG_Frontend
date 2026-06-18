@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
     initMobileScroll();
     optionsBar();
     tabSelected();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('search'))
+        loadFromUrl();
+
     requestDropdown();
     updateXmlVisibility();
     initTableResize();
@@ -20,7 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Backend
 const token = Session.getToken();
 const logoUser = Session.getUser();
-const API = 'http://127.0.0.1:3000';
+//const API = 'http://127.0.0.1:3000';
+const API = 'http://10.10.164.200:3000';
 
 // API Banxico
 const exchangeRateCache = {};
@@ -1783,6 +1789,20 @@ async function enviarComprobacion() {
     } finally {
         hideLoader();
     }
+}
+
+
+/* =================================== EDIT =================================== */
+function loadFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchValue = urlParams.get('search');
+
+    if(!searchValue) return;
+
+    const search = document.querySelector('.request-back');
+    const request = search.querySelector('.sol-edit');
+
+    request.textContent = searchValue;
 }
 
 

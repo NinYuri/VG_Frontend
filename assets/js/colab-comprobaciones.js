@@ -32,7 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
 // Backend
 const token = Session.getToken();
 const logoUser = Session.getUser();
-const API = 'http://127.0.0.1:3000';
+//const API = 'http://127.0.0.1:3000';
+const API = 'http://10.10.164.200:3000';
 
 let globalStartDate = null;
 let globalEndDate = null;
@@ -1687,17 +1688,24 @@ function buttonEdit() {
         const row = button.closest('tr');
         const card = button.closest('.card');
         let folio = null;
+        let sol = null;
 
         if(row) {
             const folioCell = row.querySelector('.folio p');
+            const solCell = row.querySelector('.sol p');
+
             if(folioCell) folio = folioCell.textContent.trim();
+            if(solCell) sol = solCell.textContent.trim();
         } else if(card) {
             const folioElem = card.querySelector('.folio-mobile');
-            if (folioElem) folio = folioElem.textContent.trim();
+            const solElem = card.querySelector('.sol-mobile');
+
+            if(folioElem) folio = folioElem.textContent.trim();
+            if(solElem) sol = solElem.textContent.trim();
         }
 
         if(folio)
-            window.location.href = `editar-comprobacion.html?search=${encodeURIComponent(folio)}`;
+            window.location.href = `editar-comprobacion.html?folio=${encodeURIComponent(folio)}&search=${encodeURIComponent(sol)}`;
         else
             Toast('ERROR', 'No se pudo identificar el folio de la solicitud');
     });
