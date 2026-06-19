@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+    
+    <title>Viáticos</title>
+    <meta name="title" content="Viáticos">
+    <meta name="description" content="Gestión de solicitudes, anticipos y comprobación de gastos">
+    <link rel="icon" href="./assets/images/Page_icon.ico" type="image/x-icon">
+
+    <!-- ======================= CSS ======================= -->
+    <link rel="stylesheet" href="./assets/css/dashboard.css">
+    
+    <!-- ======================= ICONS ======================= -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ========================== CHART.JS ========================== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- ======================= SWEET ALERT ======================= -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- ======================= LOADER ======================= -->
+    <div class="loader-overlay">
+        <div class="dot-spinner">
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+        </div>
+    </div>
+
+    <!-- ======================= CONTENT ======================= -->
+    <div class="background">
+        <!-- ======================= PHONE MENU ======================= -->
+        <div class="mobile-nav">
+            <label class="hamburger" id="hamburger">
+                <input type="checkbox">
+                <svg viewBox="0 0 32 32">
+                    <path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+                    <path class="line" d="M7 16 27 16"></path>
+                </svg>
+            </label>
+        </div>
+
+        <!-- ======================= OPTIONS BAR ======================= -->
+        <div class="option-bar" id="optionBar">
+            <div class="logo">
+                <img src="./assets/images/White_logo.webp" alt="Grupo | PSA">
+                <div class="name"><p></p></div>
+            </div>
+
+            <div class="options treasury">
+                <div class="option dashboard">
+                    <img src="./assets/images/Grid.webp" alt="Grid">
+                    <p>Panel Principal</p>
+                </div>
+
+                <div class="option request">
+                    <i class="fa-solid fa-plane-departure"></i>
+                    <p>Solicitudes</p>
+                </div>
+
+                <div class="option expenses">
+                    <img src="./assets/images/Payment.webp" alt="Payment">
+                    <p>Comprobaciones</p>
+                </div>
+
+                <div class="option liquidation">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <p>Liquidaciones</p>
+                </div>
+            </div>
+
+            <div class="logout treasury">
+                <div class="option log-out">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180"></i>
+                    <p>Cerrar sesión</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= CONTENT CONTAINER ======================= -->
+        <div class="content-container">
+            <div class="container colab">
+                <!-- ==================== CONTENT HEADER ==================== -->
+                <div class="content-header">
+                    <div class="titles">
+                        <h1 class="title">BIENVENIDO ADMINISTRADOR</h1>
+                        <p class="subtitle">¿Qué desea hacer hoy?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/session.js"></script>
+</body>
+</html>

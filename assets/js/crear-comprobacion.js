@@ -6,8 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
     tabSelected();
 
     const urlParams = new URLSearchParams(window.location.search);
-    if(urlParams.get('search'))
+    if(urlParams.get('search')) {
         loadFromUrl();
+        loadCmpDetail();
+    }
 
     requestDropdown();
     updateXmlVisibility();
@@ -18,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const sendBtn = document.querySelector('.button.send');
     if(sendBtn) sendBtn.addEventListener('click', enviarComprobacion);
+
+    const saveBtn = document.querySelector('.button.save');
+    if(saveBtn) saveBtn.addEventListener('click', guardarComprobacion);
 });
 
 
@@ -25,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Backend
 const token = Session.getToken();
 const logoUser = Session.getUser();
-//const API = 'http://127.0.0.1:3000';
+// const API = 'http://127.0.0.1:3000';
 const API = 'http://10.10.164.200:3000';
 
 // API Banxico
@@ -105,6 +110,28 @@ function resetAllFacturas() {
     if (tbody) tbody.innerHTML = '';
     facturasCargadas = [];    
     clearPendingEdit();
+}
+
+function formatMoney(value, code) {
+    const num = parseFloat(String(value).replace(/[^0-9.-]/g, ''));
+    const symbol = obtenerSimboloMoneda(code);
+
+    if(isNaN(num)) return `${symbol}0.00`;
+    const formatted = Math.abs(num).toFixed(2);
+    return num < 0 ? `- ${symbol}${formatted}` : `${symbol}${formatted}`;
+}
+
+function obtenerSimboloMoneda(code) {
+    try {
+        const parts = new Intl.NumberFormat('es-MX', {
+            style: 'currency',
+            currency: code,
+            currencyDisplay: 'narrowSymbol'
+        }).formatToParts(0);
+        return parts.find(p => p.type === 'currency')?.value || code;
+    } catch {
+        return code;
+    }
 }
 
 
@@ -466,6 +493,15 @@ function initTableResize() {
 function addFactura(datos) {
     const tbody = document.querySelector('.table-body');
     const nuevaFila = document.createElement('tr');
+    const moneda = datos.moneda;
+
+    let fileButtonsHTML = '';
+    if(datos.rutaPDF)
+        fileButtonsHTML += `<i class="fa-solid fa-file-pdf download-btn-cmp" data-url="${datos.rutaPDF}" data-type="pdf"></i>`;
+    if(datos.rutaXML)
+        fileButtonsHTML += `<i class="fa-solid fa-file-code download-btn-cmp" data-url="${datos.rutaXML}" data-type="xml"></i>`;
+    if(!datos.rutaPDF && !datos.rutaXML && datos.rutaIMG)
+        fileButtonsHTML += `<i class="fa-solid fa-file-image download-btn-cmp" data-url="${datos.rutaIMG}" data-type="img"></i>`;
 
     nuevaFila.innerHTML = `
         <td>${datos.folio || ''}</td>
@@ -473,17 +509,43 @@ function addFactura(datos) {
         <td>${(datos.proveedor).toUpperCase() || ''}</td>
         <td>${datos.concepto || ''}</td>
         <td>${(datos.descripcion).toUpperCase() || ''}</td>
-        <td>${datos.importe || '0.00'}</td>
-        <td>${datos.iva || '0.00'}</td>
-        <td>${datos.otros || '0.00'}</td>
-        <td>${datos.total || '0.00'}</td>
+        <td>${formatMoney(datos.importe, moneda)}</td>
+        <td>${formatMoney(datos.iva, moneda)}</td>
+        <td>${formatMoney(datos.otros, moneda)}</td>
+        <td>${formatMoney(datos.total, moneda)}</td>
         <td>${datos.moneda || ''}</td>
         <td>${datos.tipoCambio || '1.0000'}</td>
-        <td class="delete-row"><div class="actions"><i class="fa-solid fa-trash-can"></i></div></td>
+        <td class="delete-row">
+            <div class="actions">
+                ${fileButtonsHTML}
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+        </td>
     `;
     tbody.appendChild(nuevaFila);
+
+    nuevaFila.querySelectorAll('.download-btn-cmp').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const url = btn.dataset.url;
+            const type = btn.dataset.type;
+            const folioFactura = datos.folio || 'documento';
+
+            let extension = '';
+            if(type === 'pdf') 
+                extension = 'pdf';
+            else if(type === 'xml') 
+                extension = 'xml';
+            else if(type === 'img') {
+                const match = url.match(/\.(jpe?g|png)$/i);
+                extension = match ? match[1] : 'jpg';
+            }
+
+            downloadFileCmp(`Factura_${folioFactura}.${extension}`, url);
+        });
+    });
     
-    const deleteBtn = nuevaFila.querySelector('.delete-row i');
+    const deleteBtn = nuevaFila.querySelector('.fa-trash-can');
     deleteBtn.addEventListener('click', () => {
         const index = facturasCargadas.findIndex(f => 
             f.folio === datos.folio && 
@@ -573,7 +635,7 @@ function addFacturaEditable(datosBase) {
         let iva = parseFloat(ivaInput.value) || 0;
         let otros = parseFloat(otrosInput.value) || 0;
         let total = importe + iva + otros;
-        totalCell.textContent = `$${total.toFixed(2)}`;
+        totalCell.textContent = formatMoney(total, moneda);
     }
 
     importeInput.addEventListener('input', actualizarTotal);
@@ -750,10 +812,10 @@ async function addPDFRow(row, tempData) {
         <td>${facturaFinal.proveedor}</td>
         <td>${facturaFinal.concepto}</td>
         <td>${facturaFinal.descripcion}</td>
-        <td>$${facturaFinal.importe}</td>
-        <td>$${facturaFinal.iva}</td>
-        <td>$${facturaFinal.otros}</td>
-        <td>$${facturaFinal.total}</td>
+        <td>${formatMoney(facturaFinal.importe, facturaFinal.moneda)}</td>
+        <td>${formatMoney(facturaFinal.iva, facturaFinal.moneda)}</td>
+        <td>${formatMoney(facturaFinal.otros, facturaFinal.moneda)}</td>
+        <td>${formatMoney(facturaFinal.total, facturaFinal.moneda)}</td>
         <td>${facturaFinal.moneda}</td>
         <td>${facturaFinal.tipoCambio}</td>
         <td class="delete-row"><div class="actions"><i class="fa-solid fa-trash-can"></i></div></td>
@@ -785,6 +847,30 @@ function duplicateFactura(nuevaFactura) {
         existente.fecha === nuevaFactura.fecha &&
         existente.descripcion === nuevaFactura.descripcion
     );
+}
+
+// Download
+async function downloadFileCmp(filename, url) {
+    try {
+        const response = await fetch(`${API}/${url}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+
+        if(!response.ok) throw new Error('Error al descargar el archivo');
+
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+    } catch(error) {
+        Toast('ERROR', 'No fue posible descargar el archivo');
+    }
 }
 
 
@@ -1525,8 +1611,16 @@ function initUpload() {
             }
 
             // 2. Solicitud
-            const selector = document.querySelector('.request-selector');
-            const selectedFolio = selector ? selector.dataset.selectedFolio : null;
+            let selectedFolio = null;
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get('search'))
+                selectedFolio = urlParams.get('search');
+            else {
+                const selector = document.querySelector('.request-selector');
+                selectedFolio = selector ? selector.dataset.selectedFolio : null;
+            }
+
             if(!selectedFolio) {
                 Toast('SOLICITUD REQUERIDA', 'Por favor, selecciona una solicitud para registrar la comprobación');
                 return;
@@ -1791,18 +1885,229 @@ async function enviarComprobacion() {
     }
 }
 
+// Save -> Edit
+async function guardarComprobacion() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const folioCmp = urlParams.get('folio');
+
+    if(!folioCmp) {
+        Toast('ERROR', 'Lo siento, no pude identificar la comprobación que deseas editar');
+        return;
+    }
+    if(facturasCargadas.length === 0) {
+        Toast('SIN FACTURAS', 'Agrega al menos una factura para continuar');
+        return;
+    }
+    if(pendingEditRow) {
+        Toast('DATOS INCOMPLETOS', 'Por favor, completa la información pendiente para continuar');
+        return;
+    }
+
+    showLoader();
+    try {
+        const fechaComp = new Date().toLocaleDateString('sv-SE');
+        const facturasEnviar = [];
+
+        for(const factura of facturasCargadas) {
+            let rutaPDF = factura.pdfPath || null;
+            let rutaXML = factura.xmlPath || null;
+            let rutaIMG = factura.imgPath || null;
+
+            if(factura.pdfFile instanceof File)
+                rutaPDF = await uploadPDF(factura.pdfFile);
+
+            if(factura.xmlFile instanceof File)
+                rutaXML = await uploadXML(factura.xmlFile);
+
+            if(factura.imgFile instanceof File)
+                rutaIMG = await uploadIMG(factura.imgFile);
+
+            const importeNum = parseFloat(String(factura.importe).replace(/[^0-9.-]/g, ''));
+            const ivaNum = parseFloat(String(factura.iva).replace(/[^0-9.-]/g, ''));
+            const otrosNum = parseFloat(String(factura.otros).replace(/[^0-9.-]/g, ''));
+            const totalNum = parseFloat(String(factura.total).replace(/[^0-9.-]/g, ''));
+            const tipoCambioNum = factura.tipoCambio ? parseFloat(factura.tipoCambio) : null;
+
+            if(isNaN(importeNum))  
+                throw new Error(`Importe inválido en factura ${factura.folio}`);
+            if(isNaN(ivaNum))
+                throw new Error(`IVA inválido en factura ${factura.folio}`);
+            if(isNaN(otrosNum))
+                throw new Error(`Otros montos inválidos en factura ${factura.folio}`);
+            if(isNaN(totalNum))
+                throw new Error(`Total inválido en factura ${factura.folio}`);
+
+            facturasEnviar.push({
+                folio_factura: factura.folio,
+                fecha_factura: factura.fecha,
+                proveedor: (factura.proveedor || '').toUpperCase(),
+                concepto: factura.concepto,
+                descripcion: (factura.descripcion || '').toUpperCase(),
+                importe: importeNum,
+                iva: ivaNum,
+                otros_montos: isNaN(otrosNum) ? 0 : otrosNum,
+                total_moneda: totalNum,
+                tipo_moneda: factura.moneda,
+                ruta_pdf: rutaPDF,
+                ruta_xml: rutaXML,
+                ruta_jpg: rutaIMG,
+                tipo_cambio: tipoCambioNum
+            });
+        }
+
+        const body = {
+            folio_comp:  folioCmp,
+            fecha_comp:  fechaComp,
+            facturas:    facturasEnviar
+        };
+
+        const response = await fetch(`${API}/api/comprobaciones/editar`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include',
+            body: JSON.stringify(body)
+        });
+
+        if(!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.message || err.mensaje || 'Error al guardar la comprobación');
+        }
+
+        const result = await response.json();
+        hideLoader();
+        Toast('COMPROBACIÓN ACTUALIZADA', result.mensaje || 'La comprobación se actualizó correctamente');
+
+        setTimeout(() => {
+            window.location.href = 'colab-comprobaciones.html';
+        }, 2500);
+    } catch(error) {
+        Toast('ERROR AL EDITAR', error.message)
+    } finally {
+        hideLoader();
+    }
+}
+
 
 /* =================================== EDIT =================================== */
 function loadFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const searchValue = urlParams.get('search');
+    const folioValue = urlParams.get('folio');
 
-    if(!searchValue) return;
+    if(!searchValue || !folioValue) return;
 
-    const search = document.querySelector('.request-back');
-    const request = search.querySelector('.sol-edit');
+    const title = document.querySelector('.title.folio-cmp');
+    const request = document.querySelector('.request-back .sol-edit');
 
-    request.textContent = searchValue;
+    if(title) title.textContent = folioValue;
+    if(request) request.textContent = searchValue;
+}
+
+async function loadCmpDetail() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const folioCmp = urlParams.get('folio');
+    if(!folioCmp) return;
+
+    showLoader();
+    try {
+        const response = await fetch(`${API}/api/comprobaciones/detalle?folio=${folioCmp}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include'
+        });
+
+        if(!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.message || 'No se pudieron cargar los detalles de la comprobación');
+        }
+
+        const { comprobacion, facturas } = await response.json();
+
+        if(facturas.length) {
+            currentMoneda = facturas[0].tipo_moneda;
+            updateXmlVisibility();
+        }
+
+        // Formatear fecha
+        function formatDate(dateStr) {
+            if(!dateStr) return '';
+
+            if(dateStr.includes('T'))
+                return dateStr.split('T')[0];
+
+            const d = new Date(dateStr);
+            if(!isNan(d.getTime())) {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+
+            return dateStr;
+        }
+
+        function formatCurrency(value) {
+            if(value === undefined || value === null || isNaN(value)) return '$0.00';
+
+            const num = parseFloat(value);
+            const formatted = Math.abs(num).toFixed(2);
+
+            if(num < 0)
+                return `- $${formatted}`;
+
+            return `$${formatted}`;
+        }
+
+        // Llenar tabla con facturas existentes
+        facturas.forEach(f => {
+            const datos = {
+                folio: f.folio_factura || '',
+                fecha: formatDate(f.fecha_factura),
+                proveedor: f.proveedor || '',
+                concepto: f.concepto || '',
+                descripcion: f.descripcion || '',
+                importe: formatCurrency(f.importe),
+                iva: formatCurrency(f.iva),
+                otros: formatCurrency(f.otros_montos),
+                total: formatCurrency(f.total_factura),
+                moneda: f.tipo_moneda || '',
+                tipoCambio: f.tipo_cambio?.tipo_cambio
+                    ? parseFloat(f.tipo_cambio.tipo_cambio).toFixed(4)
+                    : '1.0000',
+
+                pdfFile: null,
+                xmlFile: null,
+                imgFile: null,
+                rutaPDF: f.ruta_pdf || null,
+                rutaXML: f.ruta_xml || null,
+                rutaIMG: f.ruta_jpg || null,
+            };
+
+            addFactura(datos);
+
+            facturasCargadas.push({
+                ...datos,
+                importe: parseFloat(f.importe || 0).toFixed(2),
+                iva: parseFloat(f.iva || 0).toFixed(2),
+                otros: parseFloat(f.otros_montos || 0).toFixed(2),
+                total: parseFloat(f.total_factura || 0).toFixed(2),
+                pdfPath: f.ruta_pdf  || null,
+                xmlPath: f.ruta_xml  || null,
+                imgPath: f.ruta_jpg  || null,
+            });
+        });
+    } catch(error) {
+        console.log(error);
+        Toast('ERROR', 'No se pudo cargar el detalle de la comprobación');
+    } finally {
+        hideLoader();
+    }
 }
 
 

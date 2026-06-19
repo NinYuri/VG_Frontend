@@ -1,31 +1,43 @@
-/* ================================ TOKEN JWT  ================================ */
 const Session = (function() {
   let token = null;
   let user = null;
 
   return {
-    // TOKEN
-    setToken: function(newToken, newUser) {
+    setToken: function(newToken) {
       token = newToken;
+      sessionStorage.setItem('jwt', newToken);
     },
 
     getToken: function() {
-      return token;
+      if(token) return token;
+      const storedT = sessionStorage.getItem('jwt');
+      if(storedT) {
+        token = storedT;
+        return token;
+      }
+      return null;
     },
 
-    // USER
     setUser: function(newUser) {
       user = newUser;
+      sessionStorage.setItem('user', newUser);
     },
 
     getUser: function() {
-      return user;
+      if(user) return user;
+      const storedU = sessionStorage.getItem('user');
+      if(storedU) {
+        user = storedU;
+        return user;
+      }
+      return null;
     },
 
-    // CLEAN
     clearAll: function() {
       user = null;
       token = null;
+      sessionStorage.removeItem('jwt');
+      sessionStorage.removeItem('user');
     },
   };
 })();

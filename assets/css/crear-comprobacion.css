@@ -20,6 +20,7 @@
 
     /* ============= TRANSLUCENT COLORS ============= */
     --tr-gray: rgba(145, 154, 155, 0.3);
+    --tr-agave: rgba(66, 129, 136, 0.15);
     --transparent-white: rgba(255, 255, 255, 0.5);
     --transparent-blue: rgba(217, 217, 217, 0.5);
     --transparent-gray: rgba(140, 146, 146, 0.5);
@@ -1012,6 +1013,8 @@ body {
 .table-head th:last-child,
 .table-body td:last-child { border-right: none; }
 
+.table-body tr:hover { background-color: var(--tr-agave); }
+
 .table-body tr:last-child td { border-bottom: none; }
 
 .table-head th {
@@ -1063,14 +1066,15 @@ body {
 .table-head th:nth-child(8) { width: 150px; }
 .table-head th:nth-child(11) { width: 160px; }
 
-.table-head th:nth-child(12) { width: 50px; }
+.table-head th:nth-child(12) { width: 90px; }
 
 .actions {
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--icons);
-    font-size: 1em;
+    font-size: 1.1em;
+    gap: 0.8em;
 }
 
 .actions i { cursor: pointer; }
@@ -1957,6 +1961,13 @@ body {
     .table-head th:nth-child(4) { width: 140px; }
     .table-head th:nth-child(11) { width: 170px; }
 
+    .table-head th:nth-child(12) { width: 120px; }
+
+    .actions { 
+        font-size: 1.3em; 
+        gap: 1em;
+    }
+
     .table-body td {
         overflow: visible;
         text-overflow: clip;
@@ -2209,6 +2220,13 @@ body {
     }
 
     .datepicker-wrapper { width: 75%; }
+
+    .table-head th:nth-child(12) { width: 120px; }
+
+    .actions { 
+        font-size: 1.3em; 
+        gap: 1em;
+    }
 
     .agave-mobile {
         display: flex;

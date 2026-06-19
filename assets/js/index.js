@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 /* ================================ VARIABLES ================================ */
-//const API = 'http://127.0.0.1:3000';
+// const API = 'http://127.0.0.1:3000';
 const API = 'http://10.10.164.200:3000';
 
 
@@ -60,6 +60,9 @@ async function login() {
                     break;
                 case 'Colaborador':
                     window.location.href = 'colab-dashboard.html';
+                    break;
+                case 'Administrador':
+                    window.location.href = 'admin-dashboard.html';
                     break;
                 default:
                     window.location.href = 'index.html';    // fallback
