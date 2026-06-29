@@ -1157,6 +1157,14 @@ body {
     font-weight: 600; 
 }
 
+.button-conexion,
+.back-buttons:has(.page.final) { display: none; }
+
+.button-conexion { 
+    font-size: 1em; 
+    margin: 0 -1em;
+}
+
 .prev .icon,
 .next .icon {
     position: absolute;
@@ -1597,6 +1605,8 @@ body {
 
     .page { font-size: 1.5em; }
 
+    .button-conexion { font-size: 1.4em; }
+
     /* TRANSFER RECEIPT */
     .transfer-wrapper,
     .info-wrapper {
@@ -1794,6 +1804,8 @@ body {
 
     .page { font-size: 0.9em; }
 
+    .button-conexion { font-size: 0.95em; }
+
     /* TRANSFER RECEIPT */
     .transfer-wrapper,
     .info-wrapper { width: 46em; }
@@ -1909,6 +1921,8 @@ body {
     }
 
     .page { font-size: 0.9em; }
+
+    .button-conexion { font-size: 0.9em; }
 
     /* TRANSFER RECEIPT */
     .transfer-wrapper,
@@ -2036,6 +2050,8 @@ body {
     }
 
     .page { font-size: 0.9em; }
+
+    .button-conexion { font-size: 0.85em; }
 
     /* TRANSFER RECEIPT */
     .transfer-wrapper,
@@ -2728,6 +2744,14 @@ body {
         margin-top: 1em;
     }
 
+    /* PAGE */
+    .tab-buttons { 
+        margin-top: 2.5em;
+        gap: 1em; 
+    }
+
+    .button-conexion { margin: 0 -0.3em; }
+
     /* TRANSFER RECEIPT */
     .container::before { border-radius: 20px; }
 
@@ -2769,9 +2793,6 @@ body {
     .button-receipt:hover::before,
     .button-verification:hover::before,
     .button-download:hover::before { animation: shine 2.5s ease-out infinite; }
-
-    /* PAGE */
-    .tab-buttons { margin-top: 2.5em; }
 
     .agave-mobile {
         display: flex;

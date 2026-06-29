@@ -1333,6 +1333,14 @@ body {
     font-weight: 600; 
 }
 
+.button-conexion,
+.back-buttons:has(.page.final) { display: none; }
+
+.button-conexion { 
+    font-size: 1em; 
+    margin: 0 -1em;
+}
+
 .prev .icon,
 .next .icon {
     position: absolute;
@@ -1868,6 +1876,8 @@ body {
 
     .page { font-size: 1.5em; }
 
+    .button-conexion { font-size: 1.4em; }
+
     /* INFORMATION */
     .info-wrapper {
         width: 35em;
@@ -2204,6 +2214,8 @@ body {
 
     .page { font-size: 0.9em; }
 
+    .button-conexion { font-size: 0.95em; }
+
     /* INFORMATION */
     .info-wrapper {
         width: 27em; 
@@ -2357,6 +2369,8 @@ body {
     }
 
     .page { font-size: 0.9em; }
+
+    .button-conexion { font-size: 0.9em; }
 
     /* INFORMATION */
     .info-wrapper {
@@ -2536,6 +2550,8 @@ body {
     }
 
     .page { font-size: 0.9em; }
+
+    .button-conexion { font-size: 0.85em; }
 
     /* INFORMATION */
     .info-wrapper { 
@@ -3208,7 +3224,12 @@ body {
     }
 
     /* PAGE */
-    .tab-buttons { margin-top: 2.5em; }
+    .tab-buttons { 
+        margin-top: 2.5em;
+        gap: 1em; 
+    }
+
+    .button-conexion { margin: 0 -0.3em; }
 
     .agave-mobile {
         display: flex;

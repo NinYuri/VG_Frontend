@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", async function() {
 // Backend
 const token = Session.getToken();
 const logoUser = Session.getUser();
-const API = 'http://127.0.0.1:3000';
-// const API = 'http://10.10.164.200:3000';
+// const API = 'http://127.0.0.1:3000';
+const API = 'http://10.10.164.200:3000';
 
 // Estados mensuales (solicitudes)
 let currentStatusYear = null;

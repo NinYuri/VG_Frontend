@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", async function() {
 // Backend
 const token = Session.getToken();
 const logoUser = Session.getUser();
-const API = 'http://127.0.0.1:3000';
-// const API = 'http://10.10.164.200:3000';
+// const API = 'http://127.0.0.1:3000';
+const API = 'http://10.10.164.200:3000';
 
 // Transfer receipt
 let selectedFile = null;
@@ -595,12 +595,20 @@ function renderCards(liquidaciones, tab = 'all') {
 
 // Pagination
 function updatePagination(paginacion) {
-    const pageDiv = document.querySelector('.page');
+    const pageDiv = document.querySelector('.page:not(.final)');
+    const pageFinal = document.querySelector('.page.final');
+    const buttonConexion = document.querySelector('.button-conexion');
     const prevBtn = document.querySelector('.prev');
     const nextBtn = document.querySelector('.next');
 
     if(pageDiv) pageDiv.textContent = paginacion.paginaActual;
+    if(pageFinal) pageFinal.textContent = paginacion.totalPaginas;
     paginacionGlobal = paginacion;
+
+    if(buttonConexion)
+        buttonConexion.style.display = paginacion.totalPaginas > 1 ? 'flex' : 'none';
+    if(pageFinal)
+        pageFinal.parentElement.style.display = paginacion.totalPaginas > 1 ? 'flex' : 'none';
 
     // Habilitar / deshabilitar botones
     if(prevBtn) prevBtn.parentElement.classList.toggle('disabled', paginacion.paginaActual <= 1);
