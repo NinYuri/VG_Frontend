@@ -857,82 +857,6 @@ body {
 
 .table-body td:last-child { vertical-align: middle; }
 
-/* CHECKBOX */
-.check input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.check {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    font-size: 1.2em;
-    width: 1.3em;
-    height: 1.3em;
-    user-select: none;
-}
-
-.checkmark {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    top: 0;
-    left: 0;
-    height: 1.3em;
-    width: 1.3em;
-    background-color: var(--tabs-gray);
-    border-radius: 50%;
-    border: 2px solid var(--gray);
-    transition: 300ms;
-}
-
-.check input:checked ~ .checkmark {
-    background-image: var(--button-hover);
-    border-radius: 0.5rem;
-    border: none;
-    animation: pulse 500ms ease-in-out;
-}
-
-.checkmark:after {
-    content: "";
-    position: relative;
-    display: none;
-}
-
-.check input:checked ~ .checkmark:after { display: block; }
-
-.check .checkmark:after {
-    width: 0.3em;
-    height: 0.5em;
-    border: solid #E0E0E2;
-    border-width: 0 0.15em 0.15em 0;
-    transform: rotate(45deg);
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 #0B6E4F90;
-        rotate: 20deg;
-    }
-
-    50% { rotate: -20deg; }
-
-    75% { box-shadow: 0 0 0 10px #0B6E4F60; }
-
-    100% {
-        box-shadow: 0 0 0 13px #0B6E4F30;
-        rotate: 0;
-    }
-}
-
 /* TABLE */
 .table-body .actions {
     display: flex;
@@ -954,6 +878,72 @@ body {
     visibility: hidden;
 }
 
+/* ============================== ROL SELECTOR ============================== */
+.rol-selector {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+.rol-selector::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -6px;
+    right: -6px;
+    bottom: -4px;
+    background-color: var(--tabs-gray);
+    border-radius: 5px;
+    z-index: -2;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rol-selector:hover::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.rol-selector i {
+    color: var(--gray);
+    font-size: 0.7em;
+    margin-left: 0.5em;
+    transform: translateY(0.15em);
+}
+
+.rol-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5em);
+    left: -0.5em;
+    background-color: var(--tr-dark-blue);
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    display: none;
+    min-width: 130%;
+    white-space: nowrap;
+    padding: 0.4em 0.4em;
+}
+
+.rol-dropdown.show { display: block; }
+
+.rol-option {
+    padding: 0.4em 0.8em;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background 0.2s;
+}
+
+.rol-option:hover { background-color: rgba(0, 0, 0, 0.1); }
+
+/* PAGINATION */
 .tab-buttons {
     display: flex;
     justify-content: center;
@@ -1182,8 +1172,6 @@ body {
 
     .table-body td { font-size: 1.3em; }
 
-    .check { font-size: 1.5em; }
-
     .tab-buttons { margin-top: 1.5em; }
 
     .back-buttons {
@@ -1260,8 +1248,6 @@ body {
 
     .table-body td { font-size: 0.95em; }
 
-    .check { font-size: 1.2em; }
-
     .back-buttons {
         width: 2em;
         height: 2em;
@@ -1337,8 +1323,6 @@ body {
     .table-head th { font-size: 1.15em; }
 
     .table-body td { font-size: 0.85em; }
-
-    .check { font-size: 1.1em; }
 
     .tab-buttons { margin-top: 1em; }
 
@@ -1419,8 +1403,6 @@ body {
     .table-head th { font-size: 1.1em; }
 
     .table-body td { font-size: 0.9em; }
-
-    .check { font-size: 1em; }
 
     .table-body .actions { font-size: 1em; }
 
@@ -1516,8 +1498,6 @@ body {
     .table-head th { font-size: 1em; }
 
     .table-body td { font-size: 0.8em; }
-
-    .check { font-size: 0.9em; }
 
     .back-buttons {
         width: 2em;

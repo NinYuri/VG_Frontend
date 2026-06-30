@@ -28,7 +28,10 @@ const limitPerPage = 7;
 let currentNombre = null;
 let currentEmail = null;
 let currentDep = null;
-let currentAccess = null;
+let currentRol = null;
+
+// Rol
+const ROLES = ['Colaborador', 'Jefe', 'Tesorería', 'Administrador'];
 
 
 /* ================================= LOADER ================================= */
@@ -222,11 +225,10 @@ function getCurrentFilters() {
         filtros.departamento = valor;
     else
         filtros.colaborador = valor;
-
     if(currentNombre) filtros.ordenNombre = currentNombre;
     if(currentEmail) filtros.ordenEmail = currentEmail;
     if(currentDep) filtros.ordenDep = currentDep;
-    if(currentAccess) filtros.ordenAcceso = currentAccess;
+    if(currentRol) filtros.ordenRol = currentRol;
 
     return filtros;
 }
@@ -246,8 +248,8 @@ async function tableInformation(filtros = {}, page = 1) {
     if(filtros.ordenNombre) params.append('ordenNombre', filtros.ordenNombre);
     if(filtros.ordenEmail) params.append('ordenEmail', filtros.ordenEmail);
     if(filtros.ordenDep) params.append('ordenDep', filtros.ordenDep);
-    if(filtros.ordenAcceso) params.append('ordenAcceso', filtros.ordenAcceso); 
-    params.append('pagina', 'Accesos');
+    if(filtros.ordenRol) params.append('ordenRol', filtros.ordenRol);
+    params.append('pagina', 'Roles');
     params.append('limit', limitPerPage);
     params.append('offset', offset);
 
@@ -305,7 +307,7 @@ function buildThead(tab) {
 
     columnas.push(
         { title: 'Departamento', hasOrder: true },
-        { title: 'Acceso', hasOrder: true }
+        { title: 'Rol', hasOrder: true }
     );
 
     const headerRow = document.createElement('tr');
@@ -352,10 +354,11 @@ function renderTable(usuarios) {
         html += `
             <td><p>${u.departamento || '—'}</p></td>
             <td>
-                <label class="check">
-                    <input type="checkbox" data-usuario-id="${u.usuario_id}" ${u.acceso ? 'checked' : ''}>
-                    <div class="checkmark"></div>
-                </label>
+                <div class="rol-selector" data-usuario-id="${u.usuario_id}" data-current="${u.rol}">
+                    <p class="rol-text">${u.rol}</p>
+                    <i class="fa-solid fa-angle-down"></i>
+                    <div class="rol-dropdown"></div>
+                </div>
             </td>
         `;
 
@@ -370,7 +373,7 @@ function renderTable(usuarios) {
         tbody.appendChild(emptyRow);
     }
 
-    setupAccessToggle();
+    setupRolDropdowns();
 }
 
 // Pagination
@@ -585,24 +588,24 @@ function setupSorting() {
 
                     currentEmail = null;
                     currentDep = null;
-                    currentAccess = null;
+                    currentRol = null;
                     break;
                 case 'correo':
                     currentEmail = currentEmail === 'ASC' ? 'DESC' : 'ASC';
 
                     currentNombre = null;
                     currentDep = null;
-                    currentAccess = null;
+                    currentRol = null;
                     break;
                 case 'departamento':
                     currentDep = currentDep === 'ASC' ? 'DESC' : 'ASC';
 
                     currentNombre = null;
                     currentEmail = null;
-                    currentAccess = null;
+                    currentRol = null;
                     break;
-                case 'acceso':
-                    currentAccess = currentAccess === 'ASC' ? 'DESC' : 'ASC';
+                case 'rol':
+                    currentRol = currentRol == 'ASC' ? 'DESC' : 'ASC';
 
                     currentNombre = null;
                     currentEmail = null;
@@ -620,35 +623,73 @@ function setupSorting() {
 }
 
 
-/* ================================= ACCESS ================================= */
-function setupAccessToggle() {
-    const checkboxes = document.querySelectorAll('.check input[type="checkbox"]');
+/* =================================== ROLES =================================== */
+function setupRolDropdowns() {
+    const selectors = document.querySelectorAll('.rol-selector');
 
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', async (e) => {
-            const usuarioId = checkbox.dataset.usuarioId;
-            const nuevoAcceso = checkbox.checked;
+    selectors.forEach(selector => {
+        const dropdown = selector.querySelector('.rol-dropdown');
+        const text = selector.querySelector('.rol-text');
+        const usuarioId = selector.dataset.usuarioId;
 
-            try {
-                const response = await fetch(`${API}/auth/actualizar-acceso`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify({ usuarioId: parseInt(usuarioId), acceso: nuevoAcceso })
+        function buildDropdown(currentRol) {
+            dropdown.innerHTML = '';
+            const otros = ROLES.filter(r => r !== currentRol);
+
+            otros.forEach(rolOpcion => {
+                const option = document.createElement('div');
+                option.className = 'rol-option';
+                option.textContent = rolOpcion;
+
+                option.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    await updateRol(usuarioId, rolOpcion, selector, text, buildDropdown);
                 });
 
-                if(!response.ok) throw new Error('Error al actualizar el acceso');
+                dropdown.appendChild(option);
+            });
+        }
 
-                Toast('ACCESO ACTUALIZADO', `El acceso del usuario se ${nuevoAcceso ? 'habilitó' : 'desactivó'} correctamente`);
-            } catch(error) {
-                checkbox.checked = !nuevoAcceso;
-                Toast('ACTUALIZACIÓN FALLIDA', 'No fue posible actualizar el acceso del usuario. Por favor, inténtalo nuevamente');
-            }
+        buildDropdown(selector.dataset.current);
+
+        selector.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdown.classList.contains('show');
+            document.querySelectorAll('.rol-dropdown.show').forEach(d => d.classList.remove('show'));
+            if(!isOpen) dropdown.classList.add('show');
         });
     });
+
+    document.addEventListener('click', (e) => {
+        if(!e.target.closest('.rol-selector'))
+            document.querySelectorAll('.rol-dropdown.show').forEach(d => d.classList.remove('show'));
+    });
+}
+
+async function updateRol(usuarioId, nuevoRol, selector, textEl, buildDropdownFn) {
+    try {
+        const response = await fetch(`${API}/auth/actualizar-rol`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include',
+            body: JSON.stringify({ usuarioId: parseInt(usuarioId), rol: nuevoRol })
+        });
+
+        if(!response.ok) throw new Error('Error al actualizar el rol');
+
+        textEl.textContent = nuevoRol;
+        selector.dataset.current = nuevoRol;
+        buildDropdownFn(nuevoRol);
+        selector.querySelector('.rol-dropdown').classList.remove('show');
+
+        Toast('ROL ACTUALIZADO', `El rol del usuario se actualizó a ${nuevoRol} correctamente`);
+    } catch(error) {
+        console.log(error);
+        Toast('ACTUALIZACIÓN FALLIDA', 'No fue posible actualizar el rol del usuario. Por favor, inténtalo nuevamente');
+    }
 }
 
 
