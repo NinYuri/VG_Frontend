@@ -1171,7 +1171,10 @@ body {
 
     .table-container .order i { font-size: 0.6em; }
 
-    .table-body td { font-size: 1.3em; }
+    .table-body td,
+    .rol-selector  { font-size: 1.3em; }
+
+    .rol-option { font-size: 1.15em; }
 
     .tab-buttons { margin-top: 1.5em; }
 
@@ -1248,6 +1251,8 @@ body {
     .table-head th { font-size: 1.35em; }
 
     .table-body td { font-size: 0.95em; }
+
+    .rol-option { font-size: 0.95em; }
 
     .back-buttons {
         width: 2em;
@@ -1499,6 +1504,8 @@ body {
     .table-head th { font-size: 1em; }
 
     .table-body td { font-size: 0.8em; }
+
+    .rol-selector { font-size: 1em; }
 
     .back-buttons {
         width: 2em;

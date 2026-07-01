@@ -1182,7 +1182,7 @@ body {
 
     .table-body td { font-size: 1.3em; }
 
-    .check { font-size: 1.5em; }
+    .check { font-size: 1.4em; }
 
     .tab-buttons { margin-top: 1.5em; }
 
@@ -1338,7 +1338,7 @@ body {
 
     .table-body td { font-size: 0.85em; }
 
-    .check { font-size: 1.1em; }
+    .check { font-size: 1.15em; }
 
     .tab-buttons { margin-top: 1em; }
 
@@ -1420,7 +1420,7 @@ body {
 
     .table-body td { font-size: 0.9em; }
 
-    .check { font-size: 1em; }
+    .check { font-size: 1.1em; }
 
     .table-body .actions { font-size: 1em; }
 
@@ -1517,7 +1517,7 @@ body {
 
     .table-body td { font-size: 0.8em; }
 
-    .check { font-size: 0.9em; }
+    .check { font-size: 1.15em; }
 
     .back-buttons {
         width: 2em;
