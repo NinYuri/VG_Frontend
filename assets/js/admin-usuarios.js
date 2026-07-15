@@ -408,6 +408,8 @@ function renderCards(usuarios) {
 
         container.appendChild(card);
     });
+
+    setupAccessToggle();
 }
 
 // Pagination
