@@ -6,7 +6,7 @@ const msalConfig = {
     auth: {
         clientId: '9ab12a2e-e456-4273-85bd-6d9b648e6916',
         authority: 'https://login.microsoftonline.com/8f861cfa-33df-4e2c-ac7e-3b8224ae9d66',
-        redirectUri: 'https://yuri-psa.github.io/VG_Frontend/',
+        redirectUri: 'https://wonderful-smoke-0a279fc0f.7.azurestaticapps.net/',
     },
     cache: {
         cacheLocation: 'sessionStorage',
